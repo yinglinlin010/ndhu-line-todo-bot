@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>待辦小幫手｜LINE Bot 第一版開發紀錄</title><meta name="description" content="AI 協作開發紀錄，含程式進度、輸入與預期及實際測試結果。"><style>
+*{box-sizing:border-box}body{margin:0;font:16px/1.75 system-ui,-apple-system,sans-serif;background:#f4f7fb;color:#24384b}main{max-width:1040px;margin:auto;padding:0 26px 70px}header{padding:60px 0 35px;border-bottom:1px solid #cedbe3}h1{font-size:clamp(34px,6vw,58px);line-height:1.2;color:#132d46;margin:15px 0}h2{font-size:28px;color:#132d46;margin-top:44px}h3{font-size:20px}p{max-width:820px}.eyebrow,.pass{color:#087e82;font-weight:700}.notice{padding:20px;border-left:4px solid #e0a63a;background:#fff7df;border-radius:4px;margin:24px 0}.stats{display:flex;gap:18px;flex-wrap:wrap;margin:26px 0}.stats div{flex:1;min-width:170px;padding:24px;background:#132d46;color:white;border-radius:12px}.stats strong{display:block;font-size:30px;color:#9febe1}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.test{background:white;border:1px solid #d5e0e8;padding:24px;border-radius:12px}.pass{font-size:12px;letter-spacing:2px}dt{font-size:13px;color:#647588;margin-top:12px}dd{margin:3px 0 0;overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap}a{color:#087e82;text-underline-offset:4px}code{padding:3px 5px;background:#e6edf3;border-radius:3px}pre{background:#10283d;color:#e0edf7;border-radius:12px;padding:24px;overflow:auto;font-size:13px;line-height:1.65}li{margin:9px 0}footer{border-top:1px solid #cedbe3;margin-top:44px;padding-top:24px;font-size:13px;color:#647588}@media(max-width:780px){.grid{grid-template-columns:1fr}main{padding:0 18px 40px}header{padding-top:35px}}@media print{pre{white-space:pre-wrap}.grid{grid-template-columns:1fr}}
+</style></head><body><main><header><div class="eyebrow">2026.10.05 · CLASS PROJECT · VERSION 0.1.0</div><h1>待辦小幫手</h1><p>LINE Bot 第一版開發紀錄。從一個清楚的小功能開始：收到「記錄：事項」，保存內容並回覆確認。</p><nav><a href="https://github.com/yinglinlin010/ndhu-line-todo-bot">GitHub 專案</a><a href="#plan">專題計畫</a><a href="#ai">AI 協作</a><a href="#evidence">實測證明</a><a href="#next">待改善項目</a></nav></header>
+<div class="notice"><strong>第一版狀態</strong><br>程式與本機測試已完成。GitHub 專案與公開開發紀錄網頁已發布；LINE 真人對話測試尚未完成。題目已由學生確認。這份證明是本機程式實測，不是 LINE 客戶端截圖。</div>
+<div class="stats"><div><strong>1 項</strong>核心功能：記錄待辦</div><div><strong>6 / 6</strong>本機測試通過</div><div><strong>0 次</strong>LINE 真人測試</div></div>
+<section id="plan"><h2>01 / 專題計畫</h2><h3>1. 專題名稱</h3><p>待辦小幫手 LINE Bot。題目經學生確認採用。</p><h3>2. 使用對象與用途</h3><p>給需要快速記下課業或生活事項的學生使用。透過 LINE 輸入待辦，避免臨時想到的任務被遺忘。</p><h3>3. 核心功能</h3><p>收到「記錄：待辦事項」後，把非空白文字保存到檔案並回覆確認。第一版只做記錄，不包含查詢、刪除與定時提醒。</p><h3>4. 對話範例</h3><p>正常：使用者「記錄：星期五交報告」 → Bot「已記錄：星期五交報告。」<br>不完整：使用者「記錄：」 → Bot「請輸入要記錄的待辦事項。」</p><h3>5. AI 協助方式</h3><p>請 Codex 協助整理需求、撰寫 Node.js 程式、除錯及測試，製作簡報與開發紀錄網頁。學生負責選題、確認需求及完成 LINE 真人測試。</p><h3>6. 測試計畫</h3><p>情境一：完整待辦 → 成功保存並回覆確認。<br>情境二：空白待辦 → 提醒補充，不新增紀錄。<br>情境三：不支援指令「你好」 → 提供格式與範例，不新增紀錄。</p></section><section id="ai"><h2>02 / 使用 AI 的開發紀錄</h2><ol><li><strong>讀取作業要求：</strong>確認一頁六項計畫、GitHub、開發紀錄網頁、簡報 PDF 及實測證明。</li><li><strong>從零縮小需求：</strong>依使用者要求建立獨立待辦專案，第一版只做「記錄」，不依賴原有塔羅程式。</li><li><strong>產生與檢查程式：</strong>Codex 建立文字指令處理、檔案保存與 LINE Webhook；參照 LINE 官方文件驗證原始請求簽章，再解析事件。</li><li><strong>執行本機測試：</strong>檢查正常、空白及不支援指令；另測持久化、相同事件去重、寫入錯誤與 Webhook HTTP 流程。</li><li><strong>整理成果：</strong>根據實際輸出製作六項計畫、六頁簡報及本網頁，將未完成的 LINE 測試明確列出。</li></ol><p>AI：Codex。回覆採固定規則，沒有呼叫生成式 AI；AI 的用途是協助開發與整理成果。題目與需求由學生確認。</p></section><section id="evidence"><h2>03 / 實測證明</h2><p>2026-10-05 在本機執行 <code>npm test</code>。以下三個必要情境逐項列出輸入、預期與實際結果；測試也驗證新增紀錄筆數。HTTP 測試使用假的測試金鑰與替代回覆 API，不會傳送 LINE 訊息。</p><div class="grid"><article class="test"><span class="pass">PASS</span><h3>01 / 完整待辦</h3><dl><dt>輸入</dt><dd>記錄：星期五交報告</dd><dt>預期結果</dt><dd>已記錄：星期五交報告。</dd><dt>實際結果</dt><dd>已記錄：星期五交報告。</dd><dt>新增紀錄</dt><dd>1 筆</dd></dl></article><article class="test"><span class="pass">PASS</span><h3>02 / 空白待辦</h3><dl><dt>輸入</dt><dd>記錄：</dd><dt>預期結果</dt><dd>請輸入要記錄的待辦事項。</dd><dt>實際結果</dt><dd>請輸入要記錄的待辦事項。</dd><dt>新增紀錄</dt><dd>0 筆</dd></dl></article><article class="test"><span class="pass">PASS</span><h3>03 / 不支援指令</h3><dl><dt>輸入</dt><dd>你好</dd><dt>預期結果</dt><dd>使用方式：記錄：待辦事項；例如：記錄：星期五交報告</dd><dt>實際結果</dt><dd>使用方式：記錄：待辦事項；例如：記錄：星期五交報告</dd><dt>新增紀錄</dt><dd>0 筆</dd></dl></article></div><h3>可重現的原始測試輸出</h3><p><a href="test-log.txt">下載測試原始紀錄</a>。於專案目錄執行 <code>npm test</code> 可重新驗證。</p><details><summary>查看完整輸出（6 組通過，0 組失敗）</summary><pre>
+&gt; todo-line-bot-v1@0.1.0 test
+&gt; node --test bot.test.mjs
+
+TAP version 13
+# {&quot;input&quot;:&quot;記錄：星期五交報告&quot;,&quot;expected&quot;:&quot;已記錄：星期五交報告。&quot;,&quot;actual&quot;:&quot;已記錄：星期五交報告。&quot;,&quot;savedRecords&quot;:1}
+# {&quot;input&quot;:&quot;記錄：&quot;,&quot;expected&quot;:&quot;請輸入要記錄的待辦事項。&quot;,&quot;actual&quot;:&quot;請輸入要記錄的待辦事項。&quot;,&quot;savedRecords&quot;:0}
+# {&quot;input&quot;:&quot;你好&quot;,&quot;expected&quot;:&quot;使用方式：記錄：待辦事項\\n例如：記錄：星期五交報告&quot;,&quot;actual&quot;:&quot;使用方式：記錄：待辦事項\\n例如：記錄：星期五交報告&quot;,&quot;savedRecords&quot;:0}
+# Subtest: 完整待辦成功記錄
+ok 1 - 完整待辦成功記錄
+  ---
+  duration_ms: 1.636834
+  ...
+# Subtest: 空白待辦提醒補充
+ok 2 - 空白待辦提醒補充
+  ---
+  duration_ms: 0.09675
+  ...
+# Subtest: 不支援指令顯示提示
+ok 3 - 不支援指令顯示提示
+  ---
+  duration_ms: 0.0545
+  ...
+# Subtest: 檔案持久化及相同事件去重
+ok 4 - 檔案持久化及相同事件去重
+  ---
+  duration_ms: 1.205792
+  ...
+# Subtest: 空白、過長內容與寫入錯誤
+ok 5 - 空白、過長內容與寫入錯誤
+  ---
+  duration_ms: 0.081
+  ...
+# Subtest: Webhook 本機 HTTP：驗簽、回覆、空事件、錯誤處理
+ok 6 - Webhook 本機 HTTP：驗簽、回覆、空事件、錯誤處理
+  ---
+  duration_ms: 27.797542
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 101.1155
+</pre></details></section><section id="next"><h2>04 / 待改善與課後版本</h2><ul><li><strong>GitHub 與公開網頁：</strong>學生確認後，已建立獨立公開專案並發布本開發紀錄。</li><li><strong>LINE 真人測試：</strong>需由學生設定 Channel 與 HTTPS Webhook，加好友後傳送三個測試輸入，補上實際畫面與結果。</li><li><strong>功能限制：</strong>第一版僅能記錄，尚不能查看已記錄事項、刪除或定時提醒。</li><li><strong>技術限制：</strong>目前使用同步檔案保存，不支援多執行個體；若回覆 API 失敗，資料可能已保存，狀態追蹤與重試待改善。</li><li><strong>下一版：</strong>新增「查詢」指令。比較第一版回覆使用提示與改善版列出紀錄的差異，並重新跑原本三個情境，保留版本及測試證據。</li></ul></section><footer>技術參考：<a href="https://developers.line.biz/en/docs/messaging-api/verify-webhook-signature/">LINE Webhook 驗簽</a>、<a href="https://developers.line.biz/en/docs/messaging-api/sending-messages/">LINE 回覆訊息</a>。<br>版本 0.1.0｜第一版原始測試輸出與文件一併保留。</footer></main></body></html>

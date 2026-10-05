@@ -1,0 +1,29 @@
+{
+  "version": "0.1.0",
+  "date": "2026-10-05",
+  "topic": "待辦小幫手（學生已確認）",
+  "github": "https://github.com/yinglinlin010/ndhu-line-todo-bot",
+  "developmentRecord": "https://yinglinlin010.github.io/ndhu-line-todo-bot/",
+  "localTests": {
+    "passed": 6,
+    "failed": 0
+  },
+  "lineLiveTest": "not performed",
+  "sha256": {
+    "webhook.mjs": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+    "README.md": "518ed9b3c74e02af2456e171ca3a9ae62d0768e0c41da7fc0329b95332dc51a9",
+    ".gitignore": "0ed60aa32177d42377360e0237a93c1ad081b603ba6a89f7d2269131b0252b2c",
+    "package.json": "e4bedcccd81472bb5de549b94c49995a1fec8c34b981f1aa76470a3012382b76",
+    "server.mjs": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+    "bot.test.mjs": "4bf2bd7ae2bacb27449e2e8bed80640098dcf36dcf284a6e939f4941dbe3837b",
+    ".env.example": "2102a08bfa3baa963771f4077d308109bbf686ca57c56b841327b2c16782d901",
+    "todo.mjs": "75f462286c573bf1226c19d03d7ec672a6f1f7194c294174aedb9cb986a40d7b",
+    "test-evidence/test-log.txt": "83bb8529b00483b00d393b47220b767c32845a43fcba3faab41b8057d455d3a6",
+    "output/03-繳交文字.txt": "89654235025b872ad036d9a18ccb53f5cff090d67efae80d1afdde7e16712a02",
+    "output/02-簡報.pdf": "88969f61d58c4ba69c0431706f505201b410dd1f4a580f5307d0e9d25f2c6604",
+    "output/01-專題計畫.pdf": "cb249c7bd1921ee6661996a2bf74ef38a5560280a0d9005a89778e138ab6acc2",
+    "docs/index.html": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+    "docs/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/test-log.txt": "83bb8529b00483b00d393b47220b767c32845a43fcba3faab41b8057d455d3a6"
+  }
+}

@@ -1,1 +1,1 @@
-{"name":"todo-line-bot-v1","version":"0.1.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test bot.test.mjs"},"engines":{"node":">=20"}}
+{"name":"todo-line-bot","version":"0.2.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test bot.test.mjs","evidence":"node scripts/compare-versions.mjs"},"engines":{"node":">=20"}}
