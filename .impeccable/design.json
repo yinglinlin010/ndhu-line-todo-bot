@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T04:14:33.339354+00:00",
+  "title": "Design System: 待辦小幫手",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Forest green"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Dark ink"
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Reading white"
+      },
+      "tint": {
+        "role": "neutral",
+        "displayName": "Quiet green tint"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted green-gray"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Fine green-gray line"
+      }
+    },
+    "typographyMeta": {
+      "body": {
+        "displayName": "Chinese reading text",
+        "purpose": "Traditional Chinese prose, constrained to 74ch."
+      },
+      "display": {
+        "displayName": "Page title",
+        "purpose": "Reader entry point; 36px at max-width 1000px, 32px at max-width 760px."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "link-transition",
+        "value": "color .18s ease-out, background .18s ease-out",
+        "purpose": "Link state changes; disabled for reduced motion."
+      },
+      {
+        "name": "scroll",
+        "value": "smooth",
+        "purpose": "Anchor navigation; auto for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1500px"
+      },
+      {
+        "name": "tablet-max",
+        "value": "1000px"
+      },
+      {
+        "name": "mobile-max",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Reading navigation",
+      "kind": "nav",
+      "description": "Compact green section links with visible keyboard focus.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#difference\">前後差異</a><a href=\"#evidence\">重新測試</a></nav>",
+      "css": ".ds-nav{display:flex;gap:32px;font-size:14px;font-weight:550;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}.ds-nav a{color:var(--green);padding:6px 0;text-decoration:none;transition:color .18s ease-out,background .18s ease-out}.ds-nav a:hover{color:#0b4736;text-decoration:underline}.ds-nav a:focus-visible{outline:3px solid #428a6b;outline-offset:5px;border-radius:2px}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
+    },
+    {
+      "name": "Testing status",
+      "kind": "card",
+      "refersTo": "status",
+      "description": "Separates local success from pending live testing in written status.",
+      "html": "<aside class=\"ds-status\"><p>目前測試狀態</p><strong>14 組本機測試通過</strong><strong class=\"ds-pending\">LINE 真人測試待完成</strong></aside>",
+      "css": ".ds-status{background:var(--tint);color:var(--ink);border-radius:var(--radius);padding:22px 28px;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}.ds-status p{font-size:13px;margin:0 0 10px;line-height:1.8}.ds-status strong{display:block;font-size:20px;color:var(--green);line-height:1.6}.ds-status .ds-pending{font-size:18px;color:var(--ink);margin-top:8px}"
+    },
+    {
+      "name": "Reply region",
+      "kind": "custom",
+      "refersTo": "reply",
+      "description": "Selectable response text with preserved line breaks.",
+      "html": "<div class=\"ds-reply\">使用方式：記錄：待辦事項\n例如：記錄：星期五交報告</div>",
+      "css": ".ds-reply{background:#eff3f0;color:var(--ink);padding:10px 14px;border-radius:var(--radius);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}"
+    },
+    {
+      "name": "Improved reply region",
+      "kind": "custom",
+      "refersTo": "reply-improved",
+      "description": "Pale-green response evidence for the improved version.",
+      "html": "<div class=\"ds-improved-reply\">你的待辦事項（共 1 筆，顯示最新 1 筆）：\n1. 星期五交報告</div>",
+      "css": ".ds-improved-reply{background:#e6f0e9;color:var(--ink);padding:10px 14px;border-radius:var(--radius);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}"
+    },
+    {
+      "name": "Test-output disclosure",
+      "kind": "custom",
+      "description": "Native disclosure for raw evidence, with a visible focus state.",
+      "html": "<details class=\"ds-disclosure\"><summary>查看完整本機測試輸出</summary><pre>tests 14\npass 14\nfail 0</pre></details>",
+      "css": ".ds-disclosure{border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}.ds-disclosure summary{cursor:pointer;color:var(--green);padding:13px 0;font-weight:600}.ds-disclosure summary:focus-visible{outline:3px solid #428a6b;outline-offset:5px;border-radius:2px}.ds-disclosure pre{background:var(--tint);font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;padding:18px;border-radius:var(--radius);white-space:pre-wrap;overflow-wrap:anywhere;max-height:560px;overflow:auto}"
+    }
+  ],
+  "narrative": {
+    "northStar": "可核對的閱讀紀錄",
+    "overview": "Read-mode Traditional Chinese content on white, with restrained green headings and evidence regions. User approved B 前後對照 for this surface. The north-star name is descriptive documentation rather than a new user-approved slogan.",
+    "keyCharacteristics": [
+      "System Chinese reading typography",
+      "Flat tint surfaces and fine dividers",
+      "Written local/pending statuses",
+      "Desktop comparison; stacked mobile with full-width caption"
+    ],
+    "rules": [
+      {
+        "name": "Written Status Rule",
+        "body": "Use written 本機 and 待完成 statuses; color alone cannot imply completed testing.",
+        "section": "colors"
+      },
+      {
+        "name": "Reading Measure Rule",
+        "body": "Constrain prose to 74ch while comparison and evidence span the container.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do preserve reading hierarchy and evidence source notes.",
+      "Do retain the full-width mobile caption."
+    ],
+    "donts": [
+      "Do not claim LINE真人測試 from local outputs.",
+      "Do not invent quantitative visual validation."
+    ]
+  }
+}

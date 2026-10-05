@@ -1,0 +1,11 @@
+專題名稱：待辦小幫手 LINE Bot 改善版
+GitHub 專案連結：https://github.com/yinglinlin010/ndhu-line-todo-bot
+開發紀錄網頁連結：https://yinglinlin010.github.io/ndhu-line-todo-bot/
+實測證明位置：網頁「重新測試結果」（#evidence），附輸入、預期與實際結果、14 組本機測試原始輸出及前後版本比較資料。
+
+本次改善：第一版只能記錄，改善版新增「查詢」功能，只列出發訊者自己的最新 10 筆待辦；補上空狀態、身分缺失、讀取錯誤與不支援指令的提示。
+網頁四項紀錄：原本的問題、修改內容、前後差異、重新測試結果。
+版本保留：第一版 tag classroom-v1-2026-10-05（commit 078d9ce）保留；新增查詢改善 commit bcd1a2f 與網頁／簡報更新 commit。
+
+目前實際進度：14 組本機測試通過，包含原本三個情境、查詢與資料隔離，以及本機 HTTP Webhook 流程。LINE 回覆 API 使用替代函式進行驗證。
+尚未完成：LINE Channel 與 HTTPS Bot endpoint 設定，以及學生親自操作的 LINE 對話截圖／短影片。本機證明不能替代真人對話證據。

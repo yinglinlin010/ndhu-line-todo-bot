@@ -68,6 +68,14 @@ GitHub Pages 只提供開發紀錄網頁，**不能執行 Node.js Bot 或作為 
 - 原本 `output/01-專題計畫.pdf`、`output/02-簡報.pdf` 與 `test-evidence/test-log.txt` 均保留。
 - `version-manifest.json` 是第一版的歷史雜湊清單，對應第一版 tag，不代表改善版現行檔案。
 
+## 改善版繳交
+
+- `output/04-改善版成果簡報.pdf`：8 頁，採用骰子抽出的「問題與解法」敘事。
+- `output/05-改善版繳交文字.txt`：專題名稱、GitHub、網頁網址與實測證明段落。
+- `docs/improved-slides.pdf`：網頁可下載的同一份改善版 PDF。
+- 網頁 `#improvement` 與 `#difference`：原本問題、修改內容與前後差異；`#evidence`：重新測試結果。
+- 第一版封存網頁：`docs/v1/index.html`。
+
 ## 已知限制
 
 - LINE Channel、公開 HTTPS Bot endpoint 與真人對話證據尚未完成。

@@ -1,0 +1,90 @@
+
+> todo-line-bot@0.2.0 test
+> node --test bot.test.mjs
+
+TAP version 13
+# {"input":"記錄：星期五交報告","expected":"已記錄：星期五交報告。","actual":"已記錄：星期五交報告。","savedRecords":1}
+# {"input":"記錄：","expected":"請輸入要記錄的待辦事項。","actual":"請輸入要記錄的待辦事項。","savedRecords":0}
+# {"input":"你好","expected":"使用方式：\\n記錄：待辦事項（例如：記錄：星期五交報告）\\n查詢（查看自己的最新 10 筆待辦）","actual":"使用方式：\\n記錄：待辦事項（例如：記錄：星期五交報告）\\n查詢（查看自己的最新 10 筆待辦）","savedRecords":0}
+# {"input":"查詢（無紀錄）","expected":"目前沒有待辦事項。\\n輸入「記錄：待辦事項」新增一筆。","actual":"目前沒有待辦事項。\\n輸入「記錄：待辦事項」新增一筆。"}
+# {"input":"查詢（已有 2 筆）","expected":"你的待辦事項（共 2 筆，顯示最新 2 筆）：\\n1. 買筆記本\\n2. 交報告","actual":"你的待辦事項（共 2 筆，顯示最新 2 筆）：\\n1. 買筆記本\\n2. 交報告"}
+# Subtest: 完整待辦成功記錄
+ok 1 - 完整待辦成功記錄
+  ---
+  duration_ms: 1.453875
+  ...
+# Subtest: 空白待辦提醒補充
+ok 2 - 空白待辦提醒補充
+  ---
+  duration_ms: 0.093208
+  ...
+# Subtest: 不支援指令顯示提示
+ok 3 - 不支援指令顯示提示
+  ---
+  duration_ms: 0.045791
+  ...
+# Subtest: 查詢：沒有待辦時提示如何新增
+ok 4 - 查詢：沒有待辦時提示如何新增
+  ---
+  duration_ms: 0.059709
+  ...
+# Subtest: 查詢：最新在前並列出總筆數
+ok 5 - 查詢：最新在前並列出總筆數
+  ---
+  duration_ms: 0.059667
+  ...
+# Subtest: 查詢：超過十筆只顯示最新十筆
+ok 6 - 查詢：超過十筆只顯示最新十筆
+  ---
+  duration_ms: 0.668333
+  ...
+# Subtest: 查詢：缺少使用者身分時不讀取任何資料
+ok 7 - 查詢：缺少使用者身分時不讀取任何資料
+  ---
+  duration_ms: 0.081041
+  ...
+# Subtest: 查詢：檔案讀取失敗提供清楚錯誤提示
+ok 8 - 查詢：檔案讀取失敗提供清楚錯誤提示
+  ---
+  duration_ms: 0.041875
+  ...
+# Subtest: 查詢：重新開啟檔案仍可讀取且隔離不同使用者
+ok 9 - 查詢：重新開啟檔案仍可讀取且隔離不同使用者
+  ---
+  duration_ms: 1.753625
+  ...
+# Subtest: 記錄：半形冒號與前後空白仍可正確使用
+ok 10 - 記錄：半形冒號與前後空白仍可正確使用
+  ---
+  duration_ms: 0.10375
+  ...
+# {"input":"Webhook：記錄後查詢","expected":"你的待辦事項（共 1 筆，顯示最新 1 筆）：\\n1. 星期五交報告","actual":"你的待辦事項（共 1 筆，顯示最新 1 筆）：\\n1. 星期五交報告"}
+# Subtest: Webhook 本機 HTTP：記錄後查詢只回傳本人待辦
+ok 11 - Webhook 本機 HTTP：記錄後查詢只回傳本人待辦
+  ---
+  duration_ms: 33.956125
+  ...
+# Subtest: 檔案持久化及相同事件去重
+ok 12 - 檔案持久化及相同事件去重
+  ---
+  duration_ms: 1.686041
+  ...
+# Subtest: 空白、過長內容與寫入錯誤
+ok 13 - 空白、過長內容與寫入錯誤
+  ---
+  duration_ms: 0.155875
+  ...
+# Subtest: Webhook 本機 HTTP：驗簽、回覆、空事件、錯誤處理
+ok 14 - Webhook 本機 HTTP：驗簽、回覆、空事件、錯誤處理
+  ---
+  duration_ms: 10.646875
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 120.392458

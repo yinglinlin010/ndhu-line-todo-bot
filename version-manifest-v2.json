@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "date": "2026-10-05",
+  "baselineTag": "classroom-v1-2026-10-05",
+  "improvementCommit": "bcd1a2f",
+  "localTests": {
+    "passed": 14,
+    "failed": 0
+  },
+  "lineLiveTest": "not performed",
+  "webDesign": "user-approved B comparison layout",
+  "slidesRoll": {
+    "face": 1,
+    "name": "問題與解法",
+    "description": "每頁用一個問題帶出一項改善，最後集中呈現測試。"
+  },
+  "sha256": {
+    "todo.mjs": "1635ba4f6e6f7bc823bc666b65d1a6ce16e2631e36665432cf571e2a70c64abe",
+    "webhook.mjs": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+    "server.mjs": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+    "bot.test.mjs": "6f0e406c4790b77eb0b4cc9095afb7f3e3bb104497911fe8a7fa7c610756d937",
+    "package.json": "800650eaf34ccf35de2c20635da39eb5c2d58805755a8ed335e547e052a9d858",
+    "README.md": "85358ef1c3e8a77b65652629875124379ab7361422bf55181459f8e5801659e4",
+    "PRODUCT.md": "cd94cb16867cc547eaf0b4f01ee9a3c42c6aa75107402a71e27ef4bfa06f0af4",
+    "DESIGN.md": "f709b678ba23aaa6be5fafce6db4a5f19cedfff0f2ea95f348304c66dab55d13",
+    "scripts/compare-versions.mjs": "2a2317909ef78e81f54fee3763bd60565b2ac53d5604e09e259f5405e72dd50b",
+    "docs/index.html": "e5aa1674d62405f0d2b8fc0e38fe9eb653e62c37f98179a46dafc4fbf87cda5c",
+    "docs/styles.css": "87e52489c0abf5e737011d5cb0d117468ac024405158a81060033f4947493e75",
+    "docs/v2-test-log.txt": "5ebb05292ad24fa746b0ff7c299a66e4fa501041f283a6bbe94097850f7ca61e",
+    "docs/v2-comparison.json": "d521446e74d7beac8078d016a6057b0eac0374e09c0cdf1c47c331782240d9c2",
+    "output/04-改善版成果簡報.pdf": "17570e271ae92f47ca16e9a884bb558d56d7365c417db28b6c671124fbc4b676",
+    "output/05-改善版繳交文字.txt": "8cd0f9a3ac8ec92f90f59584382ef54180ab3c45263e1885860d384f6fe6d8d5"
+  }
+}
