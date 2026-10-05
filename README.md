@@ -32,9 +32,13 @@ npm start
 - `docs/index.html`：AI 協作開發紀錄網頁。
 - `docs/test-log.txt`：本機實際測試原始輸出。
 - `test-evidence/test-log.txt`：保留的測試原始紀錄。
-- `output/03-繳交文字.txt`：線上繳交文字草稿，上傳與發布後須填入實際連結。
+- `output/03-繳交文字.txt`：包含實際網址，可貼到線上繳交欄位。
 
-目前尚未建立此新專案的 GitHub 遠端或公開網頁，亦尚未進行 LINE 真人對話測試。勿將本機測試當成 LINE 實測截圖。
+GitHub：https://github.com/yinglinlin010/ndhu-line-todo-bot
+
+開發紀錄：https://yinglinlin010.github.io/ndhu-line-todo-bot/
+
+實測證明位於網頁「03 / 實測證明」（#evidence）。學生已確認採用待辦小幫手題目。尚未進行 LINE 真人對話測試，勿將本機測試當成 LINE 實測截圖。
 
 ## 保留第一版與課後改善
 

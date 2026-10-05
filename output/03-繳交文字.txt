@@ -1,10 +1,10 @@
-專題名稱：待辦小幫手 LINE Bot（題目待學生確認）
+專題名稱：待辦小幫手 LINE Bot（題目已確認）
 
-GitHub 專案連結：尚未上傳，發布後填入實際連結。
-開發紀錄網頁連結：尚未發布，發布後填入實際連結。
+GitHub 專案連結：https://github.com/yinglinlin010/ndhu-line-todo-bot
+開發紀錄網頁連結：https://yinglinlin010.github.io/ndhu-line-todo-bot/
 實測證明位置：網頁「03 / 實測證明」（#evidence），包含三個必要情境的輸入、預期、實際結果及完整測試原始紀錄。
 
-目前進度：完成記錄待辦功能、空白與不支援指令處理、檔案保存、Webhook 驗簽、6 組本機測試，並完成計畫與簡報 PDF。
-待完成：GitHub 上傳、公開網頁、LINE Channel 與 HTTPS Webhook 設定、LINE 真人對話測試。
+目前進度：已發布 GitHub 與開發紀錄網頁；完成記錄待辦功能、空白與不支援指令處理、檔案保存、Webhook 驗簽、6 組本機測試，並完成計畫與簡報 PDF。
+待完成：LINE Channel 與 HTTPS Webhook 設定、LINE 真人對話測試。
 本次證明為本機程式實測，未完成 LINE 客戶端實測，故沒有 LINE 對話截圖。
 課後改善：保留本第一版，另做新增查詢功能的改善版，記錄前後差異並重新測試。
