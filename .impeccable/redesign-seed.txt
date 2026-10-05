@@ -1,0 +1,143 @@
+DIRECTION CONCEPT SEED (key: 45547134; mode: read; source: api; approved pool: c3b204a1eed6; 306/564 human-approved; rerun with --scope direction --mode read --from 45547134 --candidate-count 7 to reproduce this roll against this catalog revision)
+ASSIGNED INDEX: 3
+  After ordering the grounded directions by resonance, build candidate
+  3 of your own grounded list; the assignment never points at a
+  challenger. The assignment is the roll, not a suggestion: your top-ranked
+  direction is what every run would ship, so the script decides which grounded
+  direction gets built. Each direction joins a durable visual system to a
+  concrete expression for the requested first surface, decided as one. It must
+  survive the current task plus navigation, quiet and dense content,
+  interaction and state, and a substantially different future surface. In an
+  attended run, present the assigned direction fully committed and offer
+  re-roll. You may add ONE card for your top-ranked grounded candidate when
+  it is not the assigned direction, kicker IMPECCABLE’S PICK, with an honest risk line
+  naming its familiarity; one pick card, never a ranked lineup, and the pick
+  never takes the lead position. When the assignment IS your top candidate,
+  there is no pick card. Re-roll yourself only
+  on named factual grounds, when the assignment cannot carry the product's
+  truth or task; taste is never grounds.
+  The assignment exists to refuse the model's ranking rut, never to outrank
+  the user or the brief. Never expose assignment metadata in user-facing labels.
+CHALLENGERS:
+  1. a sixth-generation system menu in black void, memory towers drifting like monoliths in fog, cubic rooms of ambient particle light standing in for chrome
+     SOURCE ID: digital-design-canon-console-dashboard-atmosphere
+     CREATIVE SPARK: you turn the camera in the dark and a tower of saved memories drifts past, motes of light rising around it like dust in a projector beam, a low hum as the cube you chose swells forward out of the fog
+     SYSTEM GRAMMAR:
+       - Palette/material: deep black-blue void as ground, milky translucent towers and cubes lit from within, drifting white particle motes, the selected object glows warm amber
+       - Type/composition: sparse thin sans labels floating beside objects, no panels or rules, composition is objects arranged in depth with generous void between them
+       - Topology/navigation: each area is a room in the dark, you glide the camera between floating objects, entering one swells it to fill the space while the rest recede
+       - Controls/state: selection makes an object rise, brighten, and hum, its options orbit it as smaller satellites, empty slots read as dark hollows in the row
+       - Responsive/motion: small screens flatten rooms into a single row of glowing objects, motes drift constantly and the camera eases
+     WEB LEVERAGE: webgl fog and particles build the void; css 3d perspective glides the camera between the object rooms
+     QUALITY BAR: board https://impeccable.style/worlds/cards/digital-design-canon-console-dashboard-atmosphere.webp · hero https://impeccable.style/worlds/cards/digital-design-canon-console-dashboard-atmosphere-hero.webp
+  2. a tokyo boutique-pop sleeve wrapped in a printed paper obi band, the band crowded with dense vertical credits and catalog numbers while the sleeve face behind it holds one geometric mark and nothing else
+     SOURCE ID: posters-covers-sleeves-shibuya-boutique-sleeve
+     CREATIVE SPARK: a nearly empty sleeve with one small mark on it, and wrapped around the bottom third a paper band so crowded with credits that the collision between the two is the whole design.
+     SYSTEM GRAMMAR:
+       - Palette/material: a saturated obi band in one strong hue against a pale sleeve face, the band printed dense and the face left almost bare
+       - Type/composition: crowded vertical credits packed onto the obi band, a single geometric mark on the face behind, and a deliberate density collision between the two
+       - Topology/navigation: the band overlays the face, so navigation slides the band to reveal what it was covering
+       - Controls/state: controls are band segments, the active one slides clear of the face, and inactive ones stay wrapped across it
+       - Responsive/motion: the band holds its proportion of the face at any width, and motion is the band sliding off and back on
+     WEB LEVERAGE: a proportional overlay band that slides on pointer state, responsive density on the band, and reveal state for the face beneath
+     QUALITY BAR: board https://impeccable.style/worlds/cards/posters-covers-sleeves-shibuya-boutique-sleeve.webp · hero https://impeccable.style/worlds/cards/posters-covers-sleeves-shibuya-boutique-sleeve-hero.webp
+  3. a technical deep dive down a volcanic island wall, where one small diver leaves the turquoise surface, crosses a cold blue thermocline, and enters a mesophotic garden of black coral, glass sponges, and falling marine snow
+     SOURCE ID: rivers-tides-ocean-depths-mesophotic-deep-dive
+     CREATIVE SPARK: At forty meters the last warm red drains from the diver's gloves; a lamp clicks on, revealing black-coral branches and white particles falling past a wall with no visible floor.
+     SYSTEM GRAMMAR:
+       - Palette/material: abyssal ink blue deepening by dive stage as the ground, chalk-white marine snow as particle texture, one thermocline cyan band marking the active depth
+       - Type/composition: monospaced dive-computer digits for depth and gas beside quiet grotesk notes, one vertical depth axis ruling every line of copy
+       - Topology/navigation: Descend through surface, thermocline, reef ledge, mesophotic wall, turnaround depth, ascent stops, and the vertical route home.
+       - Controls/state: Descend, hover, illuminate, mark, turn, and ascend with daylight, cooling, dark, gas-limited, decompression, and surfaced states.
+       - Responsive/motion: Pair the vertical dive profile with selected close views; stop drift and bubbles under
+     WEB LEVERAGE: A synchronized depth-and-time scrub can change light, color, sound, species, and ascent obligations together, while any observation remains pinned to its exact depth and dive phase.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/rivers-tides-ocean-depths-mesophotic-deep-dive.webp · hero https://impeccable.style/worlds/cards/rivers-tides-ocean-depths-mesophotic-deep-dive-hero.webp
+  4. an alphabet storm, where letters condense into words, break into weather, and reshape the landscape according to grammar
+     SOURCE ID: dream-surreal-impossible-worlds-alphabet-storm
+     CREATIVE SPARK: Black letters gather into CLOUD, burst into rain, and carve the word RIVER across white ground; changing one vowel turns the current into a field of silver ravens.
+     SYSTEM GRAMMAR:
+       - Palette/material: paper white ground, storm-letter black as both body ink and weather mass, one silver flash for words mid-transformation, rain gray for spent grammar
+       - Type/composition: a single monumental grotesk behaving as matter, kerning loosening into wind, words breaking across lines as literal weather fronts on an open field
+       - Topology/navigation: Travel between letter fronts, word formations, grammatical forces, and the landscapes they produce.
+       - Controls/state: Type, split, conjugate, and recombine language while physical consequences remain reversible.
+       - Responsive/motion: Use one word-weather event per phone viewport and preserve readable text throughout transformation.
+     WEB LEVERAGE: Text parsing, procedural particles, and semantic rules turn typed language into deterministic weather with accessible narrative descriptions.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-alphabet-storm.webp · hero https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-alphabet-storm-hero.webp
+  5. A resumable configuration surface drawn as a jackfield normalling schedule: numbered lanes on unlit black glass where every item is tied to its default by an amber link line that is unbroken, cross-ticked, gapped, doubled or ended in an open ring.
+     SOURCE ID: operate-b-normalled-jackfield
+     CREATIVE SPARK: A backlit schedule taped inside a machine-room door: amber lanes numbered 01 to 48 on black glass, a solid tie line running to each default, and one line interrupted by a neat hand-inked gap where the operator broke the normal and left it broken.
+     SYSTEM GRAMMAR:
+       - Palette/material: black glass ground, one signal amber for every mark; foreign photos keep their own colour inside an amber hairline frame with a filled amber caption bar.
+       - Type/composition: one condensed grotesque: small-cap legends, upright prose. Rank is inversion, the dominant block knocked dark out of a solid amber plate, one per screen.
+       - Topology/navigation: an endless lane grid drifts under a fixed left legend strip; dark gutters at both edges mean nothing spans full width, and panels snap to numbered lanes.
+       - Controls/state: each item carries a link line: unbroken is live, one cross-tick held, a clean gap disabled, doubled selected, open ring end destructive; no colour carries state.
+       - Responsive/motion: lanes drift one hairline per second under static type; narrow widths drop lanes, never the edge gutters, and a broken link line never animates closed.
+     WEB LEVERAGE: Every row owns an SVG link rail whose state is drawn by stroke pattern rather than hue: unbroken, cross-tick, gap, doubled, open ring. Lane numbers are durable anchors, so any surface can be re-entered where it broke.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/operate-b-normalled-jackfield.webp · hero https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp
+  6. A film cutting bench flattened into a sheet: a perforated select rail crossing a grain-orange field, each step a punched frame held between two pins, the place you stopped marked by a folded tape flag, and everything set aside still hanging on pins below the rail.
+     SOURCE ID: operate-a-cutting-bench-select-rail
+     CREATIVE SPARK: A work print strung between two pins under a bench lamp, white grease crosses struck across three frames, a folded orange tape flag doubled over the perforation where the editor stopped, and a dozen trims hanging on pins in the bin below.
+     SYSTEM GRAMMAR:
+       - Palette/material: one ink, flag orange in coarse film grain on true black; orange holds a third of any screen. Running copy and foreign images sit only in punched white windows.
+       - Type/composition: one size of condensed grotesk throughout, caps for labels; rank is cell count not size, a window may span twelve frame cells while edge ticks stay hairline.
+       - Topology/navigation: a perforated rail crosses every sheet at a fixed height; sections string along it as frames, and anything set aside hangs below on pins in an open bin.
+       - Controls/state: state is a mark, not a hue: grease cross done, punched corner unavailable, tape band committed, folded flag where you stopped, hung on a pin deferred.
+       - Responsive/motion: the strip scrubs with inertia and settles on perforation pitch, never between frames; hung trims swing and damp. Narrow screens drop frame count, not size.
+     WEB LEVERAGE: The rail is one virtual strip whose scrub snaps to a fixed frame pitch; the frame you left is persisted and re-flagged on return, and every discarded frame stays reachable on a pin below the rail.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/operate-a-cutting-bench-select-rail.webp · hero https://impeccable.style/worlds/cards/operate-a-cutting-bench-select-rail-hero.webp
+Fuse each challenger before judging it: the challenger supplies the form
+  and its system grammar, the product supplies every fact, and clarity wins
+  conflicts. Weigh the fused result against the assigned direction on exactly
+  two axes, audience identification and product clarity. Losing to strong
+  grounded material is a valid outcome; beating a thin or tool-monoculture
+  list is the point. A fused challenger that wins both axes becomes the build.
+  Close the weighing with a verdict per challenger, decided before any
+  borrowing is considered: wins (beats the assigned direction on both axes),
+  competitive (holds one axis), or declined (loses both). A declined
+  challenger is not spent: name the one discipline of its system the assigned
+  direction lacks, and raise the assigned direction to match before
+  presenting it. A donation transfers ambition and system discipline, never
+  the challenger's clothes; one world owns the page. Write each raise as its
+  own named line on the presented direction, and carry every verdict, kept
+  line, and raise into the decision page payload.
+When you can view images, open the QUALITY BAR board and hero for any
+challenger you weigh seriously and for the world you build. They exist as a
+craft bar, the finish level and commitment the build is expected to reach,
+never as a mockup to copy; your surface serves this product, not that render.
+PRODUCT.md and explicit incumbent brand commitments constrain every direction.
+The seed never chooses exact colors, fonts, tokens, or a user preference, and
+it never permits the world and first surface to be selected independently.
+The CREATIVE SPARK is a complete visual system, not a theme or decorative
+reference. Translate every supplied system rule into the product: palette and
+material, type and composition, topology, controls and states, and adaptation.
+Keep the source's visible character, scale, rhythm, and interaction instead of
+reducing vivid grammar to generic nouns. Keep a literal carrier only when it
+becomes functional.
+Ambitious motion, spatial media, or interaction is welcome when it strengthens
+the product without weakening semantics, performance, or fallback behavior.
+MODE RULES (read, from /Users/yinglin/orca/projects/ndhu ai class/tmp/assignment/impeccable-official/.agents/skills/impeccable/reference/mode-read.md). They govern this surface's directions and every comp you write or judge for it, the decision comps included; where shared guidance conflicts, these win.
+DIRECTIONS
+The reader's question leads, and comprehension and wayfinding stay intact at every step. Documentation reads as documentation, a guide as a guide, an article as an article, a changelog as a changelog. The world owns the frame and serves the column. The frame is the masthead, the navigation rail, the ground, the title and section openers, and the way code, tables, and callouts are set: there the world's palette, type, and signature move commit fully, so the page could belong to no other product. The reading column inside it stays calm: a reading face, real contrast, a real measure, nothing performing behind the text. The world never supplies the reading order or replaces the navigation with something a reader has to learn. Documentation still reads as documentation, a guide as a guide, an article as an article.
+
+Candidates from the world's own publishing traditions transfer best: reference books, type specimens, timetables, field guides, technical manuals, scholarly apparatus, a newspaper's wayfinding. A tool, instrument, or fictional interface from the audience's world comes back as a costume on a page meant for reading: take from it only what transfers as type, palette, density, and a signature move, or replace it from your list. When a catalog world's source is itself an interface language, the same limit holds: it lends type, density, palette, and one signature move, while navigation and controls stay the standard ones for the platform.
+
+Write each direction's first viewport as the document's shell first: the navigation and where the reader stands in it, the title and the opening that answers or frames the reader's question, the reading column, and the way forward (contents, section headings, next and previous). Then name where the world owns the frame and where the signature move lives: a masthead, a coloured rail, a running head, a margin system, a numbering scheme, a way of setting code or tables. When you weigh fused challengers, product clarity includes how fast a reader finds and understands the answer.
+COMPS
+The comp is the document as the reader meets it: a frame the world owns, in the direction's committed palette and type, around a calm reading column at a real measure (on the web about 60 to 75 characters with body text near 16px; in a native app, the platform's body text style and its readable width), with headings in a clear hierarchy and the wayfinding that carries the reader through. Body text is set in a reading face with real contrast against its ground; a monospace face is for code, parameters, and small labels, never the running text or the headings by default. Code, tables, notes, and figures sit in the standard forms readers already know, set in the world's type and palette. The signature move is one system used where it earns its place, never a frame repeated around every element. The world never supplies the page's reading order, so a document never reads as a poster, a magazine cover, or a book photographed open.
+
+Prompt with the real material: the actual title, a real opening paragraph, real section names, and one example of the hardest content the surface holds (a code sample, a reference table, a diagram), never filler text.
+
+Comps two and three vary the reading structure and how the frame carries the world, never the column: the navigation model (sidebar tree, top tabs, inline contents), the column and margin system, how densely the reference material sits, and where the signature move appears. Each must be recognisably different from the first at thumbnail size; a variant only its prompt can tell apart adds no choice. A variant that pushes world material into the reading column makes reading harder and goes the wrong way.
+
+Self-check every render: can a reader tell where they are and where to go next, and read the body comfortably? Then cover the name: could this be any other product's documentation? If so, the frame has not taken the world; push the masthead, rail, ground, and openers further into it. If the render reads as an artifact of the world before it reads as a document, the world has reached the column; pull it back to the frame.
+TELEMETRY: after the user's choice resolves, rerun this script once with
+  --kind <assigned|pick|challenger|canon> --from 45547134 --scope direction --mode read,
+  adding --chosen <challenger-id> when a dealt challenger won and keeping
+  --register <safer|bolder> when the resolved round came from a steered hand.
+  One ping per resolved attended round. The ping is anonymous, the card kind
+  plus the catalog id when one won; your grounded candidates' names never
+  leave the machine, and the ping is skipped automatically when DO_NOT_TRACK
+  or IMPECCABLE_NO_TELEMETRY is set.
+A user- or brief-pinned decision beats the roll, always.
+ASSIGNED INDEX (restated for truncated readers): 3. Build candidate
+3 of your own grounded list; seed key 45547134.

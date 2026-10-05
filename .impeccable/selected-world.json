@@ -1,0 +1,13 @@
+{
+  "optionId": "challenger-letters",
+  "world": "dream-surreal-impossible-worlds-alphabet-storm",
+  "label": "文字風暴",
+  "seed": "45547134",
+  "buildPath": "comp",
+  "selectedIn": "official Impeccable browser question page",
+  "approval": "使用者在瀏覽器按 Adopt anyway，並在聊天說「我選完了」",
+  "referenceHero": ".impeccable/references/alphabet-storm-hero.webp",
+  "referenceBoard": ".impeccable/references/alphabet-storm-board.webp",
+  "compositionApproval": "letters-c",
+  "approvedComp": ".impeccable/mocks/letters-c.png"
+}

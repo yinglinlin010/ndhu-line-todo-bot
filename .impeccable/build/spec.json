@@ -1,0 +1,3422 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-10-05T04:53:53.282Z",
+  "comp": ".impeccable/mocks/letters-c.png",
+  "warnings": [
+    "region comparison-layout: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region left-record-layout: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region right-evidence-layout: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)"
+  ],
+  "uncoveredInkCells": [],
+  "compSize": {
+    "width": 1505,
+    "height": 1045
+  },
+  "aspect": 1.4402,
+  "orientation": "landscape",
+  "palette": [
+    {
+      "hex": "#f6f6f6",
+      "coverage": 0.8551
+    },
+    {
+      "hex": "#0a0a0a",
+      "coverage": 0.0907
+    },
+    {
+      "hex": "#c3c5cb",
+      "coverage": 0.0201
+    },
+    {
+      "hex": "#616265",
+      "coverage": 0.0189
+    },
+    {
+      "hex": "#95979a",
+      "coverage": 0.0152
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.0337,
+      "strength": 0.3067
+    },
+    {
+      "y": 0.1011,
+      "strength": 0.7505
+    },
+    {
+      "y": 0.1236,
+      "strength": 0.2885
+    },
+    {
+      "y": 0.1685,
+      "strength": 0.3024
+    },
+    {
+      "y": 0.2697,
+      "strength": 0.2589
+    },
+    {
+      "y": 0.3034,
+      "strength": 0.7927
+    },
+    {
+      "y": 0.3371,
+      "strength": 0.2927
+    },
+    {
+      "y": 0.3708,
+      "strength": 0.3804
+    },
+    {
+      "y": 0.4831,
+      "strength": 0.2535
+    },
+    {
+      "y": 0.5056,
+      "strength": 0.2463
+    },
+    {
+      "y": 0.6742,
+      "strength": 0.2801
+    },
+    {
+      "y": 0.7303,
+      "strength": 0.2657
+    },
+    {
+      "y": 0.8315,
+      "strength": 0.2573
+    },
+    {
+      "y": 0.9551,
+      "strength": 0.4214
+    },
+    {
+      "y": 0.9775,
+      "strength": 0.2144
+    }
+  ],
+  "regions": [
+    {
+      "id": "masthead",
+      "kind": "chrome",
+      "note": "Semantic chrome region masthead: 白灰色頂部導覽與下緣細線",
+      "grid": null,
+      "box": {
+        "x": 0.0146,
+        "y": 0,
+        "w": 0.9721,
+        "h": 0.0565
+      },
+      "px": {
+        "x": 22,
+        "y": 0,
+        "w": 1463,
+        "h": 59
+      },
+      "aspect": 24.7966,
+      "palette": [
+        {
+          "hex": "#f8f8f8",
+          "coverage": 0.9109
+        },
+        {
+          "hex": "#c6c6cf",
+          "coverage": 0.0617
+        },
+        {
+          "hex": "#121212",
+          "coverage": 0.0115
+        },
+        {
+          "hex": "#7f8083",
+          "coverage": 0.0095
+        },
+        {
+          "hex": "#4a4a4b",
+          "coverage": 0.0065
+        }
+      ],
+      "detail": {
+        "energy": 20.8841
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "brand",
+      "kind": "text",
+      "note": "Semantic text region brand: 待辦小幫手粗體品牌",
+      "grid": null,
+      "box": {
+        "x": 0.0252,
+        "y": 0.0134,
+        "w": 0.0791,
+        "h": 0.0258
+      },
+      "px": {
+        "x": 38,
+        "y": 14,
+        "w": 119,
+        "h": 27
+      },
+      "aspect": 4.4074,
+      "palette": [
+        {
+          "hex": "#f5f5f5",
+          "coverage": 0.538
+        },
+        {
+          "hex": "#0d0e0e",
+          "coverage": 0.2507
+        },
+        {
+          "hex": "#b0b1b1",
+          "coverage": 0.0789
+        },
+        {
+          "hex": "#444444",
+          "coverage": 0.0761
+        },
+        {
+          "hex": "#7a7e7a",
+          "coverage": 0.0563
+        }
+      ],
+      "detail": {
+        "energy": 64.1211
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 6,
+          "capHeightPx": 21.3,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0082,
+          "advTall": 1.0082,
+          "advX": null,
+          "gap": 0.1172,
+          "xRatio": 0.7404,
+          "stemW": 0.1584,
+          "contrast": 1.1842,
+          "serif": 1.2071,
+          "densTall": 0.5407,
+          "densX": null,
+          "weight": 0.5407
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "nav-record",
+      "kind": "control",
+      "note": "Semantic control region nav-record: 專案紀錄與選中底線",
+      "grid": null,
+      "box": {
+        "x": 0.1535,
+        "y": 0.0134,
+        "w": 0.0432,
+        "h": 0.0297
+      },
+      "px": {
+        "x": 231,
+        "y": 14,
+        "w": 65,
+        "h": 31
+      },
+      "aspect": 2.0968,
+      "palette": [
+        {
+          "hex": "#f4f4f4",
+          "coverage": 0.7754
+        },
+        {
+          "hex": "#9f9fa0",
+          "coverage": 0.1017
+        },
+        {
+          "hex": "#272427",
+          "coverage": 0.0551
+        },
+        {
+          "hex": "#726e72",
+          "coverage": 0.0424
+        },
+        {
+          "hex": "#c0c8c8",
+          "coverage": 0.0254
+        }
+      ],
+      "detail": {
+        "energy": 25.3378
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "nav-usage",
+      "kind": "control",
+      "note": "Semantic control region nav-usage: 使用說明連結",
+      "grid": null,
+      "box": {
+        "x": 0.2252,
+        "y": 0.0144,
+        "w": 0.0432,
+        "h": 0.0258
+      },
+      "px": {
+        "x": 339,
+        "y": 15,
+        "w": 65,
+        "h": 27
+      },
+      "aspect": 2.4074,
+      "palette": [
+        {
+          "hex": "#f6f6f6",
+          "coverage": 0.7677
+        },
+        {
+          "hex": "#b1b4b6",
+          "coverage": 0.1111
+        },
+        {
+          "hex": "#747577",
+          "coverage": 0.0909
+        },
+        {
+          "hex": "#4b5050",
+          "coverage": 0.0303
+        }
+      ],
+      "detail": {
+        "energy": 22.0678
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "nav-archive",
+      "kind": "control",
+      "note": "Semantic control region nav-archive: 第一版封存連結",
+      "grid": null,
+      "box": {
+        "x": 0.295,
+        "y": 0.0144,
+        "w": 0.0525,
+        "h": 0.0258
+      },
+      "px": {
+        "x": 444,
+        "y": 15,
+        "w": 79,
+        "h": 27
+      },
+      "aspect": 2.9259,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7012
+        },
+        {
+          "hex": "#717176",
+          "coverage": 0.1079
+        },
+        {
+          "hex": "#cdcfcf",
+          "coverage": 0.0871
+        },
+        {
+          "hex": "#acb0b0",
+          "coverage": 0.0788
+        },
+        {
+          "hex": "#484d55",
+          "coverage": 0.0249
+        }
+      ],
+      "detail": {
+        "energy": 21.8006
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "nav-date",
+      "kind": "text",
+      "note": "Semantic text region nav-date: 2026-10-05 日期",
+      "grid": null,
+      "box": {
+        "x": 0.8545,
+        "y": 0.0163,
+        "w": 0.0678,
+        "h": 0.022
+      },
+      "px": {
+        "x": 1286,
+        "y": 17,
+        "w": 102,
+        "h": 23
+      },
+      "aspect": 4.4348,
+      "palette": [
+        {
+          "hex": "#f6f7f7",
+          "coverage": 0.9007
+        },
+        {
+          "hex": "#45454a",
+          "coverage": 0.0515
+        },
+        {
+          "hex": "#9b9d9d",
+          "coverage": 0.0368
+        },
+        {
+          "hex": "#cdcdd3",
+          "coverage": 0.011
+        }
+      ],
+      "detail": {
+        "energy": 25.5382
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 10,
+          "capHeightPx": 11.4,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6139,
+          "advTall": 0.6139,
+          "advX": null,
+          "gap": 0.0877,
+          "xRatio": 0.483,
+          "stemW": 0.1843,
+          "contrast": 1.0947,
+          "serif": null,
+          "densTall": 0.5239,
+          "densX": null,
+          "weight": 0.5239
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "nav-version",
+      "kind": "text",
+      "note": "Semantic text region nav-version: v0.2.0 版本",
+      "grid": null,
+      "box": {
+        "x": 0.9435,
+        "y": 0.0134,
+        "w": 0.0405,
+        "h": 0.0249
+      },
+      "px": {
+        "x": 1420,
+        "y": 14,
+        "w": 61,
+        "h": 26
+      },
+      "aspect": 2.3462,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8413
+        },
+        {
+          "hex": "#777778",
+          "coverage": 0.0582
+        },
+        {
+          "hex": "#b1b1b1",
+          "coverage": 0.0476
+        },
+        {
+          "hex": "#0d0d10",
+          "coverage": 0.0317
+        },
+        {
+          "hex": "#505050",
+          "coverage": 0.0212
+        }
+      ],
+      "detail": {
+        "energy": 18.4456
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 4,
+          "capHeightPx": 13,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.656,
+          "advTall": 0.656,
+          "advX": 0.6174,
+          "gap": 0.4245,
+          "xRatio": 0.7148,
+          "stemW": 0.1773,
+          "contrast": 0.9912,
+          "serif": null,
+          "densTall": 0.537,
+          "densX": 0.4686,
+          "weight": 0.537
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "storm-record",
+      "kind": "text",
+      "note": "Semantic text region storm-record: 巨大粗體記錄兩字；右緣拆散為字詞微粒",
+      "grid": null,
+      "box": {
+        "x": 0.0286,
+        "y": 0.0938,
+        "w": 0.2797,
+        "h": 0.2211
+      },
+      "px": {
+        "x": 43,
+        "y": 98,
+        "w": 421,
+        "h": 231
+      },
+      "aspect": 1.8225,
+      "palette": [
+        {
+          "hex": "#0a0a0a",
+          "coverage": 0.6595
+        },
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.2961
+        },
+        {
+          "hex": "#767577",
+          "coverage": 0.0156
+        },
+        {
+          "hex": "#b1b1b1",
+          "coverage": 0.0152
+        },
+        {
+          "hex": "#494949",
+          "coverage": 0.0135
+        }
+      ],
+      "detail": {
+        "energy": 40.9493
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-10-05T05:34:01.106Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "storm-record-glyphs",
+      "kind": "chrome",
+      "note": "Semantic chrome region storm-record-glyphs: 可逐字計數的記錄字詞流，程式繪製字型微粒；不是插畫或材質",
+      "grid": null,
+      "box": {
+        "x": 0.2957,
+        "y": 0.0622,
+        "w": 0.1734,
+        "h": 0.2794
+      },
+      "px": {
+        "x": 445,
+        "y": 65,
+        "w": 261,
+        "h": 292
+      },
+      "aspect": 0.8938,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8157
+        },
+        {
+          "hex": "#101011",
+          "coverage": 0.062
+        },
+        {
+          "hex": "#616265",
+          "coverage": 0.0509
+        },
+        {
+          "hex": "#97999b",
+          "coverage": 0.0449
+        },
+        {
+          "hex": "#bfc2c4",
+          "coverage": 0.0265
+        }
+      ],
+      "detail": {
+        "energy": 45.5237
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "storm-slash",
+      "kind": "text",
+      "note": "Semantic text region storm-slash: 細而巨大的斜線分隔",
+      "grid": null,
+      "box": {
+        "x": 0.4339,
+        "y": 0.1033,
+        "w": 0.0664,
+        "h": 0.1981
+      },
+      "px": {
+        "x": 653,
+        "y": 108,
+        "w": 100,
+        "h": 207
+      },
+      "aspect": 0.4831,
+      "palette": [
+        {
+          "hex": "#f8f8f8",
+          "coverage": 0.927
+        },
+        {
+          "hex": "#0e0e0e",
+          "coverage": 0.0305
+        },
+        {
+          "hex": "#818285",
+          "coverage": 0.0198
+        },
+        {
+          "hex": "#bebec3",
+          "coverage": 0.0137
+        },
+        {
+          "hex": "#434447",
+          "coverage": 0.009
+        }
+      ],
+      "detail": {
+        "energy": 8.7447
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-10-05T05:33:55.622Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "storm-query",
+      "kind": "text",
+      "note": "Semantic text region storm-query: 巨大粗體查詢兩字；與記錄同一字型",
+      "grid": null,
+      "box": {
+        "x": 0.5037,
+        "y": 0.0928,
+        "w": 0.2797,
+        "h": 0.2258
+      },
+      "px": {
+        "x": 758,
+        "y": 97,
+        "w": 421,
+        "h": 236
+      },
+      "aspect": 1.7839,
+      "palette": [
+        {
+          "hex": "#0a0b0b",
+          "coverage": 0.6364
+        },
+        {
+          "hex": "#f8f8f8",
+          "coverage": 0.3065
+        },
+        {
+          "hex": "#4e4e4e",
+          "coverage": 0.027
+        },
+        {
+          "hex": "#c1c1c1",
+          "coverage": 0.0173
+        },
+        {
+          "hex": "#898989",
+          "coverage": 0.0128
+        }
+      ],
+      "detail": {
+        "energy": 41.0394
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-10-05T05:33:55.660Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "storm-query-glyphs",
+      "kind": "chrome",
+      "note": "Semantic chrome region storm-query-glyphs: 可逐字計數的查詢微粒，銀灰漸疏；不壓在正文上",
+      "grid": null,
+      "box": {
+        "x": 0.7449,
+        "y": 0.0612,
+        "w": 0.2425,
+        "h": 0.3445
+      },
+      "px": {
+        "x": 1121,
+        "y": 64,
+        "w": 365,
+        "h": 360
+      },
+      "aspect": 1.0139,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8361
+        },
+        {
+          "hex": "#0b0b0c",
+          "coverage": 0.0549
+        },
+        {
+          "hex": "#adafb2",
+          "coverage": 0.048
+        },
+        {
+          "hex": "#6f7074",
+          "coverage": 0.0383
+        },
+        {
+          "hex": "#38393c",
+          "coverage": 0.0227
+        }
+      ],
+      "detail": {
+        "energy": 28.5043
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "document-title",
+      "kind": "text",
+      "note": "Semantic text region document-title: LINE Bot改善紀錄正式標題",
+      "grid": null,
+      "box": {
+        "x": 0.0286,
+        "y": 0.3244,
+        "w": 0.2724,
+        "h": 0.0536
+      },
+      "px": {
+        "x": 43,
+        "y": 339,
+        "w": 410,
+        "h": 56
+      },
+      "aspect": 7.3214,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.6856
+        },
+        {
+          "hex": "#090a09",
+          "coverage": 0.2442
+        },
+        {
+          "hex": "#c7c7c7",
+          "coverage": 0.03
+        },
+        {
+          "hex": "#353636",
+          "coverage": 0.0233
+        },
+        {
+          "hex": "#686868",
+          "coverage": 0.017
+        }
+      ],
+      "detail": {
+        "energy": 86.2799
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 11,
+          "capHeightPx": 36.2,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6633,
+          "advTall": 0.6357,
+          "advX": 0.691,
+          "gap": 0.1382,
+          "xRatio": 0.6959,
+          "stemW": 0.1963,
+          "contrast": 1.3095,
+          "serif": null,
+          "densTall": 0.6806,
+          "densX": 0.6031,
+          "weight": 0.6806
+        },
+        "widthClass": "normal",
+        "weightClass": "black",
+        "chosen": {
+          "family": "Noto Sans TC",
+          "weight": 700,
+          "fontSizePx": 42,
+          "source": "index",
+          "fp": {
+            "lines": 1,
+            "glyphs": 13,
+            "capHeightPx": 36.5,
+            "inkIsDark": true,
+            "allCaps": true,
+            "advance": 0.4932,
+            "advTall": 0.4932,
+            "advX": null,
+            "gap": 0.0822,
+            "xRatio": null,
+            "stemW": 0.1758,
+            "contrast": 1.171,
+            "serif": null,
+            "densTall": 0.682,
+            "densX": null,
+            "weight": 0.682
+          },
+          "stamp": "16c29b41fa89"
+        }
+      }
+    },
+    {
+      "id": "document-intro",
+      "kind": "text",
+      "note": "Semantic text region document-intro: 新增查詢功能，讓記錄的待辦可以回看",
+      "grid": null,
+      "box": {
+        "x": 0.0286,
+        "y": 0.3809,
+        "w": 0.3774,
+        "h": 0.0364
+      },
+      "px": {
+        "x": 43,
+        "y": 398,
+        "w": 568,
+        "h": 38
+      },
+      "aspect": 14.9474,
+      "palette": [
+        {
+          "hex": "#f7f8f8",
+          "coverage": 0.801
+        },
+        {
+          "hex": "#5a5e65",
+          "coverage": 0.0717
+        },
+        {
+          "hex": "#bec1c5",
+          "coverage": 0.0697
+        },
+        {
+          "hex": "#81868b",
+          "coverage": 0.0576
+        }
+      ],
+      "detail": {
+        "energy": 44.7291
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 19,
+          "capHeightPx": 21.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0059,
+          "advTall": 1.0059,
+          "advX": null,
+          "gap": 0.16,
+          "xRatio": 0.8377,
+          "stemW": 0.1071,
+          "contrast": 1.1188,
+          "serif": 2.2089,
+          "densTall": 0.4826,
+          "densX": null,
+          "weight": 0.4826
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "comparison-top-rule",
+      "kind": "chrome",
+      "note": "Semantic chrome region comparison-top-rule: 比較區上方細線",
+      "grid": null,
+      "box": {
+        "x": 0.0166,
+        "y": 0.4258,
+        "w": 0.9668,
+        "h": 0.0019
+      },
+      "px": {
+        "x": 25,
+        "y": 445,
+        "w": 1455,
+        "h": 2
+      },
+      "aspect": 727.5,
+      "palette": [
+        {
+          "hex": "#f6f7f8",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 55.394
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "input-label",
+      "kind": "text",
+      "note": "Semantic text region input-label: 输入指令小標",
+      "grid": null,
+      "box": {
+        "x": 0.4764,
+        "y": 0.4383,
+        "w": 0.0565,
+        "h": 0.0211
+      },
+      "px": {
+        "x": 717,
+        "y": 458,
+        "w": 85,
+        "h": 22
+      },
+      "aspect": 3.8636,
+      "palette": [
+        {
+          "hex": "#f7f8f8",
+          "coverage": 0.7328
+        },
+        {
+          "hex": "#9c9da0",
+          "coverage": 0.125
+        },
+        {
+          "hex": "#696c75",
+          "coverage": 0.0647
+        },
+        {
+          "hex": "#47474c",
+          "coverage": 0.0474
+        },
+        {
+          "hex": "#c3cacd",
+          "coverage": 0.0302
+        }
+      ],
+      "detail": {
+        "energy": 21.8665
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 4,
+          "capHeightPx": 14,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.965,
+          "advTall": 0.965,
+          "advX": null,
+          "gap": 0.1072,
+          "xRatio": 0.8384,
+          "stemW": 0.1786,
+          "contrast": 1.1405,
+          "serif": null,
+          "densTall": 0.5492,
+          "densX": null,
+          "weight": 0.5492
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "input-command",
+      "kind": "text",
+      "note": "Semantic text region input-command: 共同輸入查詢與中文引號",
+      "grid": null,
+      "box": {
+        "x": 0.4585,
+        "y": 0.4632,
+        "w": 0.085,
+        "h": 0.0364
+      },
+      "px": {
+        "x": 690,
+        "y": 484,
+        "w": 128,
+        "h": 38
+      },
+      "aspect": 3.3684,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7684
+        },
+        {
+          "hex": "#111112",
+          "coverage": 0.1059
+        },
+        {
+          "hex": "#49494a",
+          "coverage": 0.0628
+        },
+        {
+          "hex": "#b7b8b9",
+          "coverage": 0.0467
+        },
+        {
+          "hex": "#8d8d8c",
+          "coverage": 0.0162
+        }
+      ],
+      "detail": {
+        "energy": 29.948
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 3,
+          "capHeightPx": 25.7,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0128,
+          "advTall": 1.0128,
+          "advX": null,
+          "gap": 0.2532,
+          "xRatio": 0.8347,
+          "stemW": 0.1361,
+          "contrast": 1.2144,
+          "serif": null,
+          "densTall": 0.5916,
+          "densX": null,
+          "weight": 0.5916
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "before-heading",
+      "kind": "text",
+      "note": "Semantic text region before-heading: 第一版標題",
+      "grid": null,
+      "box": {
+        "x": 0.0286,
+        "y": 0.4746,
+        "w": 0.0645,
+        "h": 0.0373
+      },
+      "px": {
+        "x": 43,
+        "y": 496,
+        "w": 97,
+        "h": 39
+      },
+      "aspect": 2.4872,
+      "palette": [
+        {
+          "hex": "#f6f6f6",
+          "coverage": 0.6387
+        },
+        {
+          "hex": "#0c0c0c",
+          "coverage": 0.2471
+        },
+        {
+          "hex": "#808283",
+          "coverage": 0.0583
+        },
+        {
+          "hex": "#b9b9b9",
+          "coverage": 0.0396
+        },
+        {
+          "hex": "#414341",
+          "coverage": 0.0163
+        }
+      ],
+      "detail": {
+        "energy": 32.3179
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 3,
+          "capHeightPx": 13.9,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": null,
+          "advTall": null,
+          "advX": null,
+          "gap": 0.0719,
+          "xRatio": null,
+          "stemW": 0.3014,
+          "contrast": 1.154,
+          "serif": null,
+          "densTall": null,
+          "densX": null,
+          "weight": null
+        },
+        "widthClass": "normal",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "before-version",
+      "kind": "text",
+      "note": "Semantic text region before-version: 銀灰色0.1.0",
+      "grid": null,
+      "box": {
+        "x": 0.1023,
+        "y": 0.4756,
+        "w": 0.0605,
+        "h": 0.0364
+      },
+      "px": {
+        "x": 154,
+        "y": 497,
+        "w": 91,
+        "h": 38
+      },
+      "aspect": 2.3947,
+      "palette": [
+        {
+          "hex": "#f8f8f8",
+          "coverage": 0.7494
+        },
+        {
+          "hex": "#7c828a",
+          "coverage": 0.2035
+        },
+        {
+          "hex": "#b1b7b8",
+          "coverage": 0.0471
+        }
+      ],
+      "detail": {
+        "energy": 12.2295
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 3,
+          "capHeightPx": 25.5,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.705,
+          "advTall": 0.705,
+          "advX": null,
+          "gap": 0.5483,
+          "xRatio": 0.7996,
+          "stemW": 0.2004,
+          "contrast": 1.1511,
+          "serif": null,
+          "densTall": 0.5619,
+          "densX": null,
+          "weight": 0.5619
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "after-heading",
+      "kind": "text",
+      "note": "Semantic text region after-heading: 改善版標題",
+      "grid": null,
+      "box": {
+        "x": 0.586,
+        "y": 0.4746,
+        "w": 0.0664,
+        "h": 0.0373
+      },
+      "px": {
+        "x": 882,
+        "y": 496,
+        "w": 100,
+        "h": 39
+      },
+      "aspect": 2.5641,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.5751
+        },
+        {
+          "hex": "#0c0c0c",
+          "coverage": 0.2887
+        },
+        {
+          "hex": "#969799",
+          "coverage": 0.06
+        },
+        {
+          "hex": "#c8c8c9",
+          "coverage": 0.0439
+        },
+        {
+          "hex": "#676869",
+          "coverage": 0.0323
+        }
+      ],
+      "detail": {
+        "energy": 41.8009
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 3,
+          "capHeightPx": 27.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0025,
+          "advTall": 1.0025,
+          "advX": null,
+          "gap": 0.1432,
+          "xRatio": 0.8539,
+          "stemW": 0.1407,
+          "contrast": 1.1527,
+          "serif": null,
+          "densTall": 0.5751,
+          "densX": null,
+          "weight": 0.5751
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "after-version",
+      "kind": "text",
+      "note": "Semantic text region after-version: 銀灰色0.2.0",
+      "grid": null,
+      "box": {
+        "x": 0.6598,
+        "y": 0.4756,
+        "w": 0.0645,
+        "h": 0.0364
+      },
+      "px": {
+        "x": 993,
+        "y": 497,
+        "w": 97,
+        "h": 38
+      },
+      "aspect": 2.5526,
+      "palette": [
+        {
+          "hex": "#f6f6f6",
+          "coverage": 0.7902
+        },
+        {
+          "hex": "#787e87",
+          "coverage": 0.1748
+        },
+        {
+          "hex": "#a8abb1",
+          "coverage": 0.035
+        }
+      ],
+      "detail": {
+        "energy": 13.365
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 3,
+          "capHeightPx": 25.5,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6667,
+          "advTall": 0.6667,
+          "advX": null,
+          "gap": 0.5294,
+          "xRatio": 0.8352,
+          "stemW": 0.2034,
+          "contrast": 1.0441,
+          "serif": null,
+          "densTall": 0.5785,
+          "densX": null,
+          "weight": 0.5785
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "before-label",
+      "kind": "text",
+      "note": "Semantic text region before-label: 機器人回覆標籤",
+      "grid": null,
+      "box": {
+        "x": 0.0299,
+        "y": 0.5139,
+        "w": 0.0684,
+        "h": 0.0239
+      },
+      "px": {
+        "x": 45,
+        "y": 537,
+        "w": 103,
+        "h": 25
+      },
+      "aspect": 4.12,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7619
+        },
+        {
+          "hex": "#6d6e75",
+          "coverage": 0.1175
+        },
+        {
+          "hex": "#afafb1",
+          "coverage": 0.0921
+        },
+        {
+          "hex": "#424b52",
+          "coverage": 0.0159
+        },
+        {
+          "hex": "#2c3030",
+          "coverage": 0.0127
+        }
+      ],
+      "detail": {
+        "energy": 24.5762
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 13.6,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.9531,
+          "advTall": 0.9531,
+          "advX": null,
+          "gap": 0.1466,
+          "xRatio": null,
+          "stemW": 0.1739,
+          "contrast": 1.1859,
+          "serif": null,
+          "densTall": 0.6883,
+          "densX": null,
+          "weight": 0.6883
+        },
+        "widthClass": "wide",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "after-label",
+      "kind": "text",
+      "note": "Semantic text region after-label: 機器人回覆標籤",
+      "grid": null,
+      "box": {
+        "x": 0.586,
+        "y": 0.5139,
+        "w": 0.0698,
+        "h": 0.0239
+      },
+      "px": {
+        "x": 882,
+        "y": 537,
+        "w": 105,
+        "h": 25
+      },
+      "aspect": 4.2,
+      "palette": [
+        {
+          "hex": "#f6f7f7",
+          "coverage": 0.8159
+        },
+        {
+          "hex": "#acafb2",
+          "coverage": 0.1111
+        },
+        {
+          "hex": "#76767a",
+          "coverage": 0.0635
+        },
+        {
+          "hex": "#4d535d",
+          "coverage": 0.0095
+        }
+      ],
+      "detail": {
+        "energy": 24.3034
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 14,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.9667,
+          "advTall": 0.9667,
+          "advX": null,
+          "gap": 0.1074,
+          "xRatio": null,
+          "stemW": 0.187,
+          "contrast": 1.236,
+          "serif": null,
+          "densTall": 0.7278,
+          "densX": null,
+          "weight": 0.7278
+        },
+        "widthClass": "wide",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "before-reply-panel",
+      "kind": "chrome",
+      "note": "Semantic chrome region before-reply-panel: 淺灰前版回覆底",
+      "grid": null,
+      "box": {
+        "x": 0.0299,
+        "y": 0.5397,
+        "w": 0.4259,
+        "h": 0.0766
+      },
+      "px": {
+        "x": 45,
+        "y": 564,
+        "w": 641,
+        "h": 80
+      },
+      "aspect": 8.0125,
+      "palette": [
+        {
+          "hex": "#e8e8e9",
+          "coverage": 0.9598
+        },
+        {
+          "hex": "#141416",
+          "coverage": 0.0193
+        },
+        {
+          "hex": "#808080",
+          "coverage": 0.0087
+        },
+        {
+          "hex": "#464747",
+          "coverage": 0.008
+        },
+        {
+          "hex": "#acafaf",
+          "coverage": 0.0042
+        }
+      ],
+      "detail": {
+        "energy": 15.0547
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": false
+      }
+    },
+    {
+      "id": "after-reply-panel",
+      "kind": "chrome",
+      "note": "Semantic chrome region after-reply-panel: 淺灰改善版回覆底",
+      "grid": null,
+      "box": {
+        "x": 0.586,
+        "y": 0.5407,
+        "w": 0.386,
+        "h": 0.0766
+      },
+      "px": {
+        "x": 882,
+        "y": 565,
+        "w": 581,
+        "h": 80
+      },
+      "aspect": 7.2625,
+      "palette": [
+        {
+          "hex": "#e8e9e9",
+          "coverage": 0.9164
+        },
+        {
+          "hex": "#141415",
+          "coverage": 0.0309
+        },
+        {
+          "hex": "#727374",
+          "coverage": 0.0234
+        },
+        {
+          "hex": "#adaeb0",
+          "coverage": 0.0173
+        },
+        {
+          "hex": "#3e3e41",
+          "coverage": 0.0119
+        }
+      ],
+      "detail": {
+        "energy": 29.6927
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": false
+      }
+    },
+    {
+      "id": "before-reply",
+      "kind": "text",
+      "note": "Semantic text region before-reply: 前版回覆；正式版补入原始回覆的第二行範例，校正草稿節錄",
+      "grid": null,
+      "box": {
+        "x": 0.0518,
+        "y": 0.556,
+        "w": 0.3561,
+        "h": 0.0565
+      },
+      "px": {
+        "x": 78,
+        "y": 581,
+        "w": 536,
+        "h": 59
+      },
+      "aspect": 9.0847,
+      "palette": [
+        {
+          "hex": "#e8e8e9",
+          "coverage": 0.9359
+        },
+        {
+          "hex": "#0c0d0d",
+          "coverage": 0.0311
+        },
+        {
+          "hex": "#343636",
+          "coverage": 0.0167
+        },
+        {
+          "hex": "#7f7f82",
+          "coverage": 0.0085
+        },
+        {
+          "hex": "#a5a7aa",
+          "coverage": 0.0079
+        }
+      ],
+      "detail": {
+        "energy": 24.8778
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 13,
+          "capHeightPx": 20.4,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.9804,
+          "advTall": 0.9804,
+          "advX": null,
+          "gap": 0.1348,
+          "xRatio": 0.8277,
+          "stemW": 0.109,
+          "contrast": 1.0601,
+          "serif": 1.5227,
+          "densTall": 0.5012,
+          "densX": null,
+          "weight": 0.5012
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "after-reply",
+      "kind": "text",
+      "note": "Semantic text region after-reply: 改善版兩行回覆，只有一筆範例紀錄",
+      "grid": null,
+      "box": {
+        "x": 0.6,
+        "y": 0.5493,
+        "w": 0.3588,
+        "h": 0.0641
+      },
+      "px": {
+        "x": 903,
+        "y": 574,
+        "w": 540,
+        "h": 67
+      },
+      "aspect": 8.0597,
+      "palette": [
+        {
+          "hex": "#e8e8e9",
+          "coverage": 0.8941
+        },
+        {
+          "hex": "#141415",
+          "coverage": 0.0392
+        },
+        {
+          "hex": "#727374",
+          "coverage": 0.0297
+        },
+        {
+          "hex": "#adaeb0",
+          "coverage": 0.0219
+        },
+        {
+          "hex": "#3e3e41",
+          "coverage": 0.0151
+        }
+      ],
+      "detail": {
+        "energy": 38.8864
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 30,
+          "capHeightPx": 18.2,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.9647,
+          "advTall": 0.9647,
+          "advX": null,
+          "gap": 0.1408,
+          "xRatio": null,
+          "stemW": 0.125,
+          "contrast": 1.1061,
+          "serif": 1.017,
+          "densTall": 0.4741,
+          "densX": null,
+          "weight": 0.4741
+        },
+        "widthClass": "wide",
+        "weightClass": "regular"
+      }
+    },
+    {
+      "id": "comparison-divider",
+      "kind": "chrome",
+      "note": "Semantic chrome region comparison-divider: 比較欄中央细線",
+      "grid": null,
+      "box": {
+        "x": 0.4997,
+        "y": 0.5196,
+        "w": 0.0013,
+        "h": 0.0957
+      },
+      "px": {
+        "x": 752,
+        "y": 543,
+        "w": 2,
+        "h": 100
+      },
+      "aspect": 0.02,
+      "palette": [
+        {
+          "hex": "#c8c8c8",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 0.25
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "comparison-bottom-rule",
+      "kind": "chrome",
+      "note": "Semantic chrome region comparison-bottom-rule: 比較區下方细線",
+      "grid": null,
+      "box": {
+        "x": 0.0166,
+        "y": 0.6373,
+        "w": 0.9668,
+        "h": 0.0019
+      },
+      "px": {
+        "x": 25,
+        "y": 666,
+        "w": 1455,
+        "h": 2
+      },
+      "aspect": 727.5,
+      "palette": [
+        {
+          "hex": "#bac2c8",
+          "coverage": 0.9979
+        },
+        {
+          "hex": "#e8e8e8",
+          "coverage": 0.0021
+        }
+      ],
+      "detail": {
+        "energy": 17.1102
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "lower-divider",
+      "kind": "chrome",
+      "note": "Semantic chrome region lower-divider: 下方兩欄中央细線",
+      "grid": null,
+      "box": {
+        "x": 0.4997,
+        "y": 0.6459,
+        "w": 0.0013,
+        "h": 0.3435
+      },
+      "px": {
+        "x": 752,
+        "y": 675,
+        "w": 2,
+        "h": 359
+      },
+      "aspect": 0.0056,
+      "palette": [
+        {
+          "hex": "#d9d9dc",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 0.0749
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": true
+      }
+    },
+    {
+      "id": "problem-heading",
+      "kind": "text",
+      "note": "Semantic text region problem-heading: 原本的問題標題",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.6517,
+        "w": 0.0897,
+        "h": 0.0306
+      },
+      "px": {
+        "x": 46,
+        "y": 681,
+        "w": 135,
+        "h": 32
+      },
+      "aspect": 4.2188,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.6563
+        },
+        {
+          "hex": "#0a0a0a",
+          "coverage": 0.1988
+        },
+        {
+          "hex": "#3d3d3d",
+          "coverage": 0.0787
+        },
+        {
+          "hex": "#9c9d9c",
+          "coverage": 0.0373
+        },
+        {
+          "hex": "#b9c0bf",
+          "coverage": 0.029
+        }
+      ],
+      "detail": {
+        "energy": 56.357
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 20.8,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.011,
+          "advTall": 1.011,
+          "advX": null,
+          "gap": 0.1444,
+          "xRatio": 0.8333,
+          "stemW": 0.1573,
+          "contrast": 1.2114,
+          "serif": 0.9688,
+          "densTall": 0.6397,
+          "densX": null,
+          "weight": 0.6397
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "problem-body",
+      "kind": "text",
+      "note": "Semantic text region problem-body: 第一版不能查詢的兩行说明",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.688,
+        "w": 0.4159,
+        "h": 0.0536
+      },
+      "px": {
+        "x": 46,
+        "y": 719,
+        "w": 626,
+        "h": 56
+      },
+      "aspect": 11.1786,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8473
+        },
+        {
+          "hex": "#6e7073",
+          "coverage": 0.0566
+        },
+        {
+          "hex": "#adb0b2",
+          "coverage": 0.0538
+        },
+        {
+          "hex": "#383b3f",
+          "coverage": 0.0318
+        },
+        {
+          "hex": "#1a1b24",
+          "coverage": 0.0106
+        }
+      ],
+      "detail": {
+        "energy": 43.5082
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 43,
+          "capHeightPx": 16.7,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.9708,
+          "advTall": 0.9708,
+          "advX": null,
+          "gap": 0.1517,
+          "xRatio": 0.7132,
+          "stemW": 0.1325,
+          "contrast": 1.0255,
+          "serif": 0.6566,
+          "densTall": 0.592,
+          "densX": null,
+          "weight": 0.592
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "change-heading",
+      "kind": "text",
+      "note": "Semantic text region change-heading: 修改內容標題",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.7732,
+        "w": 0.0831,
+        "h": 0.0335
+      },
+      "px": {
+        "x": 46,
+        "y": 808,
+        "w": 125,
+        "h": 35
+      },
+      "aspect": 3.5714,
+      "palette": [
+        {
+          "hex": "#f7f8f8",
+          "coverage": 0.7231
+        },
+        {
+          "hex": "#0c0c0c",
+          "coverage": 0.1574
+        },
+        {
+          "hex": "#ccccce",
+          "coverage": 0.0498
+        },
+        {
+          "hex": "#919193",
+          "coverage": 0.0378
+        },
+        {
+          "hex": "#515050",
+          "coverage": 0.0319
+        }
+      ],
+      "detail": {
+        "energy": 40.62
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 4,
+          "capHeightPx": 21.2,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.9884,
+          "advTall": 0.9884,
+          "advX": null,
+          "gap": 0.1412,
+          "xRatio": 0.8124,
+          "stemW": 0.1515,
+          "contrast": 1.0843,
+          "serif": null,
+          "densTall": 0.5671,
+          "densX": null,
+          "weight": 0.5671
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "change-body",
+      "kind": "text",
+      "note": "Semantic text region change-body: 修改內容两行；正式字樣為本人最新10筆",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.8077,
+        "w": 0.4193,
+        "h": 0.0507
+      },
+      "px": {
+        "x": 46,
+        "y": 844,
+        "w": 631,
+        "h": 53
+      },
+      "aspect": 11.9057,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8852
+        },
+        {
+          "hex": "#515356",
+          "coverage": 0.0423
+        },
+        {
+          "hex": "#b7babc",
+          "coverage": 0.0307
+        },
+        {
+          "hex": "#86888c",
+          "coverage": 0.0262
+        },
+        {
+          "hex": "#272931",
+          "coverage": 0.0156
+        }
+      ],
+      "detail": {
+        "energy": 33.7646
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 30,
+          "capHeightPx": 16.3,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.941,
+          "advTall": 0.9558,
+          "advX": null,
+          "gap": 0.1379,
+          "xRatio": 0.7638,
+          "stemW": 0.1319,
+          "contrast": 1.0696,
+          "serif": 1.0255,
+          "densTall": 0.5638,
+          "densX": null,
+          "weight": 0.5638
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "difference-heading",
+      "kind": "text",
+      "note": "Semantic text region difference-heading: 前後差異標題",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.889,
+        "w": 0.085,
+        "h": 0.0325
+      },
+      "px": {
+        "x": 46,
+        "y": 929,
+        "w": 128,
+        "h": 34
+      },
+      "aspect": 3.7647,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7171
+        },
+        {
+          "hex": "#0e0e0e",
+          "coverage": 0.169
+        },
+        {
+          "hex": "#666767",
+          "coverage": 0.0472
+        },
+        {
+          "hex": "#b5b6b7",
+          "coverage": 0.0373
+        },
+        {
+          "hex": "#8d918f",
+          "coverage": 0.0295
+        }
+      ],
+      "detail": {
+        "energy": 42.8364
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 6,
+          "capHeightPx": 21.2,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.6004,
+          "advTall": 0.6004,
+          "advX": null,
+          "gap": 0.1177,
+          "xRatio": null,
+          "stemW": 0.1518,
+          "contrast": 1.1833,
+          "serif": null,
+          "densTall": 0.6341,
+          "densX": null,
+          "weight": 0.6341
+        },
+        "widthClass": "condensed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "difference-body",
+      "kind": "text",
+      "note": "Semantic text region difference-body: 前後差異兩行说明",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.9254,
+        "w": 0.4252,
+        "h": 0.0507
+      },
+      "px": {
+        "x": 46,
+        "y": 967,
+        "w": 640,
+        "h": 53
+      },
+      "aspect": 12.0755,
+      "palette": [
+        {
+          "hex": "#f6f7f7",
+          "coverage": 0.8322
+        },
+        {
+          "hex": "#afb1b4",
+          "coverage": 0.0607
+        },
+        {
+          "hex": "#47494e",
+          "coverage": 0.049
+        },
+        {
+          "hex": "#75777b",
+          "coverage": 0.044
+        },
+        {
+          "hex": "#1f1f25",
+          "coverage": 0.0141
+        }
+      ],
+      "detail": {
+        "energy": 53.9574
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 50,
+          "capHeightPx": 16.4,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.9718,
+          "advTall": 0.9718,
+          "advX": null,
+          "gap": 0.1519,
+          "xRatio": null,
+          "stemW": 0.1325,
+          "contrast": 1.0455,
+          "serif": 0.7644,
+          "densTall": 0.5953,
+          "densX": null,
+          "weight": 0.5953
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "test-heading",
+      "kind": "text",
+      "note": "Semantic text region test-heading: 重新測試結果標題",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.6507,
+        "w": 0.1229,
+        "h": 0.0335
+      },
+      "px": {
+        "x": 793,
+        "y": 680,
+        "w": 185,
+        "h": 35
+      },
+      "aspect": 5.2857,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7214
+        },
+        {
+          "hex": "#111112",
+          "coverage": 0.1255
+        },
+        {
+          "hex": "#5f5f60",
+          "coverage": 0.0855
+        },
+        {
+          "hex": "#bab9bb",
+          "coverage": 0.0414
+        },
+        {
+          "hex": "#8a8c8d",
+          "coverage": 0.0262
+        }
+      ],
+      "detail": {
+        "energy": 52.3955
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 6,
+          "capHeightPx": 19.4,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0449,
+          "advTall": 1.0449,
+          "advX": null,
+          "gap": 0.1032,
+          "xRatio": 0.8349,
+          "stemW": 0.1564,
+          "contrast": 1.1356,
+          "serif": 1.0805,
+          "densTall": 0.6433,
+          "densX": null,
+          "weight": 0.6433
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "test-pass",
+      "kind": "text",
+      "note": "Semantic text region test-pass: 14組本機測試通過",
+      "grid": null,
+      "box": {
+        "x": 0.5262,
+        "y": 0.6842,
+        "w": 0.1734,
+        "h": 0.0268
+      },
+      "px": {
+        "x": 792,
+        "y": 715,
+        "w": 261,
+        "h": 28
+      },
+      "aspect": 9.3214,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7636
+        },
+        {
+          "hex": "#717173",
+          "coverage": 0.0704
+        },
+        {
+          "hex": "#0c0d0d",
+          "coverage": 0.0657
+        },
+        {
+          "hex": "#adaeae",
+          "coverage": 0.0542
+        },
+        {
+          "hex": "#363738",
+          "coverage": 0.0461
+        }
+      ],
+      "detail": {
+        "energy": 70.0336
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 9,
+          "capHeightPx": 17.2,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0495,
+          "advTall": 1.0495,
+          "advX": null,
+          "gap": 0.0875,
+          "xRatio": 0.833,
+          "stemW": 0.1776,
+          "contrast": 1.1927,
+          "serif": null,
+          "densTall": 0.6654,
+          "densX": null,
+          "weight": 0.6654
+        },
+        "widthClass": "wide",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "test-pending",
+      "kind": "text",
+      "note": "Semantic text region test-pending: LINE真人測試待完成銀灰字樣",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.711,
+        "w": 0.1807,
+        "h": 0.0287
+      },
+      "px": {
+        "x": 793,
+        "y": 743,
+        "w": 272,
+        "h": 30
+      },
+      "aspect": 9.0667,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8615
+        },
+        {
+          "hex": "#afb2b5",
+          "coverage": 0.1022
+        },
+        {
+          "hex": "#767d83",
+          "coverage": 0.0352
+        },
+        {
+          "hex": "#585868",
+          "coverage": 0.0011
+        }
+      ],
+      "detail": {
+        "energy": 33.6594
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 16,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6568,
+          "advTall": 0.6568,
+          "advX": null,
+          "gap": 0.1251,
+          "xRatio": 0.8294,
+          "stemW": 0.1482,
+          "contrast": 1.1041,
+          "serif": 0.9065,
+          "densTall": 0.5533,
+          "densX": null,
+          "weight": 0.5533
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "table-heading",
+      "kind": "text",
+      "note": "Semantic text region table-heading: 本機測試範例",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.7493,
+        "w": 0.1488,
+        "h": 0.0306
+      },
+      "px": {
+        "x": 793,
+        "y": 783,
+        "w": 224,
+        "h": 32
+      },
+      "aspect": 7,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7946
+        },
+        {
+          "hex": "#0f0f0f",
+          "coverage": 0.0726
+        },
+        {
+          "hex": "#a8a8a9",
+          "coverage": 0.0701
+        },
+        {
+          "hex": "#646466",
+          "coverage": 0.0443
+        },
+        {
+          "hex": "#3e3f3f",
+          "coverage": 0.0185
+        }
+      ],
+      "detail": {
+        "energy": 48.5645
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 6,
+          "capHeightPx": 18.1,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.021,
+          "advTall": 1.021,
+          "advX": null,
+          "gap": 0.1104,
+          "xRatio": 0.8387,
+          "stemW": 0.1533,
+          "contrast": 1.0146,
+          "serif": 0.9154,
+          "densTall": 0.6426,
+          "densX": null,
+          "weight": 0.6426
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "test-table",
+      "kind": "chrome",
+      "note": "Semantic chrome region test-table: 細線測試表與每列資料，正式版附輸入、預期、實際",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.778,
+        "w": 0.4452,
+        "h": 0.1311
+      },
+      "px": {
+        "x": 793,
+        "y": 813,
+        "w": 670,
+        "h": 137
+      },
+      "aspect": 4.8905,
+      "palette": [
+        {
+          "hex": "#f2f2f3",
+          "coverage": 0.9202
+        },
+        {
+          "hex": "#86888c",
+          "coverage": 0.0265
+        },
+        {
+          "hex": "#525457",
+          "coverage": 0.0248
+        },
+        {
+          "hex": "#b9bbbd",
+          "coverage": 0.0221
+        },
+        {
+          "hex": "#27282f",
+          "coverage": 0.0063
+        }
+      ],
+      "detail": {
+        "energy": 26.0965
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "links-heading",
+      "kind": "text",
+      "note": "Semantic text region links-heading: 相關連結",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.9196,
+        "w": 0.1043,
+        "h": 0.0306
+      },
+      "px": {
+        "x": 793,
+        "y": 961,
+        "w": 157,
+        "h": 32
+      },
+      "aspect": 4.9063,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7799
+        },
+        {
+          "hex": "#121212",
+          "coverage": 0.0901
+        },
+        {
+          "hex": "#afb0b0",
+          "coverage": 0.0589
+        },
+        {
+          "hex": "#767778",
+          "coverage": 0.0364
+        },
+        {
+          "hex": "#49464a",
+          "coverage": 0.0347
+        }
+      ],
+      "detail": {
+        "energy": 36.8878
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 4,
+          "capHeightPx": 18.4,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0307,
+          "advTall": 1.0307,
+          "advX": null,
+          "gap": 0.1356,
+          "xRatio": 0.8085,
+          "stemW": 0.1616,
+          "contrast": 1.142,
+          "serif": null,
+          "densTall": 0.6778,
+          "densX": null,
+          "weight": 0.6778
+        },
+        "widthClass": "wide",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "usage-link",
+      "kind": "control",
+      "note": "Semantic control region usage-link: 使用說明與箭頭",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.9531,
+        "w": 0.0857,
+        "h": 0.0325
+      },
+      "px": {
+        "x": 793,
+        "y": 996,
+        "w": 129,
+        "h": 34
+      },
+      "aspect": 3.7941,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.7938
+        },
+        {
+          "hex": "#9e9fa3",
+          "coverage": 0.1089
+        },
+        {
+          "hex": "#6a6d73",
+          "coverage": 0.0603
+        },
+        {
+          "hex": "#3b3b46",
+          "coverage": 0.0272
+        },
+        {
+          "hex": "#c2c8cb",
+          "coverage": 0.0097
+        }
+      ],
+      "detail": {
+        "energy": 34.7411
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "archive-link",
+      "kind": "control",
+      "note": "Semantic control region archive-link: 第一版封存與箭頭",
+      "grid": null,
+      "box": {
+        "x": 0.6419,
+        "y": 0.9531,
+        "w": 0.095,
+        "h": 0.0335
+      },
+      "px": {
+        "x": 966,
+        "y": 996,
+        "w": 143,
+        "h": 35
+      },
+      "aspect": 4.0857,
+      "palette": [
+        {
+          "hex": "#f7f7f7",
+          "coverage": 0.8188
+        },
+        {
+          "hex": "#979a9e",
+          "coverage": 0.0959
+        },
+        {
+          "hex": "#404646",
+          "coverage": 0.0302
+        },
+        {
+          "hex": "#656870",
+          "coverage": 0.0284
+        },
+        {
+          "hex": "#383848",
+          "coverage": 0.0266
+        }
+      ],
+      "detail": {
+        "energy": 35.4793
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "test-table-headers",
+      "kind": "text",
+      "note": "Table column headings: input, actual response, result",
+      "grid": null,
+      "box": {
+        "x": 0.5349,
+        "y": 0.7799,
+        "w": 0.4173,
+        "h": 0.0258
+      },
+      "px": {
+        "x": 805,
+        "y": 815,
+        "w": 628,
+        "h": 27
+      },
+      "aspect": 23.2593,
+      "palette": [
+        {
+          "hex": "#e8e8e8",
+          "coverage": 0.9116
+        },
+        {
+          "hex": "#878a8f",
+          "coverage": 0.0386
+        },
+        {
+          "hex": "#54575f",
+          "coverage": 0.0259
+        },
+        {
+          "hex": "#b2b9bf",
+          "coverage": 0.019
+        },
+        {
+          "hex": "#2f313a",
+          "coverage": 0.0048
+        }
+      ],
+      "detail": {
+        "energy": 17.2941
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 11,
+          "capHeightPx": 13.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.9962,
+          "advTall": 0.9962,
+          "advX": null,
+          "gap": 0.1476,
+          "xRatio": 0.8141,
+          "stemW": 0.1779,
+          "contrast": 1.3111,
+          "serif": null,
+          "densTall": 0.6276,
+          "densX": null,
+          "weight": 0.6276
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "test-table-row-normal",
+      "kind": "text",
+      "note": "Normal input and actual save-confirmation response",
+      "grid": null,
+      "box": {
+        "x": 0.5349,
+        "y": 0.8115,
+        "w": 0.4226,
+        "h": 0.0297
+      },
+      "px": {
+        "x": 805,
+        "y": 848,
+        "w": 636,
+        "h": 31
+      },
+      "aspect": 20.5161,
+      "palette": [
+        {
+          "hex": "#f5f5f6",
+          "coverage": 0.8782
+        },
+        {
+          "hex": "#9c9ea1",
+          "coverage": 0.0454
+        },
+        {
+          "hex": "#626366",
+          "coverage": 0.0415
+        },
+        {
+          "hex": "#2b2f31",
+          "coverage": 0.0251
+        },
+        {
+          "hex": "#cbcbd2",
+          "coverage": 0.0099
+        }
+      ],
+      "detail": {
+        "energy": 38.626
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 23,
+          "capHeightPx": 15,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0006,
+          "advTall": 1.0006,
+          "advX": null,
+          "gap": 0.1668,
+          "xRatio": 0.8234,
+          "stemW": 0.1523,
+          "contrast": 1.1467,
+          "serif": 0.8535,
+          "densTall": 0.602,
+          "densX": null,
+          "weight": 0.602
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "test-table-row-empty",
+      "kind": "text",
+      "note": "Empty input and actual reminder to add content",
+      "grid": null,
+      "box": {
+        "x": 0.5349,
+        "y": 0.8431,
+        "w": 0.4226,
+        "h": 0.0297
+      },
+      "px": {
+        "x": 805,
+        "y": 881,
+        "w": 636,
+        "h": 31
+      },
+      "aspect": 20.5161,
+      "palette": [
+        {
+          "hex": "#f6f6f6",
+          "coverage": 0.897
+        },
+        {
+          "hex": "#aeb0b2",
+          "coverage": 0.0483
+        },
+        {
+          "hex": "#706f73",
+          "coverage": 0.0362
+        },
+        {
+          "hex": "#3a3d40",
+          "coverage": 0.0177
+        },
+        {
+          "hex": "#181828",
+          "coverage": 0.0009
+        }
+      ],
+      "detail": {
+        "energy": 28.6116
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 18,
+          "capHeightPx": 15.1,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.993,
+          "advTall": 0.993,
+          "advX": null,
+          "gap": 0.1324,
+          "xRatio": 0.8444,
+          "stemW": 0.1527,
+          "contrast": 1.087,
+          "serif": 0.5365,
+          "densTall": 0.6575,
+          "densX": null,
+          "weight": 0.6575
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "test-table-row-unsupported",
+      "kind": "text",
+      "note": "Unsupported input and actual usage prompt",
+      "grid": null,
+      "box": {
+        "x": 0.5349,
+        "y": 0.8756,
+        "w": 0.4226,
+        "h": 0.0297
+      },
+      "px": {
+        "x": 805,
+        "y": 915,
+        "w": 636,
+        "h": 31
+      },
+      "aspect": 20.5161,
+      "palette": [
+        {
+          "hex": "#f4f4f6",
+          "coverage": 0.9146
+        },
+        {
+          "hex": "#808184",
+          "coverage": 0.0358
+        },
+        {
+          "hex": "#b7b9bb",
+          "coverage": 0.0237
+        },
+        {
+          "hex": "#4a4c50",
+          "coverage": 0.0198
+        },
+        {
+          "hex": "#22272a",
+          "coverage": 0.006
+        }
+      ],
+      "detail": {
+        "energy": 29.6187
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 16,
+          "capHeightPx": 15.5,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 1.0032,
+          "advTall": 1.0032,
+          "advX": 0.7767,
+          "gap": 0.1456,
+          "xRatio": 0.8328,
+          "stemW": 0.1482,
+          "contrast": 1.0674,
+          "serif": 0.8723,
+          "densTall": 0.5726,
+          "densX": 0.5184,
+          "weight": 0.5726
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "problem-rule",
+      "kind": "chrome",
+      "note": "Thin rule after problem explanation",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.7579,
+        "w": 0.4425,
+        "h": 0.0019
+      },
+      "px": {
+        "x": 46,
+        "y": 792,
+        "w": 666,
+        "h": 2
+      },
+      "aspect": 333,
+      "palette": [
+        {
+          "hex": "#f6f7f8",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 46.4222
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "change-rule",
+      "kind": "chrome",
+      "note": "Thin rule after modification explanation",
+      "grid": null,
+      "box": {
+        "x": 0.0306,
+        "y": 0.8766,
+        "w": 0.4425,
+        "h": 0.0019
+      },
+      "px": {
+        "x": 46,
+        "y": 916,
+        "w": 666,
+        "h": 2
+      },
+      "aspect": 333,
+      "palette": [
+        {
+          "hex": "#c1c6c9",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 15.2633
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "test-status-rule",
+      "kind": "chrome",
+      "note": "Thin rule beneath actual test statuses",
+      "grid": null,
+      "box": {
+        "x": 0.5269,
+        "y": 0.7416,
+        "w": 0.4452,
+        "h": 0.0019
+      },
+      "px": {
+        "x": 793,
+        "y": 775,
+        "w": 670,
+        "h": 2
+      },
+      "aspect": 335,
+      "palette": [
+        {
+          "hex": "#c8cacf",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 23.6402
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "comparison-layout",
+      "kind": "chrome",
+      "note": "Two-column comparison layout including headings, input and reply panels",
+      "grid": null,
+      "container": true,
+      "box": {
+        "x": 0.0166,
+        "y": 0.4268,
+        "w": 0.9668,
+        "h": 0.2115
+      },
+      "px": {
+        "x": 25,
+        "y": 446,
+        "w": 1455,
+        "h": 221
+      },
+      "aspect": 6.5837,
+      "palette": [
+        {
+          "hex": "#f3f3f4",
+          "coverage": 0.9461
+        },
+        {
+          "hex": "#b9b9c1",
+          "coverage": 0.0213
+        },
+        {
+          "hex": "#0f0f10",
+          "coverage": 0.0156
+        },
+        {
+          "hex": "#7e8185",
+          "coverage": 0.0118
+        },
+        {
+          "hex": "#474747",
+          "coverage": 0.0052
+        }
+      ],
+      "detail": {
+        "energy": 17.3902
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": true
+      }
+    },
+    {
+      "id": "left-record-layout",
+      "kind": "chrome",
+      "note": "Left article layout with three separately named paragraphs and rules",
+      "grid": null,
+      "container": true,
+      "box": {
+        "x": 0.0299,
+        "y": 0.6459,
+        "w": 0.4432,
+        "h": 0.3435
+      },
+      "px": {
+        "x": 45,
+        "y": 675,
+        "w": 667,
+        "h": 359
+      },
+      "aspect": 1.8579,
+      "palette": [
+        {
+          "hex": "#f7f7f8",
+          "coverage": 0.9297
+        },
+        {
+          "hex": "#86888b",
+          "coverage": 0.0188
+        },
+        {
+          "hex": "#b9bbbc",
+          "coverage": 0.0186
+        },
+        {
+          "hex": "#393a3e",
+          "coverage": 0.0183
+        },
+        {
+          "hex": "#5e6063",
+          "coverage": 0.0147
+        }
+      ],
+      "detail": {
+        "energy": 24.0867
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": true
+      }
+    },
+    {
+      "id": "right-evidence-layout",
+      "kind": "chrome",
+      "note": "Right evidence layout with statuses, measured table and archive links",
+      "grid": null,
+      "container": true,
+      "box": {
+        "x": 0.5262,
+        "y": 0.6459,
+        "w": 0.4465,
+        "h": 0.3435
+      },
+      "px": {
+        "x": 792,
+        "y": 675,
+        "w": 672,
+        "h": 359
+      },
+      "aspect": 1.8719,
+      "palette": [
+        {
+          "hex": "#f5f5f6",
+          "coverage": 0.9343
+        },
+        {
+          "hex": "#919396",
+          "coverage": 0.0234
+        },
+        {
+          "hex": "#535457",
+          "coverage": 0.0169
+        },
+        {
+          "hex": "#bfc2c4",
+          "coverage": 0.0128
+        },
+        {
+          "hex": "#121212",
+          "coverage": 0.0126
+        }
+      ],
+      "detail": {
+        "energy": 20.8921
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": true
+      }
+    }
+  ],
+  "compSha256": "044502f7d9294a8df3fbafdd1e2e4eb5060bccd588a19153d8c70b8c4373c81f",
+  "regionsSource": {
+    "path": ".impeccable/build/regions.json",
+    "sha256": "082e7f985c39b186f99fb610adf0c386c72d81a5050f9b351b2d42f166f2752a"
+  }
+}

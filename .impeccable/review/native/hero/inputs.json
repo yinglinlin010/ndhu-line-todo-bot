@@ -1,0 +1,376 @@
+{
+  "schema": "native-entry-capture-v1",
+  "inputSnapshot": "0238683e408c99feb0657a96f0bc612fe80804032761d063c16d76121b6937d6",
+  "manifest": {
+    "schema": "native-html-input-snapshot-v1",
+    "entry": "docs/index.html",
+    "files": [
+      {
+        "path": ".impeccable/build/spec.json",
+        "sha256": "f3ef0a9ed6bc543c1f1b928cc88fc60632163b5d00b4d0bb57d2c5dd22550c3a",
+        "bytes": 71087,
+        "served": false
+      },
+      {
+        "path": ".impeccable/mocks/letters-c.png",
+        "sha256": "3fd8aaf8b472c8dd8bbff9ba7416365c2262712c2b5535931996b400d73ef38a",
+        "bytes": 1417892,
+        "served": false
+      },
+      {
+        "path": "bot.test.mjs",
+        "sha256": "6f0e406c4790b77eb0b4cc9095afb7f3e3bb104497911fe8a7fa7c610756d937",
+        "bytes": 8316,
+        "served": true
+      },
+      {
+        "path": "docs/favicon.svg",
+        "sha256": "2179f7a1a457dd1234e4347cd6c22d8bba65508a50ab41f5e147dec5f443fe0d",
+        "bytes": 236,
+        "served": true
+      },
+      {
+        "path": "docs/fonts/noto-sans-tc.ttf",
+        "sha256": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
+        "bytes": 11941968,
+        "served": true
+      },
+      {
+        "path": "docs/index.html",
+        "sha256": "e6f8e90efc477726936b3f9504bc40818ae32971e6681fe98f85a62cd136eeb0",
+        "bytes": 70092,
+        "served": true
+      },
+      {
+        "path": "docs/styles.css",
+        "sha256": "d4a201e05339a4368b3f13b03e65468f41de17c73973393a995b52a4cc3c2e3f",
+        "bytes": 31471,
+        "served": true
+      },
+      {
+        "path": "docs/v1/index.html",
+        "sha256": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+        "bytes": 9450,
+        "served": true
+      },
+      {
+        "path": "docs/word-storm.js",
+        "sha256": "7638af1e4030ebf30d937769685280eb363008166ab8e69529fa0210a9dd41dd",
+        "bytes": 2026,
+        "served": true
+      },
+      {
+        "path": "scripts/compare-versions.mjs",
+        "sha256": "2a2317909ef78e81f54fee3763bd60565b2ac53d5604e09e259f5405e72dd50b",
+        "bytes": 1507,
+        "served": true
+      },
+      {
+        "path": "server.mjs",
+        "sha256": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+        "bytes": 613,
+        "served": true
+      },
+      {
+        "path": "todo.mjs",
+        "sha256": "1635ba4f6e6f7bc823bc666b65d1a6ce16e2631e36665432cf571e2a70c64abe",
+        "bytes": 2117,
+        "served": true
+      },
+      {
+        "path": "versions/v1/bot.test.mjs",
+        "sha256": "4bf2bd7ae2bacb27449e2e8bed80640098dcf36dcf284a6e939f4941dbe3837b",
+        "bytes": 3862,
+        "served": true
+      },
+      {
+        "path": "versions/v1/docs/index.html",
+        "sha256": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+        "bytes": 9450,
+        "served": true
+      },
+      {
+        "path": "versions/v1/server.mjs",
+        "sha256": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+        "bytes": 613,
+        "served": true
+      },
+      {
+        "path": "versions/v1/todo.mjs",
+        "sha256": "75f462286c573bf1226c19d03d7ec672a6f1f7194c294174aedb9cb986a40d7b",
+        "bytes": 1219,
+        "served": true
+      },
+      {
+        "path": "versions/v1/webhook.mjs",
+        "sha256": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+        "bytes": 2332,
+        "served": true
+      },
+      {
+        "path": "webhook.mjs",
+        "sha256": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+        "bytes": 2332,
+        "served": true
+      }
+    ]
+  },
+  "artifact": "docs/index.html",
+  "stage": "hero",
+  "scope": "Fresh static HTML rendering of a first viewport with no raster region. No independent aesthetic approval.",
+  "captureMethod": "assembled-page-viewport",
+  "integrityScope": "assembled-page viewport from frozen inputs; the comp and approved screenshots are never served; images cover under 15% of each frame; no raster presence check (no raster region)",
+  "dependencyPolicy": "static-inventory",
+  "servedToPage": [
+    {
+      "path": "bot.test.mjs",
+      "sha256": "6f0e406c4790b77eb0b4cc9095afb7f3e3bb104497911fe8a7fa7c610756d937",
+      "bytes": 8316,
+      "served": true
+    },
+    {
+      "path": "docs/favicon.svg",
+      "sha256": "2179f7a1a457dd1234e4347cd6c22d8bba65508a50ab41f5e147dec5f443fe0d",
+      "bytes": 236,
+      "served": true
+    },
+    {
+      "path": "docs/fonts/noto-sans-tc.ttf",
+      "sha256": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
+      "bytes": 11941968,
+      "served": true
+    },
+    {
+      "path": "docs/index.html",
+      "sha256": "e6f8e90efc477726936b3f9504bc40818ae32971e6681fe98f85a62cd136eeb0",
+      "bytes": 70092,
+      "served": true
+    },
+    {
+      "path": "docs/styles.css",
+      "sha256": "d4a201e05339a4368b3f13b03e65468f41de17c73973393a995b52a4cc3c2e3f",
+      "bytes": 31471,
+      "served": true
+    },
+    {
+      "path": "docs/v1/index.html",
+      "sha256": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+      "bytes": 9450,
+      "served": true
+    },
+    {
+      "path": "docs/word-storm.js",
+      "sha256": "7638af1e4030ebf30d937769685280eb363008166ab8e69529fa0210a9dd41dd",
+      "bytes": 2026,
+      "served": true
+    },
+    {
+      "path": "scripts/compare-versions.mjs",
+      "sha256": "2a2317909ef78e81f54fee3763bd60565b2ac53d5604e09e259f5405e72dd50b",
+      "bytes": 1507,
+      "served": true
+    },
+    {
+      "path": "server.mjs",
+      "sha256": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+      "bytes": 613,
+      "served": true
+    },
+    {
+      "path": "todo.mjs",
+      "sha256": "1635ba4f6e6f7bc823bc666b65d1a6ce16e2631e36665432cf571e2a70c64abe",
+      "bytes": 2117,
+      "served": true
+    },
+    {
+      "path": "versions/v1/bot.test.mjs",
+      "sha256": "4bf2bd7ae2bacb27449e2e8bed80640098dcf36dcf284a6e939f4941dbe3837b",
+      "bytes": 3862,
+      "served": true
+    },
+    {
+      "path": "versions/v1/docs/index.html",
+      "sha256": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+      "bytes": 9450,
+      "served": true
+    },
+    {
+      "path": "versions/v1/server.mjs",
+      "sha256": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+      "bytes": 613,
+      "served": true
+    },
+    {
+      "path": "versions/v1/todo.mjs",
+      "sha256": "75f462286c573bf1226c19d03d7ec672a6f1f7194c294174aedb9cb986a40d7b",
+      "bytes": 1219,
+      "served": true
+    },
+    {
+      "path": "versions/v1/webhook.mjs",
+      "sha256": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+      "bytes": 2332,
+      "served": true
+    },
+    {
+      "path": "webhook.mjs",
+      "sha256": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+      "bytes": 2332,
+      "served": true
+    }
+  ],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/154.0.8037.95",
+    "revision": "@05d469856e75794131cc2e5d9b2f6b6f10a70388",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+    "jsVersion": "15.4.80.19"
+  },
+  "frameProofs": {
+    "hero": {
+      "kind": "assembled-page",
+      "entry": "docs/index.html",
+      "inputSnapshot": "1b797ebc3bdff7db6a24269c92219b7c98581d11789a1d1f3105c2b74ed1af8b",
+      "inputs": {
+        "schema": "native-html-input-snapshot-v1",
+        "entry": "docs/index.html",
+        "files": [
+          {
+            "path": "bot.test.mjs",
+            "sha256": "6f0e406c4790b77eb0b4cc9095afb7f3e3bb104497911fe8a7fa7c610756d937",
+            "bytes": 8316,
+            "served": true
+          },
+          {
+            "path": "docs/favicon.svg",
+            "sha256": "2179f7a1a457dd1234e4347cd6c22d8bba65508a50ab41f5e147dec5f443fe0d",
+            "bytes": 236,
+            "served": true
+          },
+          {
+            "path": "docs/fonts/noto-sans-tc.ttf",
+            "sha256": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
+            "bytes": 11941968,
+            "served": true
+          },
+          {
+            "path": "docs/index.html",
+            "sha256": "e6f8e90efc477726936b3f9504bc40818ae32971e6681fe98f85a62cd136eeb0",
+            "bytes": 70092,
+            "served": true
+          },
+          {
+            "path": "docs/styles.css",
+            "sha256": "d4a201e05339a4368b3f13b03e65468f41de17c73973393a995b52a4cc3c2e3f",
+            "bytes": 31471,
+            "served": true
+          },
+          {
+            "path": "docs/v1/index.html",
+            "sha256": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+            "bytes": 9450,
+            "served": true
+          },
+          {
+            "path": "docs/word-storm.js",
+            "sha256": "7638af1e4030ebf30d937769685280eb363008166ab8e69529fa0210a9dd41dd",
+            "bytes": 2026,
+            "served": true
+          },
+          {
+            "path": "scripts/compare-versions.mjs",
+            "sha256": "2a2317909ef78e81f54fee3763bd60565b2ac53d5604e09e259f5405e72dd50b",
+            "bytes": 1507,
+            "served": true
+          },
+          {
+            "path": "server.mjs",
+            "sha256": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+            "bytes": 613,
+            "served": true
+          },
+          {
+            "path": "todo.mjs",
+            "sha256": "1635ba4f6e6f7bc823bc666b65d1a6ce16e2631e36665432cf571e2a70c64abe",
+            "bytes": 2117,
+            "served": true
+          },
+          {
+            "path": "versions/v1/bot.test.mjs",
+            "sha256": "4bf2bd7ae2bacb27449e2e8bed80640098dcf36dcf284a6e939f4941dbe3837b",
+            "bytes": 3862,
+            "served": true
+          },
+          {
+            "path": "versions/v1/docs/index.html",
+            "sha256": "10f5bd0488c6f91fbb93a8c55a6100e27d4902f1e82f27b12363a85079fe87fa",
+            "bytes": 9450,
+            "served": true
+          },
+          {
+            "path": "versions/v1/server.mjs",
+            "sha256": "6355b6e55d1c3f60f62bb732c1cb2ff1b72f6a957b0a1588f401d95f19eb9c2b",
+            "bytes": 613,
+            "served": true
+          },
+          {
+            "path": "versions/v1/todo.mjs",
+            "sha256": "75f462286c573bf1226c19d03d7ec672a6f1f7194c294174aedb9cb986a40d7b",
+            "bytes": 1219,
+            "served": true
+          },
+          {
+            "path": "versions/v1/webhook.mjs",
+            "sha256": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+            "bytes": 2332,
+            "served": true
+          },
+          {
+            "path": "webhook.mjs",
+            "sha256": "e5bffa9c6b951ee38f96be095d05c66cd44e7edb0626dafe39828a1f487c004c",
+            "bytes": 2332,
+            "served": true
+          }
+        ]
+      },
+      "observedDependencies": {
+        "docs/favicon.svg": "2179f7a1a457dd1234e4347cd6c22d8bba65508a50ab41f5e147dec5f443fe0d",
+        "docs/fonts/noto-sans-tc.ttf": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
+        "docs/index.html": "e6f8e90efc477726936b3f9504bc40818ae32971e6681fe98f85a62cd136eeb0",
+        "docs/styles.css": "d4a201e05339a4368b3f13b03e65468f41de17c73973393a995b52a4cc3c2e3f"
+      },
+      "domSha256": "13baecbd47dfbeb78e74b551959b20b983849caa318245de2428b35f0272571a",
+      "screenshotSha256": "4fab1eb1a0afd3dca499acae5f509938f183ecf561256b18afaa29de1b0131f0",
+      "viewportScreenshotSha256": "903e82d227a96e0607cd187ce784d7e41b5560b30a9c8ab896e8a4eadb6a63f7",
+      "cropMethod": "verified-viewport-pixels",
+      "viewport": {
+        "width": 1505,
+        "height": 1045,
+        "dpr": 1
+      },
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "reducedMotion": true,
+      "svgElements": 0,
+      "rasterElements": 0,
+      "semanticControls": 7,
+      "fonts": {
+        "primaryFamilies": [
+          "Noto Sans TC"
+        ],
+        "check": "visible-primary-family-availability-v1"
+      },
+      "rasterCoverage": {
+        "share": 0,
+        "cell": 4,
+        "largest": [],
+        "measure": "painted-box-union-v3"
+      },
+      "scriptPolicy": "pinned-local-and-inline; network-api-and-workers-disabled"
+    }
+  }
+}

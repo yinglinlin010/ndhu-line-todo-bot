@@ -1,0 +1,226 @@
+{
+  "title": "重做整個開發紀錄網頁",
+  "question": "選一個整體視覺方向，或使用重骰／更穩重／更大膽，抽出下一輪。圖片是版面草稿，不是 LINE 實測截圖。",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "實驗紀錄手冊",
+      "kicker": "THE ROLL",
+      "lineage": "課堂實驗紀錄與可重現測試文件",
+      "thesis": "讓每一項改善都接到一份可核對的實際結果。",
+      "palette": [
+        "#16324F",
+        "#17A2B8",
+        "#FFFFFF",
+        "#E8F4F8"
+      ],
+      "materials": [
+        "白色閱讀頁",
+        "深藍章節索引",
+        "青色證據標記"
+      ],
+      "viewport": "左側深藍目錄，中央清楚記錄問題與修改，右側標註測試證據；前後差異沿同一基準線對齊。",
+      "risk": "內容多時仍要控制閱讀欄寬，避免排成密集工作台。",
+      "raised": [
+        {
+          "from": "console-dashboard-atmosphere",
+          "raise": "整個導覽框架維持一致的版面承諾，讀者永遠知道身處哪個章節。"
+        },
+        {
+          "from": "alphabet-storm",
+          "raise": "以「記錄」與「查詢」兩個實際指令建立可追蹤的閱讀索引。"
+        },
+        {
+          "from": "operate-b-normalled-jackfield",
+          "raise": "狀態同時用文字呈現，不只靠顏色區分通過與待完成。"
+        },
+        {
+          "from": "operate-a-cutting-bench-select-rail",
+          "raise": "第一版與改善版都能隨時回看，不把舊紀錄藏起來。"
+        }
+      ],
+      "comp": ".impeccable/mocks/decision/lab-record.png"
+    },
+    {
+      "id": "model-pick",
+      "label": "研究紀錄冊",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "學術紀錄、旁註與證據引用",
+      "thesis": "先讀懂改善理由，再從旁註逐項查閱證據。",
+      "palette": [
+        "#40366F",
+        "#DDD8F1",
+        "#FFFFFF",
+        "#242336"
+      ],
+      "materials": [
+        "紫色目錄",
+        "白色閱讀欄",
+        "細線旁註"
+      ],
+      "viewport": "頂部精簡章節導覽，單一閱讀欄配右側證據旁註，前後比較在正文中展開。",
+      "risk": "閱讀習慣最熟悉，也最接近一般學術文件。",
+      "comp": ".impeccable/mocks/decision/research-notes.png"
+    },
+    {
+      "id": "challenger-sleeve",
+      "label": "紙帶索引",
+      "verdict": "competitive",
+      "lineage": "Tokyo boutique-pop 紙帶封套",
+      "thesis": "用鮮明的索引紙帶包住安靜的閱讀頁，版本與章節在同一條帶上可查。",
+      "palette": [
+        "#E4004F",
+        "#F7F3E8",
+        "#111111",
+        "#FFFFFF"
+      ],
+      "materials": [
+        "莓紅索引紙帶",
+        "淡色封套",
+        "密集但可讀的版本標籤"
+      ],
+      "viewport": "左側與底部由莓紅索引帶形成頁框，中央保留完整閱讀欄；點選紙帶項目跳到章節。",
+      "case": "章節與版本能清楚映射到紙帶索引，閱讀清晰度成立；與教師熟悉的文件形式距離較遠。",
+      "risk": "紙帶不能覆蓋正文，也不能把必要測試藏在互動後。",
+      "comp": ".impeccable/mocks/decision/index-sleeve.png",
+      "hero": "https://impeccable.style/worlds/cards/posters-covers-sleeves-shibuya-boutique-sleeve-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/posters-covers-sleeves-shibuya-boutique-sleeve.webp"
+    },
+    {
+      "id": "challenger-depth",
+      "label": "深度證據導覽",
+      "verdict": "competitive",
+      "lineage": "Mesophotic deep dive 深度軸與階段記錄",
+      "thesis": "沿著一條清楚的章節軸，從原本問題走到重新測試證據。",
+      "palette": [
+        "#050A14",
+        "#10243A",
+        "#23BFE6",
+        "#F4F6FA"
+      ],
+      "materials": [
+        "深藍文件框架",
+        "青色目前章節",
+        "高對比閱讀欄"
+      ],
+      "viewport": "深藍左側章節軸、青色目前位置與安靜的高對比正文；版本比較與測試表依序往下閱讀。",
+      "case": "深度軸能轉成發展步驟與證據位置，查閱清晰；風格更有個性，與課堂文件識別較弱。",
+      "risk": "不加入潛水數據或海洋裝飾，避免干擾真正的作業內容。",
+      "comp": ".impeccable/mocks/decision/evidence-depth.png",
+      "hero": "https://impeccable.style/worlds/cards/rivers-tides-ocean-depths-mesophotic-deep-dive-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/rivers-tides-ocean-depths-mesophotic-deep-dive.webp"
+    },
+    {
+      "id": "challenger-console",
+      "label": "記憶方塊空間",
+      "verdict": "declined",
+      "lineage": "Sixth-generation console atmosphere",
+      "thesis": "讓版本成為深色空間中的可選記憶物件。",
+      "palette": [
+        "#050B18",
+        "#DDE3ED",
+        "#DCA34B"
+      ],
+      "materials": [
+        "深色空間",
+        "發光物件"
+      ],
+      "viewport": "物件式版本索引與浮動文字。",
+      "case": "空間物件對教師辨識與快速閱讀都不如清楚文件欄。",
+      "kept": "保留整體導覽一致性的紀律。",
+      "risk": "閱讀導航容易變成探索遊戲。",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-console-dashboard-atmosphere-hero.webp"
+    },
+    {
+      "id": "challenger-letters",
+      "label": "文字風暴",
+      "verdict": "declined",
+      "lineage": "Alphabet storm",
+      "thesis": "用指令文字的重組表現記錄與查詢。",
+      "palette": [
+        "#FFFFFF",
+        "#111111",
+        "#B7BEC5"
+      ],
+      "materials": [
+        "大字型",
+        "字詞形變"
+      ],
+      "viewport": "指令詞在頁面上形成動態語意索引。",
+      "case": "文字形變比閱讀證據更搶眼，與課堂文件目的距離較遠。",
+      "kept": "保留指令詞作為內容索引的清晰度。",
+      "risk": "效果可能遮蔽正文。",
+      "hero": "https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-alphabet-storm-hero.webp"
+    },
+    {
+      "id": "challenger-jackfield",
+      "label": "黑金檢核索引",
+      "verdict": "declined",
+      "lineage": "Normalled jackfield schedule",
+      "thesis": "把功能與測試整理成帶狀檢核列。",
+      "palette": [
+        "#07090B",
+        "#F3B544"
+      ],
+      "materials": [
+        "黑色欄位",
+        "琥珀標記"
+      ],
+      "viewport": "固定圖例旁的編號檢核帶。",
+      "case": "操作面板語彙會增加文件閱讀負擔。",
+      "kept": "保留不只用顏色表示狀態的規則。",
+      "risk": "容易看起來像儀器界面。",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp"
+    },
+    {
+      "id": "challenger-film",
+      "label": "版本剪輯軌",
+      "verdict": "declined",
+      "lineage": "Film cutting bench select rail",
+      "thesis": "用連續影格呈現前後版本。",
+      "palette": [
+        "#000000",
+        "#F87824",
+        "#FFFFFF"
+      ],
+      "materials": [
+        "橘色軌道",
+        "白色閱讀窗"
+      ],
+      "viewport": "橫向版本軌道與依序排列的改善紀錄。",
+      "case": "橫向剪輯語彙不如直向文件適合長篇測試內容。",
+      "kept": "保留可返回舊版本的連續性。",
+      "risk": "手機閱讀長文需要額外操作。",
+      "hero": "https://impeccable.style/worlds/cards/operate-a-cutting-bench-select-rail-hero.webp"
+    }
+  ],
+  "reroll": {
+    "registers": [
+      "safer",
+      "bolder"
+    ]
+  },
+  "steer": true,
+  "buildPath": {
+    "value": "comp",
+    "toggle": true
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "熟悉的文件網站",
+    "thesis": "使用標準章節與閱讀欄，讓教師直接查閱成果。",
+    "palette": [
+      "#FFFFFF",
+      "#17212B",
+      "#2764BA"
+    ],
+    "materials": [
+      "乾淨閱讀欄",
+      "標準導覽"
+    ],
+    "viewport": "頂部導覽與簡潔正文，測試表與下載連結依序排列。",
+    "risk": "辨識度較低，但閱讀方式熟悉。",
+    "comp": ".impeccable/mocks/decision/canon.png"
+  },
+  "followup": true
+}

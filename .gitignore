@@ -4,3 +4,9 @@
 data/
 node_modules/
 .DS_Store
+.impeccable/questions/
+.impeccable/runtime.json
+.impeccable/build/map-inspections/
+.impeccable/build/experiments/
+.impeccable/build/incumbent-index.html
+.impeccable/review/sessions/

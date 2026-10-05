@@ -1,0 +1,678 @@
+{
+  "schemaVersion": 3,
+  "stage": "components",
+  "id": "components",
+  "title": "Plan and asset review · docs/index.html",
+  "comp": {
+    "path": ".impeccable/mocks/letters-c.png",
+    "width": 1505,
+    "height": 1045
+  },
+  "specSha256": "f3ef0a9ed6bc543c1f1b928cc88fc60632163b5d00b4d0bb57d2c5dd22550c3a",
+  "components": [
+    {
+      "id": "storm-record-glyphs",
+      "name": "Storm record glyphs",
+      "kind": "chrome",
+      "role": "plan",
+      "box": {
+        "x": 0.2957,
+        "y": 0.0622,
+        "w": 0.1734,
+        "h": 0.2794
+      },
+      "note": "Semantic chrome region storm-record-glyphs: 可逐字計數的記錄字詞流，程式繪製字型微粒；不是插畫或材質",
+      "medium": "code",
+      "preview": {
+        "kind": "comp-crop"
+      },
+      "codeDrawn": false,
+      "dependencies": []
+    },
+    {
+      "id": "storm-query-glyphs",
+      "name": "Storm query glyphs",
+      "kind": "chrome",
+      "role": "plan",
+      "box": {
+        "x": 0.7449,
+        "y": 0.0612,
+        "w": 0.2425,
+        "h": 0.3445
+      },
+      "note": "Semantic chrome region storm-query-glyphs: 可逐字計數的查詢微粒，銀灰漸疏；不壓在正文上",
+      "medium": "code",
+      "preview": {
+        "kind": "comp-crop"
+      },
+      "codeDrawn": false,
+      "dependencies": []
+    }
+  ],
+  "codeRegions": [
+    {
+      "id": "masthead",
+      "name": "Masthead",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0146,
+        "y": 0,
+        "w": 0.9721,
+        "h": 0.0565
+      },
+      "note": "Semantic chrome region masthead: 白灰色頂部導覽與下緣細線"
+    },
+    {
+      "id": "brand",
+      "name": "Brand",
+      "kind": "text",
+      "box": {
+        "x": 0.0252,
+        "y": 0.0134,
+        "w": 0.0791,
+        "h": 0.0258
+      },
+      "note": "Semantic text region brand: 待辦小幫手粗體品牌"
+    },
+    {
+      "id": "nav-record",
+      "name": "Nav record",
+      "kind": "control",
+      "box": {
+        "x": 0.1535,
+        "y": 0.0134,
+        "w": 0.0432,
+        "h": 0.0297
+      },
+      "note": "Semantic control region nav-record: 專案紀錄與選中底線"
+    },
+    {
+      "id": "nav-usage",
+      "name": "Nav usage",
+      "kind": "control",
+      "box": {
+        "x": 0.2252,
+        "y": 0.0144,
+        "w": 0.0432,
+        "h": 0.0258
+      },
+      "note": "Semantic control region nav-usage: 使用說明連結"
+    },
+    {
+      "id": "nav-archive",
+      "name": "Nav archive",
+      "kind": "control",
+      "box": {
+        "x": 0.295,
+        "y": 0.0144,
+        "w": 0.0525,
+        "h": 0.0258
+      },
+      "note": "Semantic control region nav-archive: 第一版封存連結"
+    },
+    {
+      "id": "nav-date",
+      "name": "Nav date",
+      "kind": "text",
+      "box": {
+        "x": 0.8545,
+        "y": 0.0163,
+        "w": 0.0678,
+        "h": 0.022
+      },
+      "note": "Semantic text region nav-date: 2026-10-05 日期"
+    },
+    {
+      "id": "nav-version",
+      "name": "Nav version",
+      "kind": "text",
+      "box": {
+        "x": 0.9435,
+        "y": 0.0134,
+        "w": 0.0405,
+        "h": 0.0249
+      },
+      "note": "Semantic text region nav-version: v0.2.0 版本"
+    },
+    {
+      "id": "storm-record",
+      "name": "Storm record",
+      "kind": "text",
+      "box": {
+        "x": 0.0286,
+        "y": 0.0938,
+        "w": 0.2797,
+        "h": 0.2211
+      },
+      "note": "Semantic text region storm-record: 巨大粗體記錄兩字；右緣拆散為字詞微粒"
+    },
+    {
+      "id": "storm-slash",
+      "name": "Storm slash",
+      "kind": "text",
+      "box": {
+        "x": 0.4339,
+        "y": 0.1033,
+        "w": 0.0664,
+        "h": 0.1981
+      },
+      "note": "Semantic text region storm-slash: 細而巨大的斜線分隔"
+    },
+    {
+      "id": "storm-query",
+      "name": "Storm query",
+      "kind": "text",
+      "box": {
+        "x": 0.5037,
+        "y": 0.0928,
+        "w": 0.2797,
+        "h": 0.2258
+      },
+      "note": "Semantic text region storm-query: 巨大粗體查詢兩字；與記錄同一字型"
+    },
+    {
+      "id": "document-title",
+      "name": "Document title",
+      "kind": "text",
+      "box": {
+        "x": 0.0286,
+        "y": 0.3244,
+        "w": 0.2724,
+        "h": 0.0536
+      },
+      "note": "Semantic text region document-title: LINE Bot改善紀錄正式標題"
+    },
+    {
+      "id": "document-intro",
+      "name": "Document intro",
+      "kind": "text",
+      "box": {
+        "x": 0.0286,
+        "y": 0.3809,
+        "w": 0.3774,
+        "h": 0.0364
+      },
+      "note": "Semantic text region document-intro: 新增查詢功能，讓記錄的待辦可以回看"
+    },
+    {
+      "id": "comparison-top-rule",
+      "name": "Comparison top rule",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0166,
+        "y": 0.4258,
+        "w": 0.9668,
+        "h": 0.0019
+      },
+      "note": "Semantic chrome region comparison-top-rule: 比較區上方細線"
+    },
+    {
+      "id": "input-label",
+      "name": "Input label",
+      "kind": "text",
+      "box": {
+        "x": 0.4764,
+        "y": 0.4383,
+        "w": 0.0565,
+        "h": 0.0211
+      },
+      "note": "Semantic text region input-label: 输入指令小標"
+    },
+    {
+      "id": "input-command",
+      "name": "Input command",
+      "kind": "text",
+      "box": {
+        "x": 0.4585,
+        "y": 0.4632,
+        "w": 0.085,
+        "h": 0.0364
+      },
+      "note": "Semantic text region input-command: 共同輸入查詢與中文引號"
+    },
+    {
+      "id": "before-heading",
+      "name": "Before heading",
+      "kind": "text",
+      "box": {
+        "x": 0.0286,
+        "y": 0.4746,
+        "w": 0.0645,
+        "h": 0.0373
+      },
+      "note": "Semantic text region before-heading: 第一版標題"
+    },
+    {
+      "id": "before-version",
+      "name": "Before version",
+      "kind": "text",
+      "box": {
+        "x": 0.1023,
+        "y": 0.4756,
+        "w": 0.0605,
+        "h": 0.0364
+      },
+      "note": "Semantic text region before-version: 銀灰色0.1.0"
+    },
+    {
+      "id": "after-heading",
+      "name": "After heading",
+      "kind": "text",
+      "box": {
+        "x": 0.586,
+        "y": 0.4746,
+        "w": 0.0664,
+        "h": 0.0373
+      },
+      "note": "Semantic text region after-heading: 改善版標題"
+    },
+    {
+      "id": "after-version",
+      "name": "After version",
+      "kind": "text",
+      "box": {
+        "x": 0.6598,
+        "y": 0.4756,
+        "w": 0.0645,
+        "h": 0.0364
+      },
+      "note": "Semantic text region after-version: 銀灰色0.2.0"
+    },
+    {
+      "id": "before-label",
+      "name": "Before label",
+      "kind": "text",
+      "box": {
+        "x": 0.0299,
+        "y": 0.5139,
+        "w": 0.0684,
+        "h": 0.0239
+      },
+      "note": "Semantic text region before-label: 機器人回覆標籤"
+    },
+    {
+      "id": "after-label",
+      "name": "After label",
+      "kind": "text",
+      "box": {
+        "x": 0.586,
+        "y": 0.5139,
+        "w": 0.0698,
+        "h": 0.0239
+      },
+      "note": "Semantic text region after-label: 機器人回覆標籤"
+    },
+    {
+      "id": "before-reply-panel",
+      "name": "Before reply panel",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0299,
+        "y": 0.5397,
+        "w": 0.4259,
+        "h": 0.0766
+      },
+      "note": "Semantic chrome region before-reply-panel: 淺灰前版回覆底"
+    },
+    {
+      "id": "after-reply-panel",
+      "name": "After reply panel",
+      "kind": "chrome",
+      "box": {
+        "x": 0.586,
+        "y": 0.5407,
+        "w": 0.386,
+        "h": 0.0766
+      },
+      "note": "Semantic chrome region after-reply-panel: 淺灰改善版回覆底"
+    },
+    {
+      "id": "before-reply",
+      "name": "Before reply",
+      "kind": "text",
+      "box": {
+        "x": 0.0518,
+        "y": 0.556,
+        "w": 0.3561,
+        "h": 0.0565
+      },
+      "note": "Semantic text region before-reply: 前版回覆；正式版补入原始回覆的第二行範例，校正草稿節錄"
+    },
+    {
+      "id": "after-reply",
+      "name": "After reply",
+      "kind": "text",
+      "box": {
+        "x": 0.6,
+        "y": 0.5493,
+        "w": 0.3588,
+        "h": 0.0641
+      },
+      "note": "Semantic text region after-reply: 改善版兩行回覆，只有一筆範例紀錄"
+    },
+    {
+      "id": "comparison-divider",
+      "name": "Comparison divider",
+      "kind": "chrome",
+      "box": {
+        "x": 0.4997,
+        "y": 0.5196,
+        "w": 0.0013,
+        "h": 0.0957
+      },
+      "note": "Semantic chrome region comparison-divider: 比較欄中央细線"
+    },
+    {
+      "id": "comparison-bottom-rule",
+      "name": "Comparison bottom rule",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0166,
+        "y": 0.6373,
+        "w": 0.9668,
+        "h": 0.0019
+      },
+      "note": "Semantic chrome region comparison-bottom-rule: 比較區下方细線"
+    },
+    {
+      "id": "lower-divider",
+      "name": "Lower divider",
+      "kind": "chrome",
+      "box": {
+        "x": 0.4997,
+        "y": 0.6459,
+        "w": 0.0013,
+        "h": 0.3435
+      },
+      "note": "Semantic chrome region lower-divider: 下方兩欄中央细線"
+    },
+    {
+      "id": "problem-heading",
+      "name": "Problem heading",
+      "kind": "text",
+      "box": {
+        "x": 0.0306,
+        "y": 0.6517,
+        "w": 0.0897,
+        "h": 0.0306
+      },
+      "note": "Semantic text region problem-heading: 原本的問題標題"
+    },
+    {
+      "id": "problem-body",
+      "name": "Problem body",
+      "kind": "text",
+      "box": {
+        "x": 0.0306,
+        "y": 0.688,
+        "w": 0.4159,
+        "h": 0.0536
+      },
+      "note": "Semantic text region problem-body: 第一版不能查詢的兩行说明"
+    },
+    {
+      "id": "change-heading",
+      "name": "Change heading",
+      "kind": "text",
+      "box": {
+        "x": 0.0306,
+        "y": 0.7732,
+        "w": 0.0831,
+        "h": 0.0335
+      },
+      "note": "Semantic text region change-heading: 修改內容標題"
+    },
+    {
+      "id": "change-body",
+      "name": "Change body",
+      "kind": "text",
+      "box": {
+        "x": 0.0306,
+        "y": 0.8077,
+        "w": 0.4193,
+        "h": 0.0507
+      },
+      "note": "Semantic text region change-body: 修改內容两行；正式字樣為本人最新10筆"
+    },
+    {
+      "id": "difference-heading",
+      "name": "Difference heading",
+      "kind": "text",
+      "box": {
+        "x": 0.0306,
+        "y": 0.889,
+        "w": 0.085,
+        "h": 0.0325
+      },
+      "note": "Semantic text region difference-heading: 前後差異標題"
+    },
+    {
+      "id": "difference-body",
+      "name": "Difference body",
+      "kind": "text",
+      "box": {
+        "x": 0.0306,
+        "y": 0.9254,
+        "w": 0.4252,
+        "h": 0.0507
+      },
+      "note": "Semantic text region difference-body: 前後差異兩行说明"
+    },
+    {
+      "id": "test-heading",
+      "name": "Test heading",
+      "kind": "text",
+      "box": {
+        "x": 0.5269,
+        "y": 0.6507,
+        "w": 0.1229,
+        "h": 0.0335
+      },
+      "note": "Semantic text region test-heading: 重新測試結果標題"
+    },
+    {
+      "id": "test-pass",
+      "name": "Test pass",
+      "kind": "text",
+      "box": {
+        "x": 0.5262,
+        "y": 0.6842,
+        "w": 0.1734,
+        "h": 0.0268
+      },
+      "note": "Semantic text region test-pass: 14組本機測試通過"
+    },
+    {
+      "id": "test-pending",
+      "name": "Test pending",
+      "kind": "text",
+      "box": {
+        "x": 0.5269,
+        "y": 0.711,
+        "w": 0.1807,
+        "h": 0.0287
+      },
+      "note": "Semantic text region test-pending: LINE真人測試待完成銀灰字樣"
+    },
+    {
+      "id": "table-heading",
+      "name": "Table heading",
+      "kind": "text",
+      "box": {
+        "x": 0.5269,
+        "y": 0.7493,
+        "w": 0.1488,
+        "h": 0.0306
+      },
+      "note": "Semantic text region table-heading: 本機測試範例"
+    },
+    {
+      "id": "test-table",
+      "name": "Test table",
+      "kind": "chrome",
+      "box": {
+        "x": 0.5269,
+        "y": 0.778,
+        "w": 0.4452,
+        "h": 0.1311
+      },
+      "note": "Semantic chrome region test-table: 細線測試表與每列資料，正式版附輸入、預期、實際"
+    },
+    {
+      "id": "links-heading",
+      "name": "Links heading",
+      "kind": "text",
+      "box": {
+        "x": 0.5269,
+        "y": 0.9196,
+        "w": 0.1043,
+        "h": 0.0306
+      },
+      "note": "Semantic text region links-heading: 相關連結"
+    },
+    {
+      "id": "usage-link",
+      "name": "Usage link",
+      "kind": "control",
+      "box": {
+        "x": 0.5269,
+        "y": 0.9531,
+        "w": 0.0857,
+        "h": 0.0325
+      },
+      "note": "Semantic control region usage-link: 使用說明與箭頭"
+    },
+    {
+      "id": "archive-link",
+      "name": "Archive link",
+      "kind": "control",
+      "box": {
+        "x": 0.6419,
+        "y": 0.9531,
+        "w": 0.095,
+        "h": 0.0335
+      },
+      "note": "Semantic control region archive-link: 第一版封存與箭頭"
+    },
+    {
+      "id": "test-table-headers",
+      "name": "Test table headers",
+      "kind": "text",
+      "box": {
+        "x": 0.5349,
+        "y": 0.7799,
+        "w": 0.4173,
+        "h": 0.0258
+      },
+      "note": "Table column headings: input, actual response, result"
+    },
+    {
+      "id": "test-table-row-normal",
+      "name": "Test table row normal",
+      "kind": "text",
+      "box": {
+        "x": 0.5349,
+        "y": 0.8115,
+        "w": 0.4226,
+        "h": 0.0297
+      },
+      "note": "Normal input and actual save-confirmation response"
+    },
+    {
+      "id": "test-table-row-empty",
+      "name": "Test table row empty",
+      "kind": "text",
+      "box": {
+        "x": 0.5349,
+        "y": 0.8431,
+        "w": 0.4226,
+        "h": 0.0297
+      },
+      "note": "Empty input and actual reminder to add content"
+    },
+    {
+      "id": "test-table-row-unsupported",
+      "name": "Test table row unsupported",
+      "kind": "text",
+      "box": {
+        "x": 0.5349,
+        "y": 0.8756,
+        "w": 0.4226,
+        "h": 0.0297
+      },
+      "note": "Unsupported input and actual usage prompt"
+    },
+    {
+      "id": "problem-rule",
+      "name": "Problem rule",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0306,
+        "y": 0.7579,
+        "w": 0.4425,
+        "h": 0.0019
+      },
+      "note": "Thin rule after problem explanation"
+    },
+    {
+      "id": "change-rule",
+      "name": "Change rule",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0306,
+        "y": 0.8766,
+        "w": 0.4425,
+        "h": 0.0019
+      },
+      "note": "Thin rule after modification explanation"
+    },
+    {
+      "id": "test-status-rule",
+      "name": "Test status rule",
+      "kind": "chrome",
+      "box": {
+        "x": 0.5269,
+        "y": 0.7416,
+        "w": 0.4452,
+        "h": 0.0019
+      },
+      "note": "Thin rule beneath actual test statuses"
+    },
+    {
+      "id": "comparison-layout",
+      "name": "Comparison layout",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0166,
+        "y": 0.4268,
+        "w": 0.9668,
+        "h": 0.2115
+      },
+      "note": "Two-column comparison layout including headings, input and reply panels"
+    },
+    {
+      "id": "left-record-layout",
+      "name": "Left record layout",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0299,
+        "y": 0.6459,
+        "w": 0.4432,
+        "h": 0.3435
+      },
+      "note": "Left article layout with three separately named paragraphs and rules"
+    },
+    {
+      "id": "right-evidence-layout",
+      "name": "Right evidence layout",
+      "kind": "chrome",
+      "box": {
+        "x": 0.5262,
+        "y": 0.6459,
+        "w": 0.4465,
+        "h": 0.3435
+      },
+      "note": "Right evidence layout with statuses, measured table and archive links"
+    }
+  ]
+}

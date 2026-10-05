@@ -1,0 +1,69 @@
+{
+  "title": "文字風暴：選擇整體版面",
+  "question": "你已選定文字風暴。以下維持相同的黑白字體風格，只比較三種閱讀與證據編排。可展開圖片看細節，選定後按 Build this。圖片是排版草稿，正式文字會依測試資料校正。",
+  "options": [
+    {
+      "id": "letters-a",
+      "label": "字詞流動",
+      "thesis": "大型指令字與章節軸帶路，正文沿單一閱讀欄展開。",
+      "palette": [
+        "#0A0A0A",
+        "#FFFFFF",
+        "#C0C5CC",
+        "#E6E8EB"
+      ],
+      "materials": [
+        "黑白大型字體",
+        "字詞流動",
+        "安靜正文"
+      ],
+      "viewport": "左側窄目錄，中央標題裡的字詞凝聚為記錄與查詢，下面是單一閱讀欄與實際測試表。",
+      "risk": "字詞動態必須留在頁框，避免影響正文。",
+      "comp": ".impeccable/mocks/letters-a.png"
+    },
+    {
+      "id": "letters-b",
+      "label": "字雨旁註",
+      "thesis": "左側指令詞展現風暴，右側保留完整、清楚的改善紀錄。",
+      "palette": [
+        "#0A0A0A",
+        "#FFFFFF",
+        "#C0C5CC",
+        "#E6E8EB"
+      ],
+      "materials": [
+        "字詞分解",
+        "黑白雙欄",
+        "證據旁註"
+      ],
+      "viewport": "上方橫向導覽，左側大型字詞視覺，右側正文與證據旁註；往下接完整測試表。",
+      "risk": "手機版需要把字體視覺縮成頁首，保持正文優先。",
+      "comp": ".impeccable/mocks/letters-b.png"
+    },
+    {
+      "id": "letters-c",
+      "label": "前後校訂",
+      "thesis": "用相同輸入的前後回覆作為中心，字詞風場只在頁首形成閱讀框架。",
+      "palette": [
+        "#0A0A0A",
+        "#FFFFFF",
+        "#C0C5CC",
+        "#E6E8EB"
+      ],
+      "materials": [
+        "大型詞彙頁首",
+        "開放比較欄",
+        "細線測試表"
+      ],
+      "viewport": "大型記錄／查詢字詞位於整寬頁首，下面直接對照第一版與改善版，再接四項開發紀錄。",
+      "risk": "比較區不能被頁首推到太下方。",
+      "comp": ".impeccable/mocks/letters-c.png"
+    }
+  ],
+  "buildPath": {
+    "value": "comp",
+    "toggle": true
+  },
+  "steer": true,
+  "followup": false
+}

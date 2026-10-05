@@ -1,195 +1,194 @@
 ---
-name: 待辦小幫手
-description: 清楚閱讀、核對前後差異與測試證據的開發紀錄。
+name: 待辦小幫手 · 文字風暴
+description: 黑白字詞頁框與可核對的 LINE Bot 改善紀錄。
 colors:
-  primary: "#15634E"
-  ink: "#14251F"
-  surface: "#FFFFFF"
-  tint: "#EDF3EE"
-  muted: "#52675E"
-  line: "#DCE6E0"
-  primary-hover: "#0B4736"
-  focus: "#428A6B"
-  comparison-improved: "#E6F0E9"
-  comparison-divider: "#BFD6C9"
-  comparison-header: "#F2F5F3"
-  comparison-surface: "#F8FBF9"
-  reply-surface: "#EFF3F0"
-  code-surface: "#F0F4F1"
-  footer-surface: "#F6F9F7"
+  paper: "#f6f6f6"
+  ink: "#0a0a0a"
+  secondary: "#616265"
+  rule: "#bfc2c7"
+  panel: "#e7e8eb"
+  body-muted: "#515356"
+  version: "#747a82"
+  comparison-rule: "#b2b6bc"
+  comparison-top: "#b8bec4"
 typography:
   display:
-    fontFamily: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif'
-    fontSize: "44px"
-    fontWeight: 750
-    lineHeight: 1.25
-    letterSpacing: "-.025em"
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "15.75vw"
+    fontWeight: 900
+    lineHeight: 1
+    letterSpacing: "-.04em"
   headline:
-    fontFamily: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif'
-    fontSize: "28px"
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "3.056vw"
     fontWeight: 700
-    lineHeight: 1.4
-    letterSpacing: "-.02em"
+    lineHeight: 1.2
+    letterSpacing: "-.015em"
+  section:
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "clamp(28px,2.8vw,42px)"
+    fontWeight: 700
   title:
-    fontFamily: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif'
-    fontSize: "20px"
-    fontWeight: 650
-    lineHeight: 1.5
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "22px"
+    fontWeight: 700
   body:
-    fontFamily: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif'
-    fontSize: "16px"
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "18px"
     fontWeight: 400
     lineHeight: 1.8
   label:
-    fontFamily: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif'
-    fontSize: "13px"
-    fontWeight: 400
-    lineHeight: 1.8
-  log:
-    fontFamily: "ui-monospace, SFMono-Regular, Consolas, monospace"
-    fontSize: "14px"
-    lineHeight: 1.65
-rounded:
-  surface: "4px"
-  focus: "2px"
-spacing:
-  compact: "8px"
-  text: "12px"
-  inset: "18px"
-  medium: "20px"
-  mobile-gutter: "22px"
-  section: "34px"
-  column: "48px"
-components:
-  status:
-    backgroundColor: "{colors.tint}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.surface}"
-    padding: "22px 28px"
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "1.063vw"
+    lineHeight: 1.4
   reply:
-    backgroundColor: "{colors.reply-surface}"
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "1.263vw"
+    fontWeight: 400
+    lineHeight: 1.65
+  evidence:
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "17px"
+    lineHeight: 1.65
+  log:
+    fontFamily: "'Noto Sans TC', sans-serif"
+    fontSize: "14px"
+    lineHeight: 1.6
+rounded:
+  square: "0"
+spacing:
+  small: "8px"
+  mobile-gap: "16px"
+  inset: "20px"
+  disclosure: "24px"
+  mobile-section: "32px"
+  column: "5vw"
+components:
+  reply:
+    backgroundColor: "{colors.panel}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.surface}"
-    padding: "10px 14px"
-  reply-improved:
-    backgroundColor: "{colors.comparison-improved}"
+    rounded: "{rounded.square}"
+    typography: "{typography.reply}"
+  reply-mobile:
+    backgroundColor: "{colors.panel}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.surface}"
-    padding: "10px 14px"
-  code:
-    backgroundColor: "{colors.code-surface}"
-    rounded: "{rounded.surface}"
-    padding: "3px 7px"
-  pending-panel:
-    backgroundColor: "{colors.tint}"
-    rounded: "{rounded.surface}"
-    padding: "24px 28px"
+    rounded: "{rounded.square}"
+    padding: "14px"
+  evidence-header:
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.ink}"
+  log:
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.ink}"
+    padding: "20px"
+    typography: "{typography.log}"
 ---
 
-# Design System: 待辦小幫手
+# Design System: 待辦小幫手 · 文字風暴
 
 ## Overview
 
-**Creative North Star:「可核對的閱讀紀錄」** — a descriptive name for the implemented direction, not an additional user-approved slogan.
+**Creative North Star: "文字風暴 / Alphabet Storm"**
 
-This is a Read-mode visual system for Traditional Chinese content. White space, dark ink and restrained green distinguish headings, evidence and supporting notes. Its hierarchy helps a reader understand a change and inspect the underlying results without ornamental distractions.
+The user selected the official Impeccable world with seed 45547134 and approved C「前後校訂」. Huge native Chinese words dissolve into small native glyphs; black ink, silver-gray panels and open fine rules frame selectable evidence. The storm belongs to the decorative header, while reading content stays stable and clear.
 
-The user approved B「前後對照」for the development-record surface. The comparison composition belongs to that surface; its readable type, flat surfaces and restrained accent are the reusable system. The source of truth is `docs/styles.css` and `docs/index.html`, with the approved direction recorded in `.impeccable/surfaces/development-record.md`.
+The implemented source is `docs/index.html` and `docs/styles.css`. This system covers the current development-record page and related new surfaces. The preserved `docs/v1/` first-version archive keeps its original design; neither its older stylesheet nor the older green documentation defines the current world. The approved first-viewport composition remains a surface decision in `.impeccable/surfaces/docs-index-html.md`, rather than a required layout for every future screen.
 
 **Key Characteristics:**
-- System Chinese typography with selectable text.
-- Flat, lightly tinted evidence regions and fine dividers.
-- Explicit written status alongside color.
-
-Documentation is extracted from the implemented source. The primary fresh reviewer passed after a mobile caption fix, as reported by the coordinating agent. The CLI launcher was unavailable; no CLI quantitative checks or automated visual validation are claimed here.
+- Native, selectable Chinese reading text and decorative glyph spans.
+- Paper, black ink and silver-gray structure; open square surfaces.
+- Finite hover movement confined to the header, with reduced-motion support.
+- Written evidence status and preserved first-version records.
 
 ## Colors
 
-A single forest-green accent sits within white and green-tinted neutrals. Frontmatter values are normative.
+The palette is monochrome. Frontmatter preserves actual source values, including contextual grays.
 
 ### Primary
-- **Forest green** (`primary`): section headings, brand, links and passed-result labels.
-- **Deep green** (`primary-hover`): hovered links.
-- **Focus green** (`focus`): keyboard outlines.
+- **Black ink** (`ink`): display words, headings, reading text, selection background and keyboard outlines.
 
 ### Neutral
-- **Reading white** (`surface`): page and navigation background.
-- **Dark ink** (`ink`): body content and pending status.
-- **Quiet green tint** (`tint`): status, logs and pending-test containers.
-- **Muted green-gray** (`muted`): metadata, captions and supporting notes.
-- **Fine green-gray line** (`line`): dividers and evidence-table borders.
-- Comparison, reply, code and footer surfaces use the named contextual neutrals in frontmatter; the improved comparison uses the stronger pale-green tone.
+- **Paper** (`paper`): the page ground and selection foreground.
+- **Silver gray** (`panel`): response evidence, table headers and raw-log backgrounds.
+- **Quiet gray** (`secondary`): metadata, source notes, hovered links and some scattered glyphs.
+- **Reading gray** (`body-muted`): short explanatory body copy in the first viewport.
+- **Fine gray** (`rule`): section, table and footer divisions.
+- **Version gray** (`version`): comparison version labels; navigation version is overridden to quiet gray.
+- **Comparison grays** (`comparison-rule`, `comparison-top`): the horizontal comparison and supporting rules.
 
-**The Written Status Rule.** State “本機” and “待完成” in text; green alone must never imply that all testing is complete.
+**The Written Status Rule.** Keep “本機” and “LINE 真人對話測試：待完成” explicit; tonal hierarchy cannot imply completed live testing.
 
 ## Typography
 
-**Display and Body Font:** the Traditional Chinese system stack in frontmatter. No web font is required. Inline code retains the body family; command blocks and raw logs use the separate system monospace stack.
+**Display and Body Font:** self-hosted variable Noto Sans TC with a generic sans-serif fallback. The font face declares weights (100–900), uses `font-display: swap`, and loads `docs/fonts/noto-sans-tc.woff2`. Code inherits this family, with tabular numerals; this system does not introduce a separate monospace font.
+
+The bundled file is a page-specific subset (136,060 bytes), accompanied by `docs/fonts/OFL.txt`. New copy may introduce unsupported characters and fall back to another sans-serif; regenerate and verify the subset when expanding the repertoire, retaining the license.
 
 ### Hierarchy
-- **Display:** page title; sizes reduce to (36px) at the tablet breakpoint and (32px, line-height 1.35) on mobile.
-- **Headline:** section headings, reducing to (25px) on mobile.
-- **Title:** subheadings, reducing to (19px) on mobile; comparison headings use (21px) on desktop.
-- **Body:** ordinary reading text with a maximum paragraph measure (74ch).
-- **Intro:** a distinct lead (20px, line-height 1.7), reducing to (17px) on mobile.
-- **Label:** metadata and captions; evidence-table text is (14px, line-height 1.7), with passed labels (12px, weight 600).
-- **Log:** command blocks use the frontmatter role; raw test output reduces to (12px).
+- **Display:** enormous decorative 記錄 / 查詢 words, compressed horizontally (`scaleX(.89)`) and shifted upward (`translateY(-.12em)`).
+- **Headline:** the formal document title; it remains native text and is the accessible heading.
+- **Comparison:** headings and version labels use (2.126vw); the shared input uses (1.927vw, weight 700).
+- **Section / title:** lower-content headings and subheadings use their frontmatter roles. First-viewport supporting headings use (1.462vw, weight 700, line-height 1.35).
+- **Body:** lower-content reading text is constrained to (75ch). First-viewport explanation uses (1.196vw, line-height 1.6); introduction uses (1.595vw).
+- **Reply:** first-version reply uses the frontmatter role; improved reply remains (1.395vw, line-height 1.4).
+- **Label / evidence / log:** metadata is compact; the detailed evidence table uses the evidence role, and raw logs use the log role.
 
-**The Reading Measure Rule.** Keep prose constrained while allowing comparisons and evidence to span the content area.
+**The Native Text Rule.** Keep reading content selectable and semantic; decorative glyphs are `aria-hidden`, not substitutes for accessible headings or evidence.
 
 ## Layout
 
-The main content is centered with a maximum outer width (1440px), desktop padding (42px 4.17vw 84px). The sticky masthead has minimum height (64px), padding (14px max(4.17vw,24px)). Desktop opening columns are `minmax(0,1.8fr) minmax(300px,1fr)` with a (50px) gap. Paired explanatory articles use equal columns with a (48px) gap and a fine center divider; the second article has (40px) left padding.
+Desktop uses a proportional first viewport (aspect ratio 1505/1045) with source-defined absolute regions expressed in viewport-relative coordinates. The masthead sits in normal page content and is not sticky. The large word field precedes the title and shared input; a two-column first-version/improved-version comparison leads to open explanatory and compact evidence regions. This precise composition is specific to the approved page.
 
-The approved desktop comparison is two equal columns inside one framed region. Each column pairs labels and replies using (105px 1fr), with gaps (18px 20px) and margins (22px 24px 0). The full-width evidence table has fixed layout, a (24%) first column, and three input/expected/actual columns. Evidence notes use (1.15fr 1fr), gap (56px). Later reading sections use top margin (64px), top padding (30px) and a divider.
+Lower content returns to normal document flow with maximum width (1505px), padding (4vw 3vw), section padding (3vw 0), and equal two-column reading/evidence grids with gap (5vw). Detailed table cells use (16px 12px) padding. Footer uses (3vw) padding and a spaced flex layout.
 
-Exact responsive rules:
-- At **min-width (1500px)**, main horizontal padding becomes (60px); masthead and footer gutters become `max(60px,calc((100vw - 1320px)/2))`.
-- At **max-width (1000px)**, the opening becomes (1.5fr 1fr), gap (28px); navigation gap becomes (20px). Comparison labels and replies stack into one column with gap (8px), margins (16px 20px 0).
-- At **max-width (760px)**, main padding becomes (28px 22px 56px); the masthead stacks and its navigation scrolls horizontally. Opening, paired articles, comparison and evidence notes stack. Comparison label/reply rows return to (88px 1fr), gap (14px 12px), margins (18px); the center divider becomes a horizontal divider. Table headers hide, rows become blocks, and each cell exposes its written `data-label`. **Table and caption both display as blocks at width (100%)**, preserving the full-width caption above all results. Archive links change from two columns to one; footer stacks.
+At **max-width (700px)**, the first viewport becomes an intrinsic-height two-column grid with equal `minmax(0,1fr)` tracks, (16px) column gap, (10px) row gap and padding (16px 20px 28px). Navigation and word marks retain paired rows; substantive reading and comparison responses span both tracks, with first-version and improved-version evidence stacked sequentially. Word marks use (24vw), horizontal compression (.83), and line-height (1.3); the formal title is (28px, line-height 1.4), comparison headings (23px), response and body text (16px), and metadata (13–14px). Glyph regions narrow, fade to opacity (.6), and their individual type sizes become (7px).
 
-Desktop scroll padding and section offsets are (95px); mobile scroll padding is (120px) and section scroll margin is (125px). Printing removes sticky positioning and navigation, reduces main padding to (22px), hides expandable raw logs and keeps evidence regions together where possible.
+Mobile lower content uses padding (0 20px 30px), section padding (32px 0), headings (27px) and body (16px). Reading grids become blocks. The compact first-viewport table remains tabular (12px); the detailed table becomes block rows (15px), hides its header and displays each cell's written `data-label`. Its caption is a full-width block. Footer stacks with padding (24px 20px). No additional tablet breakpoint or sticky offset is implemented.
 
 ## Elevation & Depth
 
-There are no shadows. Tonal backgrounds, one-pixel borders and the comparison’s two-pixel green top edge provide structure. The masthead’s stacking level supports sticky navigation without adding visual elevation. Links transition color and background over (.18s ease-out); reduced-motion preferences disable link transitions and smooth scrolling.
+There are no shadows. Depth comes from typography scale, silver panels and thin borders. The header is an open page field rather than an elevated navigation layer. Selection inverts ink and paper; keyboard focus uses an ink outline (2px), offset (4px).
+
+**The Flat Paper Rule.** Use square, flat evidence surfaces and fine rules; do not introduce lifted or rounded cards into this approved world.
 
 ## Shapes
 
-Surfaces and inline code have gently squared corners using the surface radius. The comparison rounds only its lower corners. Dividers stay straight. Keyboard focus has a (3px) outline, offset (5px), and the smaller focus radius. No pill or circular card language is implemented.
+Rectangular panels and straight rules have square corners. The favicon is a square black tile with a white SVG check. Link arrows are native inline SVG with consistent thin strokes (1.5), round caps and joins; they are visual companions to written link labels, not glyph icons. Desktop arrows size to (1.86vw × 1.33vw); mobile uses (25px × 20px).
 
 ## Components
 
-### Navigation and links
+### Navigation and evidence links
 
-Compact textual navigation uses (14px, weight 550), with a (25px, weight 750) brand. Links are green; hover deepens the color and thickens the underline to (2px). Navigation links add an underline on hover. Keyboard focus uses the visible outline described in Shapes. Mobile navigation remains a single horizontally scrollable row (13px), under a (22px) brand. The skip link becomes visible when focused.
+Text links inherit ink, with underline thickness (1px) and offset (5px); hover changes to quiet gray. Navigation removes default underlining while the current item is underlined with offset (10px). The skip link appears on keyboard focus. Arrow links are flex rows with gap (1.1vw), becoming (12px) mobile. No application buttons or editable fields are implemented.
 
-### Status and pending-test containers
+### Native word storm
 
-Flat tint panels use the surface radius. The headline passed status is green (20px, line-height 1.6); pending status is dark ink (18px). Mobile headline and pending text reduce to (18px) and (16px). Status padding becomes (20px) at tablet size, then (18px 20px) on mobile. The larger pending-test container reduces to (20px) mobile padding. These are informational regions, with no interactive hover or selected state.
+The header uses 599 decorative glyph spans, positioned as source-defined particles beside oversized native words. It uses no JavaScript, raster, canvas rendering or perpetual animation. A header hover shifts selected spans only (3px, −2px) or (2px, 3px), transitioning transform over (1.1s cubic-bezier(.16,1,.3,1)); leaving hover restores rest. Reduced-motion removes both transition and displacement. Smooth anchor scrolling likewise becomes automatic with reduced-motion.
 
-### Comparison and reply regions
+### Comparison replies
 
-The first-version and improved-version columns share a label/reply grammar; the improved heading and replies use the stronger pale-green surface. Replies preserve newlines and wrap long content anywhere. Their mobile padding becomes (9px 11px), with (14px) text. The comparison is a reusable evidence pattern, not a chat-client screenshot.
+Both versions use the same silver-gray evidence material, keeping the changed reply itself central. Newlines are preserved. Desktop reply text overlays source-positioned panels; mobile replies have intrinsic height and inset (14px). These are actual program responses, not a LINE client mockup.
 
-### Evidence table
+### Evidence table and status
 
-Desktop cells have (15px 18px) padding and fine borders. Mobile cells use (7px 0), rows use (14px 0), and textual labels precede each value (12px, weight 500). The caption remains full-width. Passed status remains attached to the actual result and explicitly says “通過 · 本機”.
+Tables use fine bottom rules and silver headers. The compact table also uses vertical cell dividers; the detailed table uses top-aligned cells and written “通過 · 本機” labels. The live-test region uses two fine horizontal borders and explicitly identifies pending work. The latest-10 query behavior and 14 passing local tests are content facts, not implied live evidence.
 
-### Code and disclosure
+### Raw-log disclosure and archive
 
-Inline code is gently rounded and uses the reading family. Monospaced logs use tinted containers with (18px) padding and horizontal overflow handling; the raw log wraps and has maximum height (560px). The disclosure summary is green (weight 600), with (13px 0) padding, a pointer cursor and keyboard outline. Its native expanded/collapsed behavior is retained.
+Native `details` / `summary` preserves keyboard interaction. Summary padding is (16px 0); logs wrap long text, use inset (20px), and raw logs scroll within maximum height (500px). Archive links remain ordinary list links to preserved first-version resources; do not restyle or overwrite archived documents to make them match the new page.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** preserve the Chinese reading hierarchy, written status and source notes.
-- **Do** retain the desktop comparison and stacked mobile behavior for this approved surface.
-- **Do** keep the mobile table caption full-width and labels adjacent to their results.
-- **Do** use existing tint, border and corner treatments for related evidence regions.
+- **Do** preserve native text, semantic headings, selectable replies and visible keyboard focus.
+- **Do** confine glyph movement to the decorative header and honor reduced-motion.
+- **Do** keep actual input, expected reply, actual reply and written local/live status adjacent.
+- **Do** update the font subset when new characters require it and retain the OFL license.
+- **Do** preserve the first-version archive and its original visual system.
 
 ### Don't:
-- **Don't** portray local results or mock layouts as LINE真人測試 evidence.
-- **Don't** replace the flat reading system with decorative shadows, oversized pills or new typefaces without a new design decision.
-- **Don't** turn the approved page composition into a universal layout requirement for unrelated surfaces.
-- **Don't** claim quantitative visual validation that was not run.
+- **Don't** add colorful, rounded or shadowed cards to this approved monochrome world.
+- **Don't** replace native evidence with images, canvas, perpetual animation or decorative glyph icons.
+- **Don't** turn the selected desktop composition into a universal rule for unrelated surfaces.
+- **Don't** present local test output, substitute APIs or design drafts as completed LINE真人測試.
+- **Don't** claim deployment or publication validation from this documentation pass.

@@ -1,140 +1,277 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-05T04:14:33.339354+00:00",
-  "title": "Design System: 待辦小幫手",
+  "generatedAt": "2026-10-05T05:58:33.783973+00:00",
+  "title": "Design System: 待辦小幫手 · 文字風暴",
   "extensions": {
     "colorMeta": {
-      "primary": {
-        "role": "primary",
-        "displayName": "Forest green"
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
       },
       "ink": {
-        "role": "neutral",
-        "displayName": "Dark ink"
+        "role": "primary",
+        "displayName": "Black ink",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
       },
-      "surface": {
+      "secondary": {
         "role": "neutral",
-        "displayName": "Reading white"
+        "displayName": "Quiet gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
       },
-      "tint": {
+      "rule": {
         "role": "neutral",
-        "displayName": "Quiet green tint"
+        "displayName": "Fine gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
       },
-      "muted": {
+      "panel": {
         "role": "neutral",
-        "displayName": "Muted green-gray"
+        "displayName": "Silver gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
       },
-      "line": {
+      "body-muted": {
         "role": "neutral",
-        "displayName": "Fine green-gray line"
+        "displayName": "Reading gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
+      },
+      "version": {
+        "role": "neutral",
+        "displayName": "Version gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
+      },
+      "comparison-rule": {
+        "role": "neutral",
+        "displayName": "Comparison gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
+      },
+      "comparison-top": {
+        "role": "neutral",
+        "displayName": "Comparison top gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesized neutral preview ramp; not additional implementation tokens."
       }
     },
     "typographyMeta": {
-      "body": {
-        "displayName": "Chinese reading text",
-        "purpose": "Traditional Chinese prose, constrained to 74ch."
-      },
       "display": {
-        "displayName": "Page title",
-        "purpose": "Reader entry point; 36px at max-width 1000px, 32px at max-width 760px."
+        "displayName": "Native word storm",
+        "purpose": "Decorative words only; mobile 24vw."
+      },
+      "headline": {
+        "displayName": "Document title",
+        "purpose": "Semantic heading; mobile 28px."
+      },
+      "body": {
+        "displayName": "Reading text",
+        "purpose": "Lower content, maximum 75ch; mobile 16px."
       }
     },
     "shadows": [],
     "motion": [
       {
-        "name": "link-transition",
-        "value": "color .18s ease-out, background .18s ease-out",
-        "purpose": "Link state changes; disabled for reduced motion."
+        "name": "glyph-hover",
+        "value": "transform 1.1s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Finite header-hover shifts of (3px,-2px) or (2px,3px); reduced-motion removes transitions and displacement."
       },
       {
-        "name": "scroll",
+        "name": "anchor-scroll",
         "value": "smooth",
-        "purpose": "Anchor navigation; auto for reduced motion."
+        "purpose": "Auto under prefers-reduced-motion."
       }
     ],
     "breakpoints": [
       {
-        "name": "wide-min",
-        "value": "1500px"
-      },
-      {
-        "name": "tablet-max",
-        "value": "1000px"
-      },
-      {
         "name": "mobile-max",
-        "value": "760px"
+        "value": "700px"
       }
-    ]
+    ],
+    "fontAsset": {
+      "path": "docs/fonts/noto-sans-tc.woff2",
+      "bytes": 136060,
+      "weights": "100 900",
+      "display": "swap",
+      "license": "docs/fonts/OFL.txt",
+      "coverage": "Page-specific subset; verify new characters and regenerate when needed."
+    },
+    "scope": {
+      "current": [
+        "docs/index.html",
+        "docs/styles.css",
+        "docs/favicon.svg"
+      ],
+      "legacyExempt": [
+        "docs/v1/"
+      ],
+      "compositionContract": ".impeccable/surfaces/docs-index-html.md"
+    }
   },
   "components": [
     {
       "name": "Reading navigation",
       "kind": "nav",
-      "description": "Compact green section links with visible keyboard focus.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#difference\">前後差異</a><a href=\"#evidence\">重新測試</a></nav>",
-      "css": ".ds-nav{display:flex;gap:32px;font-size:14px;font-weight:550;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}.ds-nav a{color:var(--green);padding:6px 0;text-decoration:none;transition:color .18s ease-out,background .18s ease-out}.ds-nav a:hover{color:#0b4736;text-decoration:underline}.ds-nav a:focus-visible{outline:3px solid #428a6b;outline-offset:5px;border-radius:2px}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
+      "description": "Reading navigation extracted from the implemented monochrome system.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#record\">專案紀錄</a><a href=\"#usage\">使用說明</a></nav>",
+      "css": ".ds-nav{font-family:'Noto Sans TC',sans-serif;color:var(--ink,#0a0a0a);display:flex;gap:24px;font-size:16px}.ds-nav a{color:inherit;text-decoration:none}.ds-nav a:first-child{text-decoration:underline;text-underline-offset:10px}.ds-nav a:hover{color:var(--secondary,#616265)}.ds-nav a:focus-visible,summary:focus-visible{outline:2px solid var(--ink,#0a0a0a);outline-offset:4px}"
     },
     {
-      "name": "Testing status",
-      "kind": "card",
-      "refersTo": "status",
-      "description": "Separates local success from pending live testing in written status.",
-      "html": "<aside class=\"ds-status\"><p>目前測試狀態</p><strong>14 組本機測試通過</strong><strong class=\"ds-pending\">LINE 真人測試待完成</strong></aside>",
-      "css": ".ds-status{background:var(--tint);color:var(--ink);border-radius:var(--radius);padding:22px 28px;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}.ds-status p{font-size:13px;margin:0 0 10px;line-height:1.8}.ds-status strong{display:block;font-size:20px;color:var(--green);line-height:1.6}.ds-status .ds-pending{font-size:18px;color:var(--ink);margin-top:8px}"
-    },
-    {
-      "name": "Reply region",
+      "name": "Comparison reply",
       "kind": "custom",
-      "refersTo": "reply",
-      "description": "Selectable response text with preserved line breaks.",
-      "html": "<div class=\"ds-reply\">使用方式：記錄：待辦事項\n例如：記錄：星期五交報告</div>",
-      "css": ".ds-reply{background:#eff3f0;color:var(--ink);padding:10px 14px;border-radius:var(--radius);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}"
+      "description": "Comparison reply extracted from the implemented monochrome system.",
+      "html": "<div class=\"ds-reply\">你的待辦事項（共 1 筆，顯示最新 1 筆）：\n1. 星期五交報告</div>",
+      "css": ".ds-reply{font-family:'Noto Sans TC',sans-serif;color:var(--ink,#0a0a0a);background:var(--panel,#e7e8eb);padding:14px;font-size:16px;line-height:1.65;white-space:pre-line}",
+      "refersTo": "reply-mobile"
     },
     {
-      "name": "Improved reply region",
+      "name": "Evidence table",
       "kind": "custom",
-      "refersTo": "reply-improved",
-      "description": "Pale-green response evidence for the improved version.",
-      "html": "<div class=\"ds-improved-reply\">你的待辦事項（共 1 筆，顯示最新 1 筆）：\n1. 星期五交報告</div>",
-      "css": ".ds-improved-reply{background:#e6f0e9;color:var(--ink);padding:10px 14px;border-radius:var(--radius);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}"
+      "description": "Evidence table extracted from the implemented monochrome system.",
+      "html": "<table class=\"ds-evidence\"><thead><tr><th>輸入</th><th>實際結果</th></tr></thead><tbody><tr><td>查詢</td><td>顯示本人紀錄<br><strong>通過 · 本機</strong></td></tr></tbody></table>",
+      "css": ".ds-evidence{font-family:'Noto Sans TC',sans-serif;color:var(--ink,#0a0a0a);border-collapse:collapse;width:100%;font-size:17px;line-height:1.65}.ds-evidence th,.ds-evidence td{text-align:left;padding:16px 12px;border-bottom:1px solid var(--rule,#bfc2c7)}.ds-evidence thead{background:var(--panel,#e7e8eb)}",
+      "refersTo": "evidence-header"
     },
     {
-      "name": "Test-output disclosure",
+      "name": "Raw-log disclosure",
       "kind": "custom",
-      "description": "Native disclosure for raw evidence, with a visible focus state.",
-      "html": "<details class=\"ds-disclosure\"><summary>查看完整本機測試輸出</summary><pre>tests 14\npass 14\nfail 0</pre></details>",
-      "css": ".ds-disclosure{border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:\"PingFang TC\",\"Noto Sans TC\",\"Microsoft JhengHei\",system-ui,sans-serif;}.ds-disclosure summary{cursor:pointer;color:var(--green);padding:13px 0;font-weight:600}.ds-disclosure summary:focus-visible{outline:3px solid #428a6b;outline-offset:5px;border-radius:2px}.ds-disclosure pre{background:var(--tint);font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;padding:18px;border-radius:var(--radius);white-space:pre-wrap;overflow-wrap:anywhere;max-height:560px;overflow:auto}"
+      "description": "Raw-log disclosure extracted from the implemented monochrome system.",
+      "html": "<details class=\"ds-log\"><summary>查看完整本機測試輸出</summary><pre>tests 14\npass 14\nfail 0</pre></details>",
+      "css": ".ds-log{font-family:'Noto Sans TC',sans-serif;color:var(--ink,#0a0a0a);}.ds-log summary{cursor:pointer;padding:16px 0}.ds-log pre{background:var(--panel,#e7e8eb);font-family:inherit;padding:20px;font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;max-height:500px;overflow:auto}.ds-log a:focus-visible,summary:focus-visible{outline:2px solid var(--ink,#0a0a0a);outline-offset:4px}",
+      "refersTo": "log"
+    },
+    {
+      "name": "Arrow evidence link",
+      "kind": "custom",
+      "description": "Arrow evidence link extracted from the implemented monochrome system.",
+      "html": "<a class=\"ds-arrow\" href=\"#archive\"><span>第一版封存</span><svg viewBox=\"0 0 28 20\" aria-hidden=\"true\"><path d=\"M1 10h24m-7-7 7 7-7 7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a>",
+      "css": ".ds-arrow{font-family:'Noto Sans TC',sans-serif;color:var(--ink,#0a0a0a);display:flex;align-items:flex-start;gap:12px;font-size:17px;text-decoration:none}.ds-arrow span{text-decoration:underline;text-underline-offset:5px}.ds-arrow svg{width:25px;height:20px;margin-top:4px;flex:none}.ds-arrow:hover{color:var(--secondary,#616265)}.ds-arrow:focus-visible{outline:2px solid var(--ink,#0a0a0a);outline-offset:4px}"
     }
   ],
   "narrative": {
-    "northStar": "可核對的閱讀紀錄",
-    "overview": "Read-mode Traditional Chinese content on white, with restrained green headings and evidence regions. User approved B 前後對照 for this surface. The north-star name is descriptive documentation rather than a new user-approved slogan.",
+    "northStar": "文字風暴 / Alphabet Storm",
+    "overview": "The user selected the official Impeccable world with seed 45547134 and approved C「前後校訂」. Huge native Chinese words dissolve into small native glyphs; black ink, silver-gray panels and open fine rules frame selectable evidence. The storm belongs to the decorative header, while reading content stays stable and clear.\n\nThe implemented source is `docs/index.html` and `docs/styles.css`. This system covers the current development-record page and related new surfaces. The preserved `docs/v1/` first-version archive keeps its original design; neither its older stylesheet nor the older green documentation defines the current world. The approved first-viewport composition remains a surface decision in `.impeccable/surfaces/docs-index-html.md`, rather than a required layout for every future screen.",
     "keyCharacteristics": [
-      "System Chinese reading typography",
-      "Flat tint surfaces and fine dividers",
-      "Written local/pending statuses",
-      "Desktop comparison; stacked mobile with full-width caption"
+      "Native, selectable Chinese reading text and decorative glyph spans.",
+      "Paper, black ink and silver-gray structure; open square surfaces.",
+      "Finite hover movement confined to the header, with reduced-motion support.",
+      "Written evidence status and preserved first-version records."
     ],
     "rules": [
       {
-        "name": "Written Status Rule",
-        "body": "Use written 本機 and 待完成 statuses; color alone cannot imply completed testing.",
+        "name": "Written Status",
+        "body": "Keep “本機” and “LINE 真人對話測試：待完成” explicit; tonal hierarchy cannot imply completed live testing.",
         "section": "colors"
       },
       {
-        "name": "Reading Measure Rule",
-        "body": "Constrain prose to 74ch while comparison and evidence span the container.",
+        "name": "Native Text",
+        "body": "Keep reading content selectable and semantic; decorative glyphs are `aria-hidden`, not substitutes for accessible headings or evidence.",
         "section": "typography"
+      },
+      {
+        "name": "Flat Paper",
+        "body": "Use square, flat evidence surfaces and fine rules; do not introduce lifted or rounded cards into this approved world.",
+        "section": "elevation"
       }
     ],
     "dos": [
-      "Do preserve reading hierarchy and evidence source notes.",
-      "Do retain the full-width mobile caption."
+      "**Do** preserve native text, semantic headings, selectable replies and visible keyboard focus.",
+      "**Do** confine glyph movement to the decorative header and honor reduced-motion.",
+      "**Do** keep actual input, expected reply, actual reply and written local/live status adjacent.",
+      "**Do** update the font subset when new characters require it and retain the OFL license.",
+      "**Do** preserve the first-version archive and its original visual system."
     ],
     "donts": [
-      "Do not claim LINE真人測試 from local outputs.",
-      "Do not invent quantitative visual validation."
+      "**Don't** add colorful, rounded or shadowed cards to this approved monochrome world.",
+      "**Don't** replace native evidence with images, canvas, perpetual animation or decorative glyph icons.",
+      "**Don't** turn the selected desktop composition into a universal rule for unrelated surfaces.",
+      "**Don't** present local test output, substitute APIs or design drafts as completed LINE真人測試.",
+      "**Don't** claim deployment or publication validation from this documentation pass."
     ]
   }
 }

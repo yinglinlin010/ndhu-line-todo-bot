@@ -1,7 +1,7 @@
 # 開發紀錄網頁
 
 Mode: Read. 教師查閱改善差異與重新測試證據。
-Approved comp: .impeccable/mocks/b-comparison.png
+Approved comp: .impeccable/mocks/archive-v2/b-comparison.png
 Approval: 使用者回覆「b」。
 
 ## Direction contract

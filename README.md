@@ -88,6 +88,6 @@ GitHub Pages 只提供開發紀錄網頁，**不能執行 Node.js Bot 或作為 
 
 ## AI 協助與技術來源
 
-Codex 提出改善步驟、撰寫查詢功能與測試，執行前後版本比較；依使用者要求參考 [Impeccable](https://github.com/pbakaus/impeccable) 製作視覺草稿與排版。
+Codex 提出改善步驟、撰寫查詢功能與測試，執行前後版本比較；使用官方 [Impeccable](https://github.com/pbakaus/impeccable) 骰子模式（種子 45547134），使用者選定「文字風暴」與 C「前後校訂」草稿。網頁採原生文字與字粒，桌面及手機保留完整測試證據。功能說明依實際程式校正為本人最新 10 筆；草稿與本機測試均不作為 LINE 真人證明。
 
 LINE 官方文件：[Webhook 驗簽](https://developers.line.biz/en/docs/messaging-api/verify-webhook-signature/)、[回覆訊息](https://developers.line.biz/en/docs/messaging-api/sending-messages/)、[接收事件](https://developers.line.biz/en/docs/messaging-api/receiving-messages/)。
