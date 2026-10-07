@@ -29,12 +29,16 @@ export function createHandler({ secret, token, store, fetchImpl = fetch }) {
         if (event.type !== 'message' || event.message?.type !== 'text' || !event.replyToken) continue;
         if (typeof event.message.text !== 'string') return finish(400, 'invalid text');
         if (!token) return finish(503, 'channel token missing');
+        console.log(`[Event] Received: "${event.message.text}" from ${event.source?.userId}`);
+        const replyText = replyFor(event.message.text, store, { userId: event.source?.userId, eventId: event.webhookEventId });
+        console.log(`[Event] Replying: "${replyText}"`);
         const response = await fetchImpl('https://api.line.me/v2/bot/message/reply', {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ replyToken: event.replyToken, messages: [{ type: 'text', text: replyFor(event.message.text, store, { userId: event.source?.userId, eventId: event.webhookEventId }) }] }),
+          body: JSON.stringify({ replyToken: event.replyToken, messages: [{ type: 'text', text: replyText }] }),
           signal: AbortSignal.timeout(10000),
         });
+        console.log(`[Event] Reply status: ${response.status}`);
         if (!response.ok) return finish(502, 'reply failed');
       }
       finish(200, 'ok');

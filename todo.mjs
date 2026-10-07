@@ -33,7 +33,7 @@ export function replyFor(text, store, context = {}) {
       return '目前無法讀取待辦事項，請稍後再試。';
     }
   }
-  const match = /^記錄\s*[:：]([\s\S]*)$/.exec(command);
+  const match = /^[記紀][錄録]\s*[:：]([\s\S]*)$/.exec(command);
   if (!match) return '使用方式：\n記錄：待辦事項（例如：記錄：星期五交報告）\n查詢（查看自己的最新 10 筆待辦）';
   const content = match[1].trim();
   if (!content) return '請輸入要記錄的待辦事項。';

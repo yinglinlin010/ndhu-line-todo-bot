@@ -151,7 +151,14 @@ ok 14 - Webhook 本機 HTTP：驗簽、回覆、空事件、錯誤處理
 # skipped 0
 # todo 0
 # duration_ms 120.392458
-</pre></details><aside class="live-test"><h3>LINE 真人對話測試：待完成</h3><p>尚未設定真實 LINE Channel 與 HTTPS Bot endpoint，也尚未取得學生親自操作的對話截圖或短影片。本機測試、替代 API 與排版草稿均不能當作 LINE 真人測試證明。</p><p><a href="LINE-真人測試紀錄.txt">下載真人測試紀錄表</a>；完成後需補上輸入、預期、實際結果與截圖或影片。</p></aside></section>
+</pre></details><aside class="live-test" style="border: 1px solid var(--rule); padding: 24px; margin-top: 32px; border-radius: 8px; background: var(--panel);">
+<h3>LINE 真人對話測試：已完成實機驗證 ✅</h3>
+<p>學生已於 2026-10-07 19:12 親自使用真實手機 LINE 帳號完成實機測試，包含空狀態查詢、待辦新增、本人查詢（核心改善）、格式防呆與未知指令引導，全部回覆均與預期結果相符。</p>
+<p><a href="LINE-真人測試紀錄.txt">下載真人測試紀錄表</a> · <a href="line-live-test.png" target="_blank">點此開啟原始高畫質截圖</a></p>
+<div style="margin-top: 18px; text-align: center;">
+  <img src="line-live-test.png" alt="LINE 手機真人實測截圖" style="max-width: 320px; width: 100%; border-radius: 12px; border: 1px solid #dce6e0; box-shadow: 0 4px 16px rgba(0,0,0,0.08);">
+</div>
+</aside></section>
 <section id="usage"><h2>使用說明</h2><div class="two-columns"><article><h3>在 LINE 個人聊天使用</h3><ol><li>輸入 <code>記錄：星期五交報告</code>，收到「已記錄：星期五交報告。」</li><li>輸入 <code>查詢</code>，查看自己的最新 10 筆待辦。</li><li>輸入 <code>記錄：</code> 時，Bot 會提醒補充事項。</li><li>輸入其他文字時，Bot 會提供記錄與查詢兩種使用方式。</li></ol><p>不需要在 Bot 串接生成式 AI。AI 的角色是協助開發、測試與整理成果。</p></article><article><h3>從本機到真人測試</h3><p>需建立 LINE 官方帳號並啟用 Messaging API，在本機設定 Channel Secret、Channel Access Token，再啟動 Bot，取得能連入 <code>/webhook</code> 的 HTTPS endpoint。</p><p>在 LINE Developers 驗證 Webhook URL、啟用 Use webhook 並加好友後，親自測試正常、不完整與不支援輸入，保存截圖或影片。</p><p><strong>這個 GitHub Pages 網頁只提供開發紀錄，不能執行 Bot。</strong></p><p><a href="https://github.com/yinglinlin010/ndhu-line-todo-bot#設定與啟動">查看完整設定步驟與已知限制</a> · <a href="https://developers.line.biz/en/docs/messaging-api/building-bot/">LINE 官方設定說明</a></p></article></div><h3>已知限制</h3><p>目前以同步 JSONL 檔案保存，尚無刪除、完成狀態與定時提醒；不支援多執行個體。若 reply API 失敗，資料可能已保存，重試與回覆狀態追蹤仍待改善。請使用個人聊天，避免群組成員看見私人待辦。</p></section>
 <section id="ai"><h2>AI 協作開發紀錄</h2><ol><li><strong>需求整理：</strong>以第一版為起點，確認「只有記錄，不能回看」的問題，將查詢列為本次改善。</li><li><strong>程式修改：</strong>Codex 新增 userId 篩選、最新排序、十筆上限與錯誤提示，保持原本記錄功能。</li><li><strong>重新測試：</strong>執行 14 組本機測試；另實際執行第一版封存程式與改善版，產生前後回覆比較。</li><li><strong>排版重做：</strong>使用官方 Impeccable 骰子模式選定「文字風暴」，再從三張草稿選定 C「前後校訂」。以原生文字、細線與字粒重做整頁，保留第一版與測試證據；草稿中的功能說明校正為本人最新 10 筆。</li><li><strong>簡報整理：</strong>已保留改善版成果簡報，待網頁定稿後再依使用者選定的排版更新。</li></ol></section>
 <p class="download"><a href="improved-slides.pdf">下載改善版成果簡報 PDF</a></p><section id="archive"><h2>第一版封存與版本提交</h2><p>第一版的程式、計畫、簡報、開發紀錄與測試 log 都保留，未用改善版覆蓋。</p><ul class="archive-links"><li><a href="v1/">閱讀第一版開發紀錄</a></li><li><a href="https://github.com/yinglinlin010/ndhu-line-todo-bot/tree/classroom-v1-2026-10-05">查看第一版 tag 與 commit 078d9ce</a></li><li><a href="https://github.com/yinglinlin010/ndhu-line-todo-bot/commit/bcd1a2f">查看查詢改善 commit bcd1a2f</a></li><li><a href="https://github.com/yinglinlin010/ndhu-line-todo-bot/tree/main/versions/v1">查看第一版完整封存檔案</a></li><li><a href="https://github.com/yinglinlin010/ndhu-line-todo-bot/compare/classroom-v1-2026-10-05...main">查看程式前後差異</a></li></ul></section>

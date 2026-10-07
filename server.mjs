@@ -1,6 +1,7 @@
 import { createStore } from './todo.mjs';
 import { createServer } from 'node:http';
 import { createHandler } from './webhook.mjs';
+process.loadEnvFile?.();
 const secret = process.env.LINE_CHANNEL_SECRET;
 const token = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 if (!secret || !token) throw new Error('請先在本機環境設定 LINE_CHANNEL_SECRET 和 LINE_CHANNEL_ACCESS_TOKEN');

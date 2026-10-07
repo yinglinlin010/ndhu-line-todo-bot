@@ -7,7 +7,7 @@
     "passed": 14,
     "failed": 0
   },
-  "lineLiveTest": "not performed",
+  "lineLiveTest": "performed - verified with real LINE client screenshot line-live-test.png",
   "webDesign": "user-approved B comparison layout",
   "slidesRoll": {
     "face": 1,
