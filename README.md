@@ -84,7 +84,7 @@ python scripts/configure-w5.py
 
 按 Ctrl+C 後，程式停止收新事件，等已接收的訊息完成，再恢復 W5；看到「已恢復 W5 Apps Script」才算成功。如果未設定或恢復失敗，請到 LINE Console 手動恢復，並實測 W5 待辦。強制關機、kill -9 或網路中斷無法保證自動恢復。
 
-本次程式移植沒有修改實際 Webhook，也沒有寫入真實 `W5_WEBHOOK_URL`。
+本機實測已將 LINE Webhook 接上 Python bot 的公開通道；原本 `W5_WEBHOOK_URL` 尚待使用者在本機設定，設定前不能宣稱已可自動恢復 W5。
 
 ## 測試與作業截圖
 
@@ -96,9 +96,9 @@ python -m unittest -v test_line_bot_local.py test_teacher_features.py
 
 另已實際呼叫網路搜尋與本機 `qwen2.5:3b`，取得三筆來源並成功生成來源卡片；公開 HTTPS DNS 固定下載也成功。這些本機驗證不等同於手機 LINE 實測。
 
-新增功能另已實測：本機照片模型讀出測試卡的日期與時間；文字模型正確解析「明天下午三點開會」；gws 0.22.5 的 Drive、Calendar、Sheets 指令預演均成功。已完成 Google OAuth 登入，Drive／Calendar API 真實讀取成功；私人紀錄表已建立，透過 bot 的 Sheets 寫入函式追加一列設定驗證並讀回一致。LINE 照片上傳與確認行程的完整雲端流程仍待手機實測。
+新增功能另已實測：本機照片模型讀出測試卡的日期與時間；文字模型正確解析「明天下午三點開會」；gws 0.22.5 的 Drive、Calendar、Sheets 指令預演均成功。已完成 Google OAuth 登入，Drive／Calendar API 真實讀取成功；私人紀錄表已建立，透過 bot 的 Sheets 寫入函式追加一列設定驗證並讀回一致。2026-10-12 18:59 的 LINE 照片實測已完成：照片存 Drive、本機視覺模型生成、寫入 Sheets，LINE 回覆 200；確認行程寫 Calendar 的完整 LINE 流程仍待實測。
 
-Python 版仍需重新做一次 LINE 手機實測；以前 Node.js 成功的截圖不能當作 Python 版實測。啟動新版後，在手機問「東華大學最近有什麼新聞？」或一題需要即時查證的問題，拍下回答與來源；同時拍終端的 `[Search]`、`[Ollama] ... 回答完成` 及 `[LINE] 回覆狀態：200`。只提供來源但顯示「模型無法整理」不代表本機模型已成功回答。
+Python 版已完成 LINE 問答實測；繳交仍須附同次手機與終端截圖，以前 Node.js 的截圖不能當作 Python 版實測。啟動新版後，在手機問「東華大學最近有什麼新聞？」或一題需要即時查證的問題，拍下回答與來源；同時拍終端的 `[Search]`、`[Ollama] ... 回答完成` 及 `[LINE] 回覆狀態：200`。只提供來源但顯示「模型無法整理」不代表本機模型已成功回答。
 
 繳交順序：第一行 repo 連結、兩張真實截圖、最後一句模型／修改／卡關說明。不要宣稱尚未完成的實測。
 
