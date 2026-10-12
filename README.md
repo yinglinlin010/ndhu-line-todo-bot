@@ -96,7 +96,7 @@ python -m unittest -v test_line_bot_local.py test_teacher_features.py
 
 另已實際呼叫網路搜尋與本機 `qwen2.5:3b`，取得三筆來源並成功生成來源卡片；公開 HTTPS DNS 固定下載也成功。這些本機驗證不等同於手機 LINE 實測。
 
-新增功能另已實測：本機照片模型讀出測試卡的日期與時間；文字模型正確解析「明天下午三點開會」；gws 0.22.5 的 Drive、Calendar、Sheets 指令預演均成功。**尚未完成 Google OAuth 登入及真實雲端寫入，不能將預演當作已建立 Google 內容。**
+新增功能另已實測：本機照片模型讀出測試卡的日期與時間；文字模型正確解析「明天下午三點開會」；gws 0.22.5 的 Drive、Calendar、Sheets 指令預演均成功。已完成 Google OAuth 登入，Drive／Calendar API 真實讀取成功；私人紀錄表已建立，透過 bot 的 Sheets 寫入函式追加一列設定驗證並讀回一致。LINE 照片上傳與確認行程的完整雲端流程仍待手機實測。
 
 Python 版仍需重新做一次 LINE 手機實測；以前 Node.js 成功的截圖不能當作 Python 版實測。啟動新版後，在手機問「東華大學最近有什麼新聞？」或一題需要即時查證的問題，拍下回答與來源；同時拍終端的 `[Search]`、`[Ollama] ... 回答完成` 及 `[LINE] 回覆狀態：200`。只提供來源但顯示「模型無法整理」不代表本機模型已成功回答。
 
@@ -132,10 +132,10 @@ Google 功能使用 [Google Workspace CLI](https://github.com/googleworkspace/cl
 npm install --prefix .tools @googleworkspace/cli@0.22.5
 ```
 
-依 CLI 官方說明準備 Google Cloud 專案和 Desktop OAuth client，把下載的 client 設定存於 `~/.config/gws/client_secret.json`，**不要放進 repo 或貼出內容**。需要 Drive、Calendar、Sheets API；Google 帳號需加入測試使用者。完成 OAuth 設定後登入這三項服務：
+依 CLI 官方說明準備 Google Cloud 專案和 Desktop OAuth client，在本機 `.env` 設定 `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` 為 `data/gws` 的絕對路徑，再把下載的 client 設定存於該目錄的 `client_secret.json`。該目錄被 Git 忽略，**不要上傳或貼出內容**。需要 Drive、Calendar、Sheets API；Google 帳號需加入測試使用者。完成 OAuth 設定後登入這三項服務：
 
 ```sh
-.tools/node_modules/.bin/gws auth login -s drive,calendar,sheets
+.tools/node_modules/.bin/gws auth login --scopes https://www.googleapis.com/auth/drive.file,https://www.googleapis.com/auth/calendar.events,https://www.googleapis.com/auth/spreadsheets
 python scripts/configure-google.py
 ```
 
