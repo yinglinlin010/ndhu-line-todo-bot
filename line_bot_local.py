@@ -148,7 +148,7 @@ def parse_search_html(html):
         snippet = row.find_next_sibling("tr") if row else None
         results.append(dict(title=clean(anchor.get_text(), 180), url=url,
                             snippet=clean(snippet.get_text() if snippet else ""), published=None))
-    return results[:3]
+    return results[:20]
 
 
 def parse_search_feed(xml, recent=False, now=None):
@@ -170,7 +170,34 @@ def parse_search_feed(xml, recent=False, now=None):
                             snippet=clean(item.findtext("description"), 500), published=published))
     if recent:
         results.sort(key=lambda r: r["published"], reverse=True)
-    return results[:3]
+    return results[:20]
+
+
+def search_query(question):
+    query = re.sub(r"^(?:(?:請問|請|麻煩|幫我|可以幫我|能不能幫我|我想知道|我想問|查詢|查一下|上網查|搜尋|搜索|找一下|查|找)[，,:：\s]*)+", "", question)
+    query = re.sub(r"(?:可以嗎|是誰|有什麼|有哪些|是什麼|是甚麼|是什麼人|呢|嗎)[？?。！!\s]*$", "", query)
+    query = re.sub(r"(?:現在|目前)(?:的)?", "現任 ", query) if re.search(r"總統|首相|市長|校長|行政院長|董事長|執行長", query) else query
+    return re.sub(r"[？?。！!，,]+", " ", query).strip()[:500]
+
+
+def relevant_sources(results, query, definitions=False):
+    terms = re.findall(r"[a-zA-Z0-9]{2,}|[\u4e00-\u9fff]+", query.lower())
+    # Ignore conversational/time qualifiers when testing topical overlap.
+    topics = re.sub(r"今天|今日|現在|目前|最近|最新|現任|查詢|請問|什麼|誰|哪些|有沒有|怎麼|為什麼|的|是", " ", query.lower())
+    chunks = re.findall(r"[a-zA-Z0-9]{2,}|[\u4e00-\u9fff]{2,}", topics)
+    grams = {chunk[i:i+2] for chunk in chunks for i in range(len(chunk)-1)}
+    ranked = []
+    for r in results:
+        text = (r["title"] + " " + r["snippet"]).lower()
+        if not definitions and re.search(r"國語辭典|國語字典|重編國語|漢典|dictionary|辭典檢視", text + " " + r["url"]):
+            continue
+        score = sum(2 for t in terms if t in text) + sum(1 for g in grams if g in text)
+        if grams and score == 0:
+            continue
+        host = urlsplit(r["url"]).hostname or ""
+        score += 1 if re.search(r"(?:^|\.)(?:gov\.tw|edu\.tw)$", host) else 0
+        ranked.append((score, r))
+    return [r for _, r in sorted(ranked, key=lambda x: x[0], reverse=True)[:3]]
 
 
 def source_reply(answer, results):
@@ -202,10 +229,11 @@ class LocalAI:
         self.lock = threading.RLock()
 
     def lookup(self, question, news=False, days=7):
-        query = re.sub(r"^(請|幫我|可以幫我|能不能幫我)(查一下|查|找一下|找|搜尋)?[，,\s]*", "", question)[:500]
+        query = search_query(question)
+        definitions = bool(re.search(r"意思|定義|字典|辭典|讀音|怎麼念", question))
         taiwan_president = re.fullmatch(
             r"(?:請問)?(?:(?:台灣|臺灣|中華民國)的?)?(?:(?:現在|目前|現任)的?)?"
-            r"(?:(?:台灣|臺灣|中華民國)的?)?總統(?:現在|目前|現任)?(?:是誰|叫什麼|名字是什麼)?[？?。\s]*", query)
+            r"(?:(?:台灣|臺灣|中華民國)的?)?總統(?:現在|目前|現任)?(?:是誰|叫什麼|名字是什麼)?[？?。\s]*", query.replace(" ", ""))
         if taiwan_president and not news:
             try:
                 LOG.info("[Search] 查核台灣總統府官方頁面")
@@ -223,6 +251,7 @@ class LocalAI:
             try:
                 LOG.info("[Search] DuckDuckGo 搜尋中")
                 results = parse_search_html(self.http("https://lite.duckduckgo.com/lite/?" + urlencode(dict(q=query)), timeout=5))
+                results = relevant_sources(results, query, definitions)
                 if taiwan_president:
                     results = [r for r in results if "總統" in r["title"] + r["snippet"]]
                 if results:
@@ -232,7 +261,7 @@ class LocalAI:
         LOG.info("[Search] %s 搜尋中", "Google News" if news else "Bing")
         url = ("https://news.google.com/rss/search?" + urlencode(dict(q=query + f" when:{days}d", hl="zh-TW", gl="TW", ceid="TW:zh-Hant"))) if news else (
             "https://www.bing.com/search?" + urlencode(dict(q=query, format="rss")))
-        results = parse_search_feed(self.http(url, timeout=5), recent=news, now=self.clock())
+        results = relevant_sources(parse_search_feed(self.http(url, timeout=5), recent=news, now=self.clock()), query, definitions)
         return [r for r in results if "總統" in r["title"] + r["snippet"]] if taiwan_president else results
 
     def ask(self, raw, conversation_id=None):

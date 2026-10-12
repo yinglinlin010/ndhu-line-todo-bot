@@ -21,7 +21,7 @@ from PIL import Image
 import line_bot_local as bot
 
 NOW = 1791590400.0  # 2026-10-10 00:00 UTC, Taipei 08:00
-RSS = b'''<rss><channel><item><title>New report</title><link>https://example.org/new</link><description>Verified report</description><pubDate>Fri, 09 Oct 2026 12:00:00 GMT</pubDate></item><item><title>Old report</title><link>https://example.org/old</link><pubDate>Tue, 01 Sep 2026 12:00:00 GMT</pubDate></item></channel></rss>'''
+RSS = '''<rss><channel><item><title>New report</title><link>https://example.org/new</link><description>Verified report 科學新聞 東華消息</description><pubDate>Fri, 09 Oct 2026 12:00:00 GMT</pubDate></item><item><title>Old report</title><link>https://example.org/old</link><pubDate>Tue, 01 Sep 2026 12:00:00 GMT</pubDate></item></channel></rss>'''.encode()
 ICS = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nUID:assignment-1\r\nDTSTART:20261011T000000Z\r\nDTEND:20261011T000000Z\r\nSUMMARY:作業一\r\nCATEGORIES:物理課\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
 CALENDAR_URL = "https://elearn4.ndhu.edu.tw/moodle/calendar/export_execute.php?authtoken=test-only"
 USER = dict(source=dict(type="user", userId="alice"))
@@ -123,6 +123,16 @@ class PythonBotTests(unittest.TestCase):
             self.assertIn("測試人物", result[0]["snippet"])
             self.assertEqual(result[0]["url"], "https://www.president.gov.tw/Page/694")
         self.assertEqual(len(calls), 3)
+
+    def test_search_removes_instructions_and_filters_before_top_three(self):
+        self.assertEqual(bot.search_query("請幫我查詢台灣目前的總統是誰？"), "台灣現任 總統")
+        rows = [dict(title="國語辭典：台灣", snippet="台灣", url="https://dictionary.example/a"),
+                dict(title="現在時間", snippet="台灣時間", url="https://clock.example/a"),
+                dict(title="無關結果", snippet="其他", url="https://example.org/other"),
+                dict(title="現任總統介紹", snippet="台灣總統", url="https://www.president.gov.tw/Page/694")]
+        result = bot.relevant_sources(rows, "現任 總統")
+        self.assertEqual([r["title"] for r in result], ["現任總統介紹"])
+        self.assertTrue(bot.relevant_sources(rows[:1], "台灣", definitions=True))
 
     def test_president_fallback_rejects_unrelated_clock_results(self):
         ai = bot.LocalAI(http=lambda url, **kw: b'<title>unavailable</title>' if 'president.gov.tw/Page' in url else RSS)
