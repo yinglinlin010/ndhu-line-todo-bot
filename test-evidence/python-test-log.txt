@@ -18,8 +18,20 @@ test_todo_empty_limit_order_and_corrupt_file (test_line_bot_local.PythonBotTests
 test_todo_legacy_data_isolation_and_reopen (test_line_bot_local.PythonBotTests.test_todo_legacy_data_isolation_and_reopen) ... ok
 test_w5_restore_validation_and_put_without_logging_url (test_line_bot_local.PythonBotTests.test_w5_restore_validation_and_put_without_logging_url) ... ok
 test_webhook_immediate_ack_dedup_validation_and_background_reply (test_line_bot_local.PythonBotTests.test_webhook_immediate_ack_dedup_validation_and_background_reply) ... ok
+test_calendar_requires_owner_private_chat_and_confirmation (test_teacher_features.TeacherFeatureTests.test_calendar_requires_owner_private_chat_and_confirmation) ... ok
+test_cancel_expiry_and_disabled_google_never_write (test_teacher_features.TeacherFeatureTests.test_cancel_expiry_and_disabled_google_never_write) ... ok
+test_drive_vision_sheet_workflow_persists_dedup (test_teacher_features.TeacherFeatureTests.test_drive_vision_sheet_workflow_persists_dedup) ... ok
+test_event_validation_rejects_invalid_and_hallucinated_dates (test_teacher_features.TeacherFeatureTests.test_event_validation_rejects_invalid_and_hallucinated_dates) ... ok
+test_google_failure_is_redacted_and_not_retried_after_restart (test_teacher_features.TeacherFeatureTests.test_google_failure_is_redacted_and_not_retried_after_restart) ... ok
+test_gws_commands_use_no_shell_raw_sheet_values_and_private_events (test_teacher_features.TeacherFeatureTests.test_gws_commands_use_no_shell_raw_sheet_values_and_private_events) ... ok
+test_gws_photo_upload_is_temporary_private_and_folder_name_escaped (test_teacher_features.TeacherFeatureTests.test_gws_photo_upload_is_temporary_private_and_folder_name_escaped) ... ok
+test_image_event_only_stages_calendar_and_vision_failure_is_honest (test_teacher_features.TeacherFeatureTests.test_image_event_only_stages_calendar_and_vision_failure_is_honest) ... ok
+test_sheet_preserves_source_cards_and_skips_greetings_and_strangers (test_teacher_features.TeacherFeatureTests.test_sheet_preserves_source_cards_and_skips_greetings_and_strangers) ... ok
+test_unbound_image_keeps_local_vision_without_cloud_writes (test_teacher_features.TeacherFeatureTests.test_unbound_image_keeps_local_vision_without_cloud_writes) ... ok
+test_vision_model_capability_and_structured_calendar_format (test_teacher_features.TeacherFeatureTests.test_vision_model_capability_and_structured_calendar_format) ... ok
+test_webhook_accepts_images_validates_id_and_preserves_todo_routes (test_teacher_features.TeacherFeatureTests.test_webhook_accepts_images_validates_id_and_preserves_todo_routes) ... ok
 
 ----------------------------------------------------------------------
-Ran 18 tests in 0.704s
+Ran 30 tests in 0.757s
 
 OK

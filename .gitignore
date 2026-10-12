@@ -4,6 +4,7 @@
 data/
 node_modules/
 .venv/
+.tools/
 __pycache__/
 *.py[cod]
 .pytest_cache/

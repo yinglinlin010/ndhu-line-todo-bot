@@ -309,14 +309,20 @@ class PythonBotTests(unittest.TestCase):
 
     def test_w5_restore_validation_and_put_without_logging_url(self):
         calls = []
-        with patch.object(bot, "read_http", side_effect=lambda *a, **k: calls.append((a, k))):
+        def fake_http(*args, **kwargs):
+            calls.append((args, kwargs))
+            return b'{}' if kwargs.get("method") == "PUT" else b'{"endpoint":"https://script.google.com/macros/s/test-only/exec"}'
+        with patch.object(bot, "read_http", side_effect=fake_http):
             bot.restore_webhook("test-token", "https://script.google.com/macros/s/test-only/exec")
             self.assertEqual(calls[0][1]["method"], "PUT")
             self.assertEqual(calls[0][1]["json"]["endpoint"], "https://script.google.com/macros/s/test-only/exec")
             for url in ("https://evil.example.org/exec", "http://script.google.com/macros/s/x/exec"):
                 with self.assertRaises(ValueError):
                     bot.restore_webhook("test-token", url)
-        self.assertEqual(len(calls), 1)
+        self.assertEqual(len(calls), 2)
+        with patch.object(bot, "read_http", return_value=b'{}'):
+            with self.assertRaises(RuntimeError):
+                bot.restore_webhook("test-token", "https://script.google.com/macros/s/test-only/exec")
 
     def test_real_http_server_start_health_and_sigint_without_line_calls(self):
         environment = dict(os.environ, LINE_CHANNEL_SECRET="test-secret", LINE_CHANNEL_ACCESS_TOKEN="test-token",
