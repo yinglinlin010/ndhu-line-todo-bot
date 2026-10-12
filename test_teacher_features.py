@@ -169,6 +169,21 @@ class TeacherFeatureTests(unittest.TestCase):
         teacher.record(event("新聞", "stranger") | dict(source=dict(type="user", userId="bob")), "回答")
         self.assertEqual(len(self.google.calls), 1)
 
+    def test_sheet_keeps_results_without_casual_or_schedule_preview_noise(self):
+        teacher = self.teacher()
+        for i, raw in enumerate(["謝謝！", "好喔", "你好，謝謝", "測試一下", "在嗎？"]):
+            self.assertEqual(teacher.record(event(raw, str(i)), "回覆"), "回覆")
+        teacher.record(event("明天下午三點開會", "preview"), "請確認行程", kind="行程")
+        teacher.record(event("取消排程", "cancel"), "已取消待確認行程", kind="行程")
+        teacher.record(event("確認排程", "missing"), "沒有可確認的行程", kind="行程")
+        teacher.record(event("今天新聞", "failed"), "本機模型暫時無法回答，請稍後再試。")
+        self.assertEqual(self.google.calls, [])
+        teacher.record(event("確認排程", "done"), "已排進 Google 日曆：開會", kind="行程")
+        teacher.record(event("好喔，解釋牛頓第二定律", "question"), "F = ma")
+        self.assertEqual(len(self.google.calls), 2)
+        self.assertEqual(self.google.calls[0][1][1], "行程")
+        self.assertEqual(self.google.calls[0][1][5], "已建立")
+
     def test_gws_commands_use_no_shell_raw_sheet_values_and_private_events(self):
         calls = []
         def run(command, **kwargs):

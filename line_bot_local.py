@@ -578,9 +578,24 @@ class TeacherFeatures:
         if not self.enabled or not self.owns(event) or not self.google.sheet_id:
             return answer
         raw = event["message"].get("text", "")
-        if re.fullmatch(r"hi|hello|你好|嗨|哈囉|測試|test", raw.strip(), re.I):
-            return answer
         text = answer[0].get("text", "") if isinstance(answer, list) else answer
+        # Keep durable results; conversation acknowledgements and setup prompts
+        # belong in LINE rather than the user's activity spreadsheet.
+        if kind == "行程":
+            if raw != "確認排程" or not text.startswith("已排進 Google 日曆："):
+                return answer
+        elif kind == "照片":
+            if not link and text.startswith("本機照片模型暫時無法辨識。"):
+                return answer
+        else:
+            casual = re.sub(r"[\s，,。.!！?？～~…]+", "", raw).lower()
+            if re.fullmatch(r"(?:hi|hello|hey|你好|您好|嗨|哈囉|早安|午安|晚安|謝謝|謝啦|感謝|thanks|thankyou|ok|okay|好|好的|好喔|嗯|收到|了解|知道了|掰掰|再見|bye|測試|test|測試一下|測試機器人|在嗎|你在嗎|確認排程|取消排程)+", casual):
+                return answer
+            if text.startswith(("本機模型暫時無法整理，", "本機模型暫時無法回答，",
+                                "圖片傳送連線還沒準備好，", "圖片搜尋暫時沒成功，")):
+                return answer
+        if not text.strip():
+            return answer
         row = [datetime.fromtimestamp(self.clock(), TAIPEI).strftime("%Y-%m-%d %H:%M:%S"), kind,
                (raw if said is None else said)[:4000], text[:500], link, "已建立" if raw == "確認排程" and text.startswith("已排進") else ""]
         key = hashlib.sha256((event.get("webhookEventId") or event["replyToken"]).encode()).hexdigest()
@@ -961,10 +976,11 @@ class BotRuntime:
             if answer is None:
                 conversation = (source.get("groupId") or source.get("roomId") or "private") + ":" + (source.get("userId") or event["replyToken"])
                 answer = self.teacher.before_text(raw, event) if self.teacher else None
+                record_kind = "行程" if answer is not None else "文字"
                 if answer is None:
                     answer = self.ai.ask(raw, conversation)
                 if self.teacher:
-                    answer = self.teacher.record(event, answer)
+                    answer = self.teacher.record(event, answer, kind=record_kind)
             self.sender(event, answer)
         except Exception:
             LOG.warning("[LINE] 處理或回覆失敗（未輸出私人內容）")
