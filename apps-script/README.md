@@ -32,3 +32,7 @@ node --test apps-script/basic.test.mjs
 4 項本機測試涵蓋儲存／查詢、事件去重、非 owner／群組／錯誤 key／錯誤 bot 拒絕、長度與數量上限。測試不寫真實雲端，不發送 LINE。
 
 參考：[Google 網頁應用程式](https://developers.google.com/apps-script/guides/web)、[指令碼屬性](https://developers.google.com/apps-script/guides/properties)、[LINE 驗簽](https://developers.line.biz/en/docs/messaging-api/verify-webhook-signature/)。
+
+## 本次部署驗證
+
+2026-10-12 已完成學校帳號部署、匿名 GET／空事件 POST 執行確認、LINE 官方 Webhook 驗證。19:40 正常停止 Python 時，LINE endpoint 已恢復到私密備援；重啟後已切回本機通道，皆讀回一致。雲端新增待辦與查詢仍須手機實測。

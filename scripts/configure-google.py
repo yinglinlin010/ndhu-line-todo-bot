@@ -23,7 +23,7 @@ def main():
     sheet = getpass.getpass("指定試算表 ID（隱藏輸入；不啟用試算表可直接 Enter）：").strip()
     if sheet and not re.fullmatch(r"[A-Za-z0-9_-]{10,200}", sheet):
         raise ValueError("Invalid spreadsheet ID")
-    print("啟用後：只在你的 LINE 私聊將照片存 Drive、一般問答記入指定 Sheets；行程需另在 LINE 確認。")
+    print("啟用後：只在你的 LINE 私聊將照片存 Drive；行程需另在 LINE 確認。試算表自動紀錄預設關閉。")
     consent = input("已完成 gws 登入並同意啟用，請輸入 ENABLE；其他輸入會取消：").strip()
     if consent != "ENABLE":
         print("已取消；未改設定。")

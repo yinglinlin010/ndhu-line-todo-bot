@@ -369,6 +369,20 @@ class PythonBotTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 bot.restore_webhook("test-token", "https://script.google.com/macros/s/test-only/exec")
 
+    def test_start_switches_only_known_backup_and_is_idempotent(self):
+        backup = 'https://script.google.com/macros/s/test-only/exec'
+        local = 'https://tunnel.example.org/webhook'
+        with patch.object(bot, 'read_http', side_effect=[json.dumps({'endpoint':backup}).encode(),b'{}',json.dumps({'endpoint':local}).encode()]) as call:
+            bot.activate_local_webhook('test-token','https://tunnel.example.org',backup)
+            self.assertEqual(call.call_args_list[1].kwargs['json']['endpoint'],local)
+        with patch.object(bot, 'read_http', return_value=json.dumps({'endpoint':local}).encode()) as call:
+            bot.activate_local_webhook('test-token','https://tunnel.example.org',backup)
+            self.assertEqual(call.call_count,1)
+        with patch.object(bot, 'read_http', return_value=b'{"endpoint":"https://other.example.org"}') as call:
+            with self.assertRaises(RuntimeError):
+                bot.activate_local_webhook('test-token','https://tunnel.example.org',backup)
+            self.assertEqual(call.call_count,1)
+
     def test_real_http_server_start_health_and_sigint_without_line_calls(self):
         environment = dict(os.environ, LINE_CHANNEL_SECRET="test-secret", LINE_CHANNEL_ACCESS_TOKEN="test-token",
                            ELEARN_CALENDAR_URL="", ELEARN_STATE_FILE=str(self.path / "state.json"),

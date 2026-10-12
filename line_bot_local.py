@@ -1113,12 +1113,29 @@ def restore_webhook(token, url):
     parsed = urlsplit(url)
     if parsed.scheme != "https" or parsed.hostname != "script.google.com" or parsed.port not in (None, 443) or not re.fullmatch(r"/macros/s/[^/]+/exec", parsed.path) or parsed.username or parsed.password or not re.fullmatch(r"(?:key=[a-f0-9]{64})?", parsed.query) or parsed.fragment:
         raise ValueError("Invalid W5 URL")
+    set_line_webhook(token, url)
+
+
+def set_line_webhook(token, url):
     read_http("https://api.line.me/v2/bot/channel/webhook/endpoint", method="PUT", timeout=10,
               headers={"Authorization": "Bearer " + token}, json=dict(endpoint=url))
     restored = json.loads(read_http("https://api.line.me/v2/bot/channel/webhook/endpoint", timeout=10,
                                    headers={"Authorization": "Bearer " + token}))
     if restored.get("endpoint") != url:
         raise RuntimeError("Could not confirm Webhook restore")
+
+
+def activate_local_webhook(token, base, backup):
+    parsed = urlsplit(base)
+    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.path not in ("", "/"):
+        raise ValueError("Invalid public base")
+    endpoint = base.rstrip("/") + "/webhook"
+    current = json.loads(read_http("https://api.line.me/v2/bot/channel/webhook/endpoint", timeout=10,
+                                  headers={"Authorization": "Bearer " + token})).get("endpoint")
+    if current not in (endpoint, backup):
+        raise RuntimeError("Unknown active Webhook; refusing to replace it")
+    if current != endpoint:
+        set_line_webhook(token, endpoint)
 
 
 def main():
@@ -1170,6 +1187,12 @@ def main():
         bind_path = Path("./data/python-bind.json")
         private_json(bind_path, dict(code=elearn.bind_code))
     try:
+        if os.getenv("W5_WEBHOOK_URL") and os.getenv("PUBLIC_BASE_URL"):
+            try:
+                activate_local_webhook(token, os.environ["PUBLIC_BASE_URL"], os.environ["W5_WEBHOOK_URL"])
+                LOG.info("[Webhook] 已連接本機 Python（退出後切回待辦備援）")
+            except Exception:
+                LOG.error("[Webhook] 未能切回本機，請核對目前 LINE Webhook 與公開通道。")
         while not stop.is_set():
             server.handle_request()
     finally:
