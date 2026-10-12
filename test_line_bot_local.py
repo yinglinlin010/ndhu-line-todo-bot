@@ -355,10 +355,16 @@ class PythonBotTests(unittest.TestCase):
             bot.restore_webhook("test-token", "https://script.google.com/macros/s/test-only/exec")
             self.assertEqual(calls[0][1]["method"], "PUT")
             self.assertEqual(calls[0][1]["json"]["endpoint"], "https://script.google.com/macros/s/test-only/exec")
-            for url in ("https://evil.example.org/exec", "http://script.google.com/macros/s/x/exec"):
+            for url in ("https://evil.example.org/exec", "http://script.google.com/macros/s/x/exec",
+                        "https://script.google.com/macros/s/x/exec?key=weak",
+                        "https://script.google.com/macros/s/x/exec?key=" + 'a'*64 + '&other=1'):
                 with self.assertRaises(ValueError):
                     bot.restore_webhook("test-token", url)
         self.assertEqual(len(calls), 2)
+        keyed = "https://script.google.com/macros/s/test-only/exec?key=" + 'a'*64
+        with patch.object(bot, "read_http", side_effect=[b'{}', json.dumps({'endpoint': keyed}).encode()]) as call:
+            bot.restore_webhook('test-token', keyed)
+            self.assertEqual(call.call_args_list[0].kwargs['json']['endpoint'], keyed)
         with patch.object(bot, "read_http", return_value=b'{}'):
             with self.assertRaises(RuntimeError):
                 bot.restore_webhook("test-token", "https://script.google.com/macros/s/test-only/exec")

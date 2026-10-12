@@ -15,7 +15,7 @@ def main():
     parsed = urlsplit(value)
     if (parsed.scheme != "https" or parsed.hostname != "script.google.com"
             or parsed.port not in (None, 443) or parsed.username or parsed.password
-            or parsed.query or parsed.fragment
+            or not re.fullmatch(r"(?:key=[a-f0-9]{64})?", parsed.query) or parsed.fragment
             or not re.fullmatch(r"/macros/s/[^/]+/exec", parsed.path)):
         raise ValueError("Invalid W5 URL")
     set_key(".env", "W5_WEBHOOK_URL", value)

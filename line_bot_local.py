@@ -1111,7 +1111,7 @@ def create_app(runtime):
 def restore_webhook(token, url):
     """Only used when the user explicitly configures W5_WEBHOOK_URL locally."""
     parsed = urlsplit(url)
-    if parsed.scheme != "https" or parsed.hostname != "script.google.com" or parsed.port not in (None, 443) or not re.fullmatch(r"/macros/s/[^/]+/exec", parsed.path) or parsed.username or parsed.password or parsed.query or parsed.fragment:
+    if parsed.scheme != "https" or parsed.hostname != "script.google.com" or parsed.port not in (None, 443) or not re.fullmatch(r"/macros/s/[^/]+/exec", parsed.path) or parsed.username or parsed.password or not re.fullmatch(r"(?:key=[a-f0-9]{64})?", parsed.query) or parsed.fragment:
         raise ValueError("Invalid W5 URL")
     read_http("https://api.line.me/v2/bot/channel/webhook/endpoint", method="PUT", timeout=10,
               headers={"Authorization": "Bearer " + token}, json=dict(endpoint=url))
