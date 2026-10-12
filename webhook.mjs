@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { replyFor } from './todo.mjs';
+import { createLocalAI } from './local-ai.mjs';
 
 export function verifySignature(body, signature, secret) {
   if (!secret || typeof signature !== 'string') return false;
@@ -9,29 +10,23 @@ export function verifySignature(body, signature, secret) {
 }
 
 export async function askLocalAI(prompt) {
-  try {
-    const res = await fetch('http://127.0.0.1:11434/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'qwen2.5:3b',
-        prompt: `你是一個待辦小幫手裡的 AI 助理，請使用台灣常用的繁體中文簡要親切地回答問題。\n\n問題：${prompt}\n回答：`,
-        stream: false,
-        options: { num_predict: 260, temperature: 0.7 }
-      }),
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.response?.trim() || null;
-  } catch (err) {
-    console.error('Local AI error:', err.message);
-    return null;
-  }
+  return createLocalAI({ model: process.env.OLLAMA_MODEL || 'qwen2.5:3b', baseURL: process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434' })(prompt);
 }
 
-export function createHandler({ secret, token, store, fetchImpl = fetch }) {
+export function createHandler({ secret, token, store, fetchImpl = fetch, elearn, photos, askAI = askLocalAI }) {
+  const aiEvents = new Map();
+  async function sendReply(event, replyText) {
+    const response = await fetchImpl('https://api.line.me/v2/bot/message/reply', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ replyToken: event.replyToken, messages: Array.isArray(replyText) ? replyText.slice(0, 5) : [{ type: 'text', text: replyText.slice(0, 4900) }] }),
+      signal: AbortSignal.timeout(10000),
+    });
+    console.log(`[Event] Reply status: ${response.status}`);
+    return response.ok;
+  }
   return async (req, res) => {
+    if (photos?.serve(req, res)) return;
     const finish = (status, text) => { res.writeHead(status, { 'Content-Type': 'text/plain; charset=utf-8' }); res.end(text); };
     if (req.method === 'GET' && req.url === '/health') return finish(200, 'ok');
     if (req.method !== 'POST' || req.url !== '/webhook') return finish(404, 'not found');
@@ -51,40 +46,33 @@ export function createHandler({ secret, token, store, fetchImpl = fetch }) {
         if (event.type !== 'message' || event.message?.type !== 'text' || !event.replyToken) continue;
         if (typeof event.message.text !== 'string') return finish(400, 'invalid text');
         if (!token) return finish(503, 'channel token missing');
-        console.log(`[Event] Received: "${event.message.text}" from ${event.source?.userId}`);
+        console.log('[Event] Received text message');
 
         const rawText = event.message.text.trim();
         const matchTodo = /^[記紀][錄録]\s*[:：]/.test(rawText);
         const isQuery = rawText === '查詢';
 
-        let replyText;
-        if (matchTodo || isQuery) {
+        let replyText = await elearn?.handle(rawText, event);
+        if (replyText != null) {
+          // Calendar commands bypass AI, including authorization failures.
+        } else if (matchTodo || isQuery) {
           replyText = replyFor(rawText, store, { userId: event.source?.userId, eventId: event.webhookEventId });
         } else {
-          // 一般問答或以 問： 開頭 -> 呼叫本機 Ollama AI 模型
-          const matchAsk = /^(問|AI|ai)\s*[:：]?\s*([\s\S]*)$/.exec(rawText);
-          const question = matchAsk ? matchAsk[2].trim() : rawText;
-
-          let aiAnswer = null;
-          if (question) {
-            aiAnswer = await askLocalAI(question);
-          }
-          if (aiAnswer) {
-            replyText = aiAnswer;
-          } else {
-            replyText = replyFor(rawText, store, { userId: event.source?.userId, eventId: event.webhookEventId });
-          }
+          // Acknowledge LINE immediately; search/model work can take tens of seconds.
+          const key = event.webhookEventId || event.replyToken;
+          const current = Date.now();
+          for (const [id, at] of aiEvents) if (current - at > 600000) aiEvents.delete(id);
+          if (aiEvents.has(key)) continue;
+          if (aiEvents.size >= 500) return finish(503, 'busy');
+          aiEvents.set(key, current);
+          void askAI(rawText, { conversationId: `${event.source?.groupId || event.source?.roomId || 'private'}:${event.source?.userId || event.replyToken}` }).then(answer => sendReply(event, answer)).then(ok => {
+            if (!ok) console.error('[AI] LINE reply failed');
+          }).catch(() => console.error('[AI] Processing failed'));
+          continue;
         }
 
-        console.log(`[Event] Replying: "${replyText}"`);
-        const response = await fetchImpl('https://api.line.me/v2/bot/message/reply', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ replyToken: event.replyToken, messages: [{ type: 'text', text: replyText }] }),
-          signal: AbortSignal.timeout(10000),
-        });
-        console.log(`[Event] Reply status: ${response.status}`);
-        if (!response.ok) return finish(502, 'reply failed');
+        console.log('[Event] Sending reply');
+        if (!await sendReply(event, replyText)) return finish(502, 'reply failed');
       }
       finish(200, 'ok');
     } catch { finish(502, 'webhook processing failed'); }

@@ -1,8 +1,16 @@
 import { createStore } from './todo.mjs';
 import { createServer } from 'node:http';
 import { createHandler } from './webhook.mjs';
+import { createElearn } from './elearn.mjs';
+import { createLocalAI } from './local-ai.mjs';
+import { createPhotos } from './photos.mjs';
 process.loadEnvFile?.();
 const secret = process.env.LINE_CHANNEL_SECRET;
 const token = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 if (!secret || !token) throw new Error('請先在本機環境設定 LINE_CHANNEL_SECRET 和 LINE_CHANNEL_ACCESS_TOKEN');
-createServer(createHandler({ secret, token, store: createStore(process.env.TODO_FILE || './data/todos.jsonl') })).listen(Number(process.env.PORT || 3000), '127.0.0.1', () => console.log('LINE Bot listening on http://127.0.0.1:' + (process.env.PORT || 3000)));
+const elearn = createElearn({ calendarURL: process.env.ELEARN_CALENDAR_URL, token, stateFile: process.env.ELEARN_STATE_FILE || './data/elearn.json' });
+const photos = createPhotos({ publicBaseURL: process.env.PUBLIC_BASE_URL });
+if (process.env.ELEARN_CALENDAR_URL && elearn.bindCode) console.log('請在 LINE 個人聊天傳送：綁定e學苑 ' + elearn.bindCode);
+createServer(createHandler({ secret, token, elearn, photos, askAI: createLocalAI({ photos, cards: true, model: process.env.OLLAMA_MODEL || 'qwen2.5:3b', baseURL: process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434' }), store: createStore(process.env.TODO_FILE || './data/todos.jsonl') })).listen(Number(process.env.PORT || 3000), '127.0.0.1', () => console.log('LINE Bot listening on http://127.0.0.1:' + (process.env.PORT || 3000)));
+setInterval(() => void elearn.tick(), 60000).unref();
+void elearn.tick();

@@ -1,1 +1,21 @@
-{"name":"todo-line-bot","version":"0.2.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test bot.test.mjs","evidence":"node scripts/compare-versions.mjs"},"engines":{"node":">=20"}}
+{
+  "name": "todo-line-bot",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test bot.test.mjs elearn.test.mjs local-ai.test.mjs photos.test.mjs",
+    "evidence": "node scripts/compare-versions.mjs"
+  },
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "dependencies": {
+    "cheerio": "1.2.0",
+    "fast-xml-parser": "5.11.2",
+    "ipaddr.js": "2.5.0",
+    "node-ical": "0.22.1",
+    "sharp": "0.35.5"
+  }
+}
