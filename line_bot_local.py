@@ -203,11 +203,28 @@ class LocalAI:
 
     def lookup(self, question, news=False, days=7):
         query = re.sub(r"^(請|幫我|可以幫我|能不能幫我)(查一下|查|找一下|找|搜尋)?[，,\s]*", "", question)[:500]
+        taiwan_president = re.fullmatch(
+            r"(?:請問)?(?:(?:台灣|臺灣|中華民國)的?)?(?:(?:現在|目前|現任)的?)?"
+            r"(?:(?:台灣|臺灣|中華民國)的?)?總統(?:現在|目前|現任)?(?:是誰|叫什麼|名字是什麼)?[？?。\s]*", query)
+        if taiwan_president and not news:
+            try:
+                LOG.info("[Search] 查核台灣總統府官方頁面")
+                url = "https://www.president.gov.tw/Page/694"
+                soup = BeautifulSoup(self.http(url, timeout=5), "html.parser")
+                title = clean(soup.title.get_text() if soup.title else "", 300)
+                if re.fullmatch(r"[^\s-]{2,20}總統-總統與副總統[｜|]中華民國總統府", title):
+                    return [dict(title=title, url=url, snippet="總統府目前的總統介紹頁標題：" + title,
+                                 published=None)]
+            except Exception:
+                LOG.info("[Search] 官方頁面未能確認，改用搜尋")
+            query = "台灣 現任 總統 site:president.gov.tw"
         query = re.sub(r"(大學)([^\s]+?)(老師|教授)", r"\1 \2 \3", query)
         if not news:
             try:
                 LOG.info("[Search] DuckDuckGo 搜尋中")
                 results = parse_search_html(self.http("https://lite.duckduckgo.com/lite/?" + urlencode(dict(q=query)), timeout=5))
+                if taiwan_president:
+                    results = [r for r in results if "總統" in r["title"] + r["snippet"]]
                 if results:
                     return results
             except Exception:
@@ -215,7 +232,8 @@ class LocalAI:
         LOG.info("[Search] %s 搜尋中", "Google News" if news else "Bing")
         url = ("https://news.google.com/rss/search?" + urlencode(dict(q=query + f" when:{days}d", hl="zh-TW", gl="TW", ceid="TW:zh-Hant"))) if news else (
             "https://www.bing.com/search?" + urlencode(dict(q=query, format="rss")))
-        return parse_search_feed(self.http(url, timeout=5), recent=news, now=self.clock())
+        results = parse_search_feed(self.http(url, timeout=5), recent=news, now=self.clock())
+        return [r for r in results if "總統" in r["title"] + r["snippet"]] if taiwan_president else results
 
     def ask(self, raw, conversation_id=None):
         question, wants_search, recent = question_mode(raw)

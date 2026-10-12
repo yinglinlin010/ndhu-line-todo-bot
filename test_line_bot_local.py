@@ -112,6 +112,22 @@ class PythonBotTests(unittest.TestCase):
         uri = reply[1]["contents"]["contents"][0]["footer"]["contents"][0]["action"]["uri"]
         self.assertEqual(uri, "https://example.org/new")
 
+    def test_current_taiwan_president_uses_live_official_title(self):
+        calls = []
+        def http(url, **kwargs):
+            calls.append(url)
+            return '<title>測試人物總統-總統與副總統｜中華民國總統府</title>'.encode()
+        ai = bot.LocalAI(http=http)
+        for question in ["現在的總統是誰？", "台灣目前的總統是誰", "現在台灣總統是誰"]:
+            result = ai.lookup(question)
+            self.assertIn("測試人物", result[0]["snippet"])
+            self.assertEqual(result[0]["url"], "https://www.president.gov.tw/Page/694")
+        self.assertEqual(len(calls), 3)
+
+    def test_president_fallback_rejects_unrelated_clock_results(self):
+        ai = bot.LocalAI(http=lambda url, **kw: b'<title>unavailable</title>' if 'president.gov.tw/Page' in url else RSS)
+        self.assertEqual(ai.lookup("現在的總統是誰？"), [])
+
     def test_no_search_for_teaching_and_history_isolation_expiry(self):
         calls, clock = [], [NOW]
         def http(url, **kwargs):
