@@ -103,3 +103,18 @@ test('真實 HTTP Webhook 將 e學苑指令交給同步服務並回覆', async (
     assert.equal(response.status, 200); assert.equal(replies[0].messages[0].text, '同步測試成功');
   } finally { await new Promise(resolve => server.close(resolve)); }
 });
+
+test('自然語言作業走私人行事曆，公開搜尋與解題不被攔截', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'elearn-routing-'));
+  try {
+    const service = createElearn({ calendarURL: url, stateFile: join(dir, 'state.json'), bindCode: 'code', now: () => Date.parse('2026-10-10T00:00:00Z'), fetchImpl: async () => new Response(feed('明日作業')) });
+    assert.match(await service.handle('我今天有什麼作業？', event), /尚未綁定/);
+    await service.handle('綁定e學院 code', event);
+    assert.match(await service.handle('我今天有什麼作業？', event), /沒有今天/);
+    assert.match(await service.handle('明天要交什麼？', event), /明日作業/);
+    assert.match(await service.handle('e學院作業', event), /明日作業/);
+    assert.match(await service.handle('我的作業', { source: { type: 'group', userId: 'alice' } }), /個人聊天/);
+    assert.match(await service.handle('我的作業', { source: { type: 'user', userId: 'bob' } }), /尚未綁定/);
+    for (const question of ['最新 AI 新聞', '陳文盛老師評價', '教我怎麼寫作業', '搜尋 e學院介紹']) assert.equal(await service.handle(question, event), null);
+  } finally { rmSync(dir, { recursive: true }); }
+});

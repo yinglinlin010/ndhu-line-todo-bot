@@ -9,6 +9,29 @@ const help = '指令：e學苑、同步e學苑、開啟提醒、關閉提醒。'
 const dateFormat = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 const clean = value => String(value ?? '').replace(/[\r\n]+/g, ' ').slice(0, 250);
 
+// Calendar intent is decided before public search; explicit search stays public.
+export function calendarIntent(value) {
+  const text = value.trim().replace(/e\s*學院/ig, 'e學苑').replace(/e\s*學苑/ig, 'e學苑');
+  if (/^(?:搜尋|搜索|查網路|網路搜尋)/.test(text)) return null;
+  const command = text.replace(/[？?！!。]+$/g, '');
+  if (['開啟提醒', '關閉提醒'].includes(command)) return { command };
+  const school = /e學苑/.test(command);
+  const task = /作業|待辦|截止|到期|要交|繳交|行事曆/.test(command);
+  const personal = /我|今天|今日|明天|本週|這週|這星期|下週|最近|有哪些|有什麼|要交/.test(command);
+  const explanation = /怎麼寫|如何寫|解題|教我|介紹|評價|新聞/.test(command);
+  if (explanation || (!school && !(task && personal))) return null;
+  return { command, force: school && /同步|更新|重新整理/.test(command), range: /下週/.test(command) ? 'nextWeek' : /本週|這週|這星期/.test(command) ? 'week' : /明天/.test(command) ? 'tomorrow' : /今天|今日/.test(command) ? 'today' : null };
+}
+
+function calendarWindow(range, now) {
+  const local = new Date(now + 8 * 3600000);
+  const day = Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) - 8 * 3600000;
+  if (range === 'today') return [day, day + DAY, '今天'];
+  if (range === 'tomorrow') return [day + DAY, day + 2 * DAY, '明天'];
+  const monday = day - ((local.getUTCDay() + 6) % 7) * DAY;
+  return range === 'nextWeek' ? [monday + 7 * DAY, monday + 14 * DAY, '下週'] : [monday, monday + 7 * DAY, '本週'];
+}
+
 export function validateCalendarURL(value) {
   const url = new URL(value);
   if (url.origin !== 'https://elearn4.ndhu.edu.tw' || url.pathname !== '/moodle/calendar/export_execute.php' || url.username || url.password) throw Error('Invalid calendar URL');
@@ -71,8 +94,11 @@ export function createElearn({ calendarURL, token, stateFile = './data/elearn.js
     try { return await loading; } finally { loading = null; }
   }
   async function handle(command, event) {
-    const binding = /^綁定e學苑\s+(\S+)$/i.exec(command);
-    if (!binding && !['e學苑', 'E學苑', '同步e學苑', '開啟提醒', '關閉提醒'].includes(command)) return null;
+    const normalized = command.trim().replace(/e\s*學院/ig, 'e學苑');
+    const binding = /^綁定e學苑\s+(\S+)$/i.exec(normalized);
+    const intent = calendarIntent(normalized);
+    if (!binding && !intent) return null;
+    command = intent?.command || normalized;
     if (event.source?.type !== 'user' || !event.source.userId) return 'e學苑功能只在 LINE 個人聊天中使用。';
     const userId = event.source.userId;
     if (binding) {
@@ -87,7 +113,14 @@ export function createElearn({ calendarURL, token, stateFile = './data/elearn.js
       state.reminders = command === '開啟提醒'; save();
       return state.reminders ? '已開啟 e學苑提醒。' : '已關閉 e學苑推播，仍可傳「e學苑」查詢。';
     }
-    try { return formatCalendar(await sync(command === '同步e學苑'), now()); }
+    try {
+      const events = await sync(intent.force), current = now();
+      if (!intent.range) return formatCalendar(events, current);
+      const [start, end, label] = calendarWindow(intent.range, current);
+      const selected = events.filter(event => event.at >= start && event.at < end && event.at > current);
+      if (!selected.length) return `東華 e 學苑${label}事件\n行事曆沒有${label}尚未到期的事件。\n未列入行事曆的作業不會出現在這裡，未確認繳交狀態。`;
+      return formatCalendar(selected, current, `東華 e 學苑${label}事件`);
+    }
     catch { return '暫時無法同步 e學苑，請稍後傳「同步e學苑」重試。若持續失敗，請重新取得行事曆訂閱網址。'; }
   }
   async function push(key, text) {
