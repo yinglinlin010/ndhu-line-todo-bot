@@ -3,6 +3,12 @@
 !.env.example
 data/
 node_modules/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+client_secret*.json
+credentials*.json
 .DS_Store
 .impeccable/questions/
 .impeccable/runtime.json

@@ -1,0 +1,25 @@
+test_calendar_binding_private_isolation_refresh_and_legacy_state (test_line_bot_local.PythonBotTests.test_calendar_binding_private_isolation_refresh_and_legacy_state) ... ok
+test_calendar_timezone_cancellation_and_recurrence (test_line_bot_local.PythonBotTests.test_calendar_timezone_cancellation_and_recurrence) ... ok
+test_calendar_url_and_intent_routing (test_line_bot_local.PythonBotTests.test_calendar_url_and_intent_routing) ... ok
+test_expired_uncertain_push_does_not_generate_new_key (test_line_bot_local.PythonBotTests.test_expired_uncertain_push_does_not_generate_new_key) ... ok
+test_news_dates_xml_entities_and_search_links (test_line_bot_local.PythonBotTests.test_news_dates_xml_entities_and_search_links) ... ok
+test_news_expands_then_uses_web (test_line_bot_local.PythonBotTests.test_news_expands_then_uses_web) ... ok
+test_no_search_for_teaching_and_history_isolation_expiry (test_line_bot_local.PythonBotTests.test_no_search_for_teaching_and_history_isolation_expiry) ... ok
+test_photos_convert_source_and_limit_public_routes (test_line_bot_local.PythonBotTests.test_photos_convert_source_and_limit_public_routes) ... ok
+test_photos_followup_and_private_ip_rejection (test_line_bot_local.PythonBotTests.test_photos_followup_and_private_ip_rejection) ... ok
+test_real_http_server_start_health_and_sigint_without_line_calls (test_line_bot_local.PythonBotTests.test_real_http_server_start_health_and_sigint_without_line_calls) ... ok
+test_reminder_retry_key_survives_restart_and_deduplicates (test_line_bot_local.PythonBotTests.test_reminder_retry_key_survives_restart_and_deduplicates) ... [e學苑] 同步或推播失敗，下次檢查重試。
+ok
+test_search_calls_local_model_and_attaches_real_sources (test_line_bot_local.PythonBotTests.test_search_calls_local_model_and_attaches_real_sources) ... ok
+test_search_failures_and_model_failure_do_not_fake_news (test_line_bot_local.PythonBotTests.test_search_failures_and_model_failure_do_not_fake_news) ... [Ollama] 本機模型無法完成回答
+ok
+test_signature_checks_exact_raw_body (test_line_bot_local.PythonBotTests.test_signature_checks_exact_raw_body) ... ok
+test_todo_empty_limit_order_and_corrupt_file (test_line_bot_local.PythonBotTests.test_todo_empty_limit_order_and_corrupt_file) ... ok
+test_todo_legacy_data_isolation_and_reopen (test_line_bot_local.PythonBotTests.test_todo_legacy_data_isolation_and_reopen) ... ok
+test_w5_restore_validation_and_put_without_logging_url (test_line_bot_local.PythonBotTests.test_w5_restore_validation_and_put_without_logging_url) ... ok
+test_webhook_immediate_ack_dedup_validation_and_background_reply (test_line_bot_local.PythonBotTests.test_webhook_immediate_ack_dedup_validation_and_background_reply) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.704s
+
+OK

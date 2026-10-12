@@ -1,12 +1,14 @@
 {
   "name": "todo-line-bot",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.mjs",
+    "start": "python3 line_bot_local.py",
     "test": "node --test bot.test.mjs elearn.test.mjs local-ai.test.mjs photos.test.mjs",
-    "evidence": "node scripts/compare-versions.mjs"
+    "evidence": "node scripts/compare-versions.mjs",
+    "start:node": "node server.mjs",
+    "test:python": "python3 -m unittest -v test_line_bot_local.py"
   },
   "engines": {
     "node": ">=20.18.1"

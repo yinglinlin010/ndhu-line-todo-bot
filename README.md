@@ -1,127 +1,112 @@
-# 待辦小幫手 LINE Bot v0.3.0
+# 本機 Ollama LINE Bot — Python 版 v0.4.0
 
-給學生使用的 LINE 待辦工具。輸入 `記錄：事項` 保存一筆，輸入 `查詢` 查看自己的最新 10 筆待辦；另支援東華 e學苑行事曆同步及私人推播。記錄、查詢及 e學苑指令以規則回覆，其他訊息交由本機 Ollama 與自動網路搜尋处理，圖片要求另走照片搜尋流程。
+使用跑在自己電腦上的 Ollama 回答 LINE 訊息；資訊查詢自動搜尋網路，再由本機模型整理，附上可點的來源卡片。主要程式是一支 `line_bot_local.py`，不是老師提供的原始檔，而是從本專案 Node.js 版移植。
 
-- 專案：https://github.com/yinglinlin010/ndhu-line-todo-bot
-- 開發紀錄：https://yinglinlin010.github.io/ndhu-line-todo-bot/
-- 第一版：https://github.com/yinglinlin010/ndhu-line-todo-bot/tree/classroom-v1-2026-10-05
+Repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 
-## 本次更新 v0.3.0
+## 怎麼裝
 
-新增自然語言搜尋、本機 AI 接續問答、e學苑行事曆同步與提醒、網路照片傳送及可點的搜尋來源卡片。本機測試 35 項通過；v0.2.0 簡報、manifest 與真人測試證據保留為歷史資料。新增圖片與卡片尚待真人聊天確認。
-
-## 為什麼改善
-
-第一版只有記錄功能，輸入「查詢」只會收到使用提示。使用者看不到已保存的事項，降低工具的實用性。改善版新增本人待辦查詢，完成記錄後能回看內容；不改變原先記錄功能的目的。
-
-## 使用方式
-
-| 使用者輸入 | Bot 行為 |
-| --- | --- |
-| `記錄：星期五交報告` | 保存一筆，回覆「已記錄：星期五交報告。」 |
-| `記錄：` | 提醒「請輸入要記錄的待辦事項。」；不保存 |
-| `查詢` | 依發訊者 userId 查詢，最新在前，最多 10 筆 |
-| `查詢`，本人沒有紀錄 | 提示沒有待辦，並說明新增格式 |
-| `你好` 或其他不支援指令 | 提供記錄、查詢兩種使用方式 |
-
-支援全形或半形冒號，會去除指令與內容前後空白。每筆待辦最多 300 個 JavaScript 字串長度單位。查詢不新增紀錄，不列出其他 userId 的資料；缺少 userId 時提示改用 LINE 個人聊天。
-
-## 本機測試
-
-Node.js 20.18.1 或以上；先執行 `npm ci` 安裝鎖定的行事曆解析套件。
+需要 Python **3.11 以上**、Ollama，以及 LINE Messaging API channel。此電腦已用 Python 3.12 安裝並測試。
 
 ```sh
-npm test
-npm run evidence
+git clone https://github.com/yinglinlin010/ndhu-line-todo-bot.git
+cd ndhu-line-todo-bot
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-lock.txt
+ollama pull qwen2.5:3b
 ```
 
-`npm test` 已通過 35 組測試（待辦 14 組、e學苑 7 組、AI 搜尋 9 組、圖片與卡片 5 組），包含原本三個情境、查詢空狀態、最新排序、十筆上限、身分缺失、讀取失敗、檔案重開後的資料隔離、半形冒號，以及本機 HTTP 的記錄後查詢流程。回覆 API 以替代函式驗證，沒有傳送真正的 LINE 訊息。
+若使用 Python 3.11，可將 `python3.12` 換成 `python3.11`。Windows 啟用虛擬環境使用 `.venv\Scripts\Activate.ps1`。`requirements-lock.txt` 固定這次測試的版本；`requirements.txt` 保留允許的更新範圍。
 
-`npm run evidence` 實際執行 `versions/v1/todo.mjs` 與目前 `todo.mjs`，產生 `test-evidence/v2-comparison.json`。第一版來源是保留的 Git tag，不是由 AI 猜測舊回覆。
+開啟 Ollama 桌面程式；若未啟動，可另開終端執行 `ollama serve`。`ollama list` 應列出選用模型。
 
-## 設定與啟動
+## 怎麼跑
 
-1. 建立 LINE 官方帳號並啟用 Messaging API，確認所屬 channel。
-2. 在本機環境設定 `LINE_CHANNEL_SECRET` 與 `LINE_CHANNEL_ACCESS_TOKEN`。請自行於 LINE Console 取得真實值；README 與 `.env.example` 只有佔位說明，不放真實金鑰。勿在聊天、簡報或 GitHub 貼出秘密值。
-3. `PORT` 可選，預設 3000；`TODO_FILE` 可選，預設 `./data/todos.jsonl`。
-4. 執行 `npm start`。
+1. 已有本機 `.env` 的使用者可直接沿用，不需要重新設定 LINE 或 e學苑綁定。
+2. 新安裝時，把 `.env.example` **複製**成 `.env`，只在自己的編輯器內填入設定；不要覆蓋現有 `.env`。
+3. 設定 `LINE_CHANNEL_SECRET`、`LINE_CHANNEL_ACCESS_TOKEN`。未設定時，程式啟動會以隱藏輸入詢問，輸入值只留在記憶體。
+4. 可選設定 `OLLAMA_MODEL`，預設 `qwen2.5:3b`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
+5. 使用以下指令啟動：
 
-伺服器只綁定本機 `127.0.0.1`。從此專案目錄啟動，程式會載入本機 `.env`；檔案缺少時須自行提供環境變數或準備 `.env`。請勿輸出秘密值。
+```sh
+source .venv/bin/activate
+python line_bot_local.py
+```
 
-`GET /health` 回覆 `ok`；`POST /webhook` 驗證原始請求的 LINE HMAC-SHA256 簽章後，解析文字事件並呼叫 reply API。資料寫入本機 JSONL 檔，含事項、userId、eventId、時間；`data/` 與 `.env` 已被 Git 忽略。
+`GET http://127.0.0.1:3000/health` 應回覆 `ok`。程式綁定 `127.0.0.1`；需沿用現有 HTTPS 通道，將 `/webhook` 轉送至此連接埠。LINE Webhook 設定須指向通道的 `/webhook`，並啟用 Use webhook。GitHub Pages 只能放說明網頁，不能執行這支 bot。
 
-## 連接 LINE 與親自測試
+**切換前先停止 Node.js bot**，不要讓兩版搶同一連接埠或同時寫資料／發提醒。Python 版沿用相同連接埠和通道時，無須更改 LINE Webhook。
 
-GitHub Pages 只提供開發紀錄網頁，**不能執行 Node.js Bot 或作為 Bot Webhook**。真人測試需要另外取得能轉送至本機 `/webhook` 的 HTTPS endpoint，或準備 Bot 主機與持久化儲存。部署到外部主機時須依平台調整綁定位址，目前未部署 Bot。
+照片功能需要 `.env` 的 `PUBLIC_BASE_URL` 為 LINE 可存取的 HTTPS 通道根網址，通道換網址時要更新並重新啟動。
 
-在 LINE Developers 的 Messaging API 設定中填入 HTTPS Webhook URL，按 Verify 並啟用 Use webhook，加入官方帳號好友。注意 LINE Official Account Manager 的自動回覆設定，以免把預設自動回覆誤認為本程式回覆。操作參照 [LINE 官方設定說明](https://developers.line.biz/en/docs/messaging-api/building-bot/)。
+## 你改了什麼
 
-親自在 LINE 個人聊天依序測試並截圖或錄影：
+- 將 Node.js 多模組版本改成 Python 單檔；不再需要 Node.js 來執行新版 bot。
+- 保留「記錄：事項」「查詢」、本人最新十筆待辦、空白／長度檢查與事件去重。
+- 保留 Ollama 本機問答、自動搜尋、來源 Flex 卡片及最近三輪追問。不同使用者／群組的對話隔離；閒置二十分鐘清除，重啟也清除。
+- 保留自然語言照片搜尋、來源說明、JPEG 與縮圖快取。只下載公開 HTTPS 位址，逐次重新導向驗證並固定 DNS 位址，限制下載與解碼大小。
+- 保留 e學苑行事曆、私聊綁定、今天／明天／本週篩選、每天上午八點摘要及事件前二十四小時提醒。沿用原本綁定狀態與推播 retry key，避免移植後重發。
+- 加入安全的終端紀錄：搜尋服務、來源筆數、本機模型名稱、回答耗時、LINE 回覆狀態；不輸出金鑰、私人行事曆網址或使用者訊息。
+- 可選設定 `W5_WEBHOOK_URL`，讓正常 Ctrl+C／SIGTERM 退出後恢復 W5 Apps Script。
 
-1. `記錄：星期五交報告`：預期成功確認，再輸入 `查詢` 應列出這筆內容。
-2. `記錄：`：預期提醒補充，之後查詢不應新增空白紀錄。
-3. `你好`：預期顯示記錄與查詢提示，不新增紀錄。
+**沒有自行改寫或覆蓋既有待辦與綁定資料。** Node.js 原始檔與歷史紀錄保留，舊版詳細說明在 [README-nodejs.md](README-nodejs.md)。
 
-每次記下輸入、預期、實際結果與測試時間，保存能看見 Bot 回覆的截圖或短影片。可使用 `test-evidence/LINE-真人測試紀錄.txt` 記錄；目前實際結果均標示為未執行。**尚未完成 LINE 真人測試，不能把本機 log 或視覺草稿當成 LINE 測試證明。**
+## e學苑設定
 
+登入 e學苑，進入行事曆匯出，取得訂閱網址，僅存入本機 `.env` 的 `ELEARN_CALENDAR_URL`；網址包含私人授權碼。只接受東華官方匯出端點，不儲存學校密碼。
 
-## 本機 AI 與網路搜尋
+既有綁定可直接沿用 `data/elearn.json`。新綁定先啟動 bot，再另開終端：
 
-直接在 LINE 用自然語言提問，例如「東華大學陳文盛老師的評價」、「東華最近有什麼消息？」或「教我牛頓第二定律」，不必輸入前綴。舊格式仍可用。資訊查詢自動搜尋網路；教學、寫作、翻譯與聊天由本機模型處理。近期新聞先查七天，沒有結果時擴大到三十天，再改查一般網頁；沒有可靠來源時提供背景，不把模型記憶當成最新消息或人物評價。
+```sh
+source .venv/bin/activate
+python line_bot_local.py --bind-code
+```
 
-Ollama 預設模型為 qwen2.5:3b。一般搜尋使用 DuckDuckGo Lite，失敗時改用 Bing RSS；新聞使用 Google News RSS。答案先回答問題，參考來源附在最後。搜尋問題會送給搜尋服務，不附帶 Bot 儲存的私人資料；目前使用摘要，不讀取全文。
+將顯示的「綁定e學苑 綁定碼」傳到 LINE **個人聊天**。綁定碼不要放在作業截圖。可傳「e學苑」「同步e學苑」「我今天有什麼作業」「明天要交什麼」「開啟提醒」「關閉提醒」。其他帳號與群組不能查看私人行事曆。
 
-同一使用者可接著追問「那詳細說明一下」。最近三輪對話暫存在本機記憶體，閒置二十分鐘後清除，重啟也會清除；不同使用者與群組對話隔離。訊息上限四千字，移除模型忙碌就立即拒絕的回覆，由 Ollama 排程處理。仍設有搜尋與模型逾時，Webhook 立即確認接收並於背景生成答案。測試共 35 項。
+提醒需要電腦、bot 與通道持續運作；LINE 推播受帳號額度限制。離線不會補發八點摘要。行事曆不等於繳交狀態；未列入行事曆的作業無法取得，重複性事件目前不支援。
 
-## 照片與搜尋來源卡片
+## 停止與恢復 W5
 
-直接說「給我東華大學陳文盛老師的照片」或在查詢後追問「他的照片呢？」。Bot 從公開搜尋结果頁與來源網頁尋找圖片，附上來源並以原生 LINE 圖片訊息傳送；沒有可用圖時會說明。這是來源網頁相關照片，不做臉部辨識或保證辨認圖中人物。一般搜尋改為先回答，再提供可點開來源的卡片。
+如果這次會把 Webhook 從 W5 切到本機，先把原本的 Apps Script `/exec` 網址存入本機 `.env` 的 `W5_WEBHOOK_URL`。**設定此值表示要求程式在退出時呼叫 LINE API 恢復該網址。** 網址不會印到終端。
 
-PUBLIC_BASE_URL 必須是 LINE 可存取的 HTTPS 通道根網址；通道更換後要同步更新並重新啟動 Bot。圖片在 data/photos 中快取，轉為 JPEG 原圖及縮圖，只有隨機檔名的 /photos 路由對外提供，不公開其他 data 檔案。快取最多 200 張原圖與縮圖，不自動大量刪檔；需定期整理。下載僅存取 HTTPS 公開 IP，驗證每次重新導向、限制檔案大小和解碼像素，不附帶使用者帳密。
+也可以用隱藏輸入設定，避免網址出現在終端畫面或命令歷史：
 
-## 東華 e學苑同步與提醒
+```sh
+python scripts/configure-w5.py
+```
 
-登入 e學苑，進入「行事曆 → 匯入或匯出行事曆 → 匯出行事曆」，選擇「課程相關事件」及「今天到未來六十天」，按「取得行事曆網址」。將訂閱網址存入本機 `.env` 的 `ELEARN_CALENDAR_URL`。它含私人授權碼，不要貼到聊天、LINE、Git 或截圖。Bot 不儲存學校密碼。來源：[Moodle 行事曆官方說明](https://docs.moodle.org/502/en/Using_Calendar)。
+設定後需重新啟動 bot。這支設定程式只寫本機 `.env`，不修改 LINE Webhook。
 
-啟動後，終端會顯示一次性的「綁定e學苑 綁定碼」。由提醒接收者在 LINE 個人聊天傳送此指令，Bot 將保存該使用者並開啟提醒。綁定碼在未綁定時重啟會更換；綁定後其他帳號不能查閱或接管。群組不支援此功能。
+按 Ctrl+C 後，程式停止收新事件，等已接收的訊息完成，再恢復 W5；看到「已恢復 W5 Apps Script」才算成功。如果未設定或恢復失敗，請到 LINE Console 手動恢復，並實測 W5 待辦。強制關機、kill -9 或網路中斷無法保證自動恢復。
 
-- `e學苑`：查看本人行事曆未來事件，最近 10 筆依日期排序（快取最多 15 分鐘）。
-- 自然語言如「我今天有什麼作業」「明天要交什麼」「本週作業」會優先查私人行事曆，按台灣時間篩選尚未到期事件；也接受「e學院」寫法。老師評價、新聞與解題仍交由搜尋或模型；「搜尋」開頭明確使用公開搜尋。
-- `同步e學苑`：立即重新取得行事曆，反映新增、改期、刪除。
-- `開啟提醒`／`關閉提醒`：控制本人推播。
+本次程式移植沒有修改實際 Webhook，也沒有寫入真實 `W5_WEBHOOK_URL`。
 
-Bot 每分鐘檢查一次；開啟提醒後，在台灣時間每天 08:00–08:59 間傳一次摘要，事件開始前 24 小時內傳一次提醒。全天事件只列入摘要。離線時無法提醒，錯過上午八點的摘要不補發。訂閱只涵蓋 Moodle 匯出範圍；無截止日期、未加入行事曆的活動無法取得，也無法辨識是否已繳交。重複性事件目前不支援，遇到時會顯示同步失敗。
+## 測試與作業截圖
 
-接收者與推播去重狀態存在忽略的 `data/elearn.json`（可用 `ELEARN_STATE_FILE` 設定），以原子寫入保存並使用 LINE retry key 重試。網路回應不明時，在 retry key 有效的 24 小時內重試；超過期間保留未確認狀態，避免重複推播。LINE 推播受帳號方案額度限制。電腦、Bot 與 HTTPS 通道必須保持運作。
+```sh
+python -m unittest -v test_line_bot_local.py
+```
 
-## 保留第一版
+18 項測試通過。測試使用暫存資料與 LINE API 替代函式，不會發送真實訊息。涵蓋驗簽、立即確認與背景回覆、事件去重、待辦資料隔離、來源附加、搜尋／模型失敗、私聊綁定、時區、同步更新、重試 key、圖片轉檔與路徑限制、W5 恢復 API，以及真實本機 HTTP 啟動／健康檢查／SIGINT 退出。
 
-- Git tag：`classroom-v1-2026-10-05`，commit `078d9ce`。
-- `versions/v1/`：由該 tag 封存的程式、原本計畫、簡報、開發紀錄與測試輸出。
-- `docs/v1/`：第一版開發紀錄原文與測試 log。
-- 原本 `output/01-專題計畫.pdf`、`output/02-簡報.pdf` 與 `test-evidence/test-log.txt` 均保留。
-- `version-manifest.json` 是第一版的歷史雜湊清單，對應第一版 tag，不代表改善版現行檔案。
+另已實際呼叫網路搜尋與本機 `qwen2.5:3b`，取得三筆來源並成功生成來源卡片；公開 HTTPS DNS 固定下載也成功。這些本機驗證不等同於手機 LINE 實測。
 
-## 改善版繳交
+Python 版仍需重新做一次 LINE 手機實測；以前 Node.js 成功的截圖不能當作 Python 版實測。啟動新版後，在手機問「東華大學最近有什麼新聞？」或一題需要即時查證的問題，拍下回答與來源；同時拍終端的 `[Search]`、`[Ollama] ... 回答完成` 及 `[LINE] 回覆狀態：200`。只提供來源但顯示「模型無法整理」不代表本機模型已成功回答。
 
-- `output/04-改善版成果簡報.pdf`：8 頁，採用骰子抽出的「問題與解法」敘事。
-- `output/05-改善版繳交文字.txt`：專題名稱、GitHub、網頁網址與實測證明段落。
-- `docs/improved-slides.pdf`：網頁可下載的同一份改善版 PDF。
-- 網頁 `#improvement` 與 `#difference`：原本問題、修改內容與前後差異；`#evidence`：重新測試結果。
-- 第一版封存網頁：`docs/v1/index.html`。
+繳交順序：第一行 repo 連結、兩張真實截圖、最後一句模型／修改／卡關說明。不要宣稱尚未完成的實測。
 
-## 已知限制
+## 隱私與已知限制
 
-- 本機 LINE Channel 與臨時 HTTPS 通道已連通，使用者已確認原本「查詢」可回覆；舊繳交資料的真人證據仍保留歷史狀態。臨時通道不是永久主機，重開會換網址。
-- 同步 JSONL 檔案適合課堂低流量原型；讀取會掃描全檔，不支援多執行個體或高流量。
-- 沒有查詢身分的舊資料不會公開列出；不支援查詢其他人的紀錄。
-- 群組中回覆內容會被群組成員看到，請使用個人聊天記錄私人事項。
-- 手動待辦尚無刪除、完成狀態與定時提醒。e學苑提醒只根據行事曆事件，不代表未繳交作業。
-- 相同 eventId 不重複寫入；reply API 失敗時，待辦可能已保存，狀態追蹤與重試仍待改善。
-- 檔案毀損時提供讀取失敗提示，尚未提供備份與修復介面。
+`.env`、`data/`、虛擬環境、client secret 與 credentials 檔案均被 Git 忽略。上傳前仍須檢查程式和 Git 暫存區；截圖不能顯示金鑰、私人授權碼、client_secret.json 內容或 `/exec` 網址。
 
-## AI 協助與技術來源
+搜尋問題會送到公開搜尋服務；模型生成在本機 Ollama 進行。一般搜尋使用 DuckDuckGo Lite／Bing RSS；新聞優先使用 Google News RSS，依序查七天、三十天，再改查一般網頁。只取得標題與摘要，不讀全文；未取得可靠來源時不把模型記憶當作最新消息。來源卡片是搜尋結果，不保證模型每項推論都正確。
 
-Codex 提出改善步驟、撰寫查詢功能與測試，執行前後版本比較；使用官方 [Impeccable](https://github.com/pbakaus/impeccable) 骰子模式（種子 45547134），使用者選定「文字風暴」與 C「前後校訂」草稿。網頁採原生文字與字粒，桌面及手機保留完整測試證據。功能說明依實際程式校正為本人最新 10 筆；草稿與本機測試均不作為 LINE 真人證明。
+此版是課堂低流量單機原型：四個背景工作執行緒，最多十六筆待處理事件；滿載回 503。LINE reply token 有效時間有限，模型或排隊太慢可能回覆失敗。單檔 JSONL 不適合多執行個體，待辦尚無刪除／完成狀態，照片快取滿時需自行整理。私聊與群組對話暫存在記憶體；群組回覆會被其他群組成員看到。
 
-LINE 官方文件：[Webhook 驗簽](https://developers.line.biz/en/docs/messaging-api/verify-webhook-signature/)、[回覆訊息](https://developers.line.biz/en/docs/messaging-api/sending-messages/)、[接收事件](https://developers.line.biz/en/docs/messaging-api/receiving-messages/)。
+這次實測使用 `ENABLE_REMINDERS=0 python line_bot_local.py` 暫停定時推播，私人行事曆查詢仍可用，原本提醒設定不會被覆寫。未指定此變數時照既有綁定設定發提醒。
+
+## 本次實測證據
+
+2026-10-12 台灣時間 13:40:40 收到 LINE 文字事件，Google News 搜尋取得三筆來源，`qwen2.5:3b` 於 13:40:43 完成生成，LINE 回覆 API 返回 200。安全終端紀錄在 [test-evidence/python-line-live-log.txt](test-evidence/python-line-live-log.txt)。這能證明程式執行與 API 回覆成功；手機畫面中的問題、回答與來源仍需以同次實測截圖核對。
