@@ -69,6 +69,7 @@ class TeacherFeatureTests(unittest.TestCase):
 
     def teacher(self, **kwargs):
         defaults = dict(ai=self.ai, google=self.google, enabled=True, owner_id="alice", token="test-token",
+                        sheet_logging=True,
                         http=lambda *a, **k: self.image, state_file=self.path / "google.json", clock=lambda: NOW)
         return bot.TeacherFeatures(**(defaults | kwargs))
 
@@ -168,6 +169,16 @@ class TeacherFeatureTests(unittest.TestCase):
         teacher.record(event("你好", "hello"), "嗨")
         teacher.record(event("新聞", "stranger") | dict(source=dict(type="user", userId="bob")), "回答")
         self.assertEqual(len(self.google.calls), 1)
+
+    def test_disabled_sheet_logging_keeps_drive_calendar_and_answers(self):
+        teacher = self.teacher(sheet_logging=False)
+        answer = [dict(type="text", text="回答"), dict(type="flex", contents={})]
+        self.assertEqual(teacher.record(event("今天新聞"), answer), answer)
+        self.assertNotIn("已記進", teacher.image(event(kind="image", identifier="photo-no-log")))
+        teacher.before_text("明天下午三點開會", event(identifier="schedule-no-log"))
+        reply = teacher.before_text("確認排程", event(identifier="confirm-no-log"))
+        self.assertEqual(teacher.record(event("確認排程"), reply, kind="行程"), reply)
+        self.assertEqual([c[0] for c in self.google.calls], ["drive", "calendar"])
 
     def test_sheet_keeps_results_without_casual_or_schedule_preview_noise(self):
         teacher = self.teacher()

@@ -138,6 +138,19 @@ class PythonBotTests(unittest.TestCase):
         ai = bot.LocalAI(http=lambda url, **kw: b'<title>unavailable</title>' if 'president.gov.tw/Page' in url else RSS)
         self.assertEqual(ai.lookup("現在的總統是誰？"), [])
 
+    def test_live_president_fact_overrides_wrong_model_and_old_history(self):
+        def http(url, **kwargs):
+            if url.startswith("https:"):
+                return '<title>測試人物總統-總統與副總統｜中華民國總統府</title>'.encode()
+            self.assertEqual(len(kwargs['json']['messages']), 2)
+            return json.dumps({'message': {'content': '錯誤人物當選，這只是舊資料'}}).encode()
+        ai = bot.LocalAI(http=http, clock=lambda: NOW)
+        ai.remember('owner', [], '總統當選人', '錯誤人物')
+        reply = ai.ask('現在的總統是誰', 'owner')
+        self.assertEqual(reply[0]['text'], '台灣（中華民國）的現任總統是測試人物。[1]')
+        self.assertNotIn('錯誤人物', str(ai.conversations['owner']))
+        self.assertIn('哪一年的總統選舉', ai.ask('總統當選人', 'owner'))
+
     def test_no_search_for_teaching_and_history_isolation_expiry(self):
         calls, clock = [], [NOW]
         def http(url, **kwargs):

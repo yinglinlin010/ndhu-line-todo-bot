@@ -266,6 +266,8 @@ class LocalAI:
 
     def ask(self, raw, conversation_id=None):
         question, wants_search, recent = question_mode(raw)
+        if re.fullmatch(r"(?:(?:台灣|臺灣|中華民國|美國)的?)?總統(?:候選人|當選人)", search_query(question)):
+            return "你想查哪個國家、哪一年的總統選舉？例如「2024 年台灣總統當選人」。現任總統與某次選舉的候選人／當選人是不同問題。"
         if not question:
             return "直接告訴我你想知道什麼就可以，例如「東華最近有什麼消息？」。"
         if len(question) > 4000:
@@ -303,6 +305,10 @@ class LocalAI:
             if person:
                 results = [r for r in results if person[1] in r["title"] + r["snippet"]]
             LOG.info("[Search] 找到 %s 筆來源", len(results))
+        if search:
+            # Earlier generated answers may be stale or wrong. Never use them
+            # as evidence when checking a fresh factual question.
+            previous = []
         system = ("你是使用者的 LINE 小幫手。使用台灣繁體中文，先直接回答，再補充兩三項必要資訊。"
                   "不要以「根據提供的資料」開頭，不要複製搜尋標題。現在台灣日期是 "
                   + datetime.fromtimestamp(self.clock(), TAIPEI).strftime("%Y-%m-%d") + "。\n")
@@ -322,6 +328,12 @@ class LocalAI:
             if not answer:
                 raise ValueError("Empty model response")
             LOG.info("[Ollama] %s 回答完成（%.1f 秒）", self.model, time.monotonic() - started)
+            if len(results) == 1 and results[0]["url"] == "https://www.president.gov.tw/Page/694":
+                name = re.fullmatch(r"([^\s-]{2,20})總統-總統與副總統[｜|]中華民國總統府", results[0]["title"])
+                if name:
+                    # This narrow lookup is a verified office-holder fact,
+                    # rather than an open-ended summary that permits guesses.
+                    answer = f"台灣（中華民國）的現任總統是{name[1]}。[1]"
             self.remember(conversation_id, previous, question, answer[:1800])
             if results:
                 return source_reply(answer, results)
@@ -508,8 +520,10 @@ class GoogleWorkspace:
 class TeacherFeatures:
     """Teacher workflows, private-chat ownership and persistent write receipts."""
     def __init__(self, ai, google=None, enabled=False, owner_id=None, vision_model="qwen2.5vl:3b",
-                 token=None, http=read_http, state_file="./data/google-actions.json", clock=time.time):
+                 token=None, http=read_http, state_file="./data/google-actions.json", clock=time.time,
+                 sheet_logging=False):
         self.ai, self.google, self.enabled, self.owner_id = ai, google, enabled, owner_id
+        self.sheet_logging = sheet_logging
         self.vision_model, self.token, self.http, self.path, self.clock = vision_model, token, http, Path(state_file), clock
         self.state = json.loads(self.path.read_text()) if self.path.exists() else dict(operations={}, pending=None)
         self.state.setdefault("operations", {})
@@ -622,7 +636,7 @@ class TeacherFeatures:
             return self.record(event, result, kind="照片", said="（照片）", link=link or "")
 
     def record(self, event, answer, kind="文字", said=None, link=""):
-        if not self.enabled or not self.owns(event) or not self.google.sheet_id:
+        if not self.sheet_logging or not self.enabled or not self.owns(event) or not self.google.sheet_id:
             return answer
         raw = event["message"].get("text", "")
         text = answer[0].get("text", "") if isinstance(answer, list) else answer
@@ -1122,6 +1136,7 @@ def main():
     google = GoogleWorkspace(sheet_id=os.getenv("SHEET_ID"), calendar_id=os.getenv("CALENDAR_ID", "primary"),
                              folder=os.getenv("PHOTO_FOLDER", "LINE待辦照片"))
     teacher = TeacherFeatures(ai, google, enabled=os.getenv("GOOGLE_ENABLED") == "1",
+        sheet_logging=os.getenv("ENABLE_SHEET_LOGGING") == "1",
         owner_id=os.getenv("GOOGLE_OWNER_ID") or elearn.state.get("ownerId"),
         vision_model=os.getenv("OLLAMA_VISION_MODEL", "qwen2.5vl:3b"), token=token,
         state_file=os.getenv("GOOGLE_STATE_FILE", "./data/google-actions.json"))
