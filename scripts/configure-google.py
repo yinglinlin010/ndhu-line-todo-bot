@@ -30,7 +30,7 @@ def main():
         return
     for key, value in {"GOOGLE_OWNER_ID": owner, "SHEET_ID": sheet, "CALENDAR_ID": "primary",
                        "PHOTO_FOLDER": "LINE待辦照片", "GOOGLE_ENABLED": "1",
-                       "OLLAMA_VISION_MODEL": "gemma4:e2b-it-q4_K_M"}.items():
+                       "OLLAMA_VISION_MODEL": "gemma4:e4b-it-q4_K_M"}.items():
         set_key(".env", key, value)
     print("設定已保存到本機 .env。未上傳憑證、未寫入 Google；重新啟動 bot 後生效。")
 

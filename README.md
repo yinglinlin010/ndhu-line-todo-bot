@@ -4,6 +4,14 @@
 
 Repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 
+## 現行版本：課堂功能與 Gemma4 E4B
+
+文字與圖片模型均使用 `gemma4:e4b-it-q4_K_M`（Q4_K_M、下載約6.6GB），保留 Drive 照片儲存與確認後的 Calendar 排程。Google 已啟用且限綁定者私聊，試算表自動紀錄依使用者設定保持關閉。52 項 Python 與4項 Apps Script 測試通過；E4B 實測文字、搜尋、追問、圖片辨識與行程解析通過。已獲使用者同意，實際上傳一張合成圖片至私人 Drive，並建立、讀回「W6 E4B 功能測試」行程（2026/10/16 15:00–16:00 台灣時間）；未寫入試算表。雲端測試使用 TeacherFeatures 流程與本機合成圖，並非手機傳圖；結果見 `test-evidence/e4b-cloud-live-check.json`。
+
+首次載入加短題約7.9秒，暖機後測試短題約0.5–1.4秒，實際速度依題目而異。下方 E2B 與 Qwen 的測試紀錄為先前版本；本次 E4B 實測另見 `test-evidence/gemma4-e4b-local-check.json`。
+
+老師輕量版指南明列真實 LINE 關卡 B 為加分；沒有明列換大模型或新增 Google 功能的固定加分數。這份專案展示課堂版功能，但不宣稱老師一定給更高分。
+
 ## 作業用模擬模式（不需要 LINE 金鑰）
 
 安裝完成後執行：
@@ -22,7 +30,7 @@ Repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 - 聊天記憶及目前主題保存在 Git 忽略的本機 `data/conversations.json`，檔案權限 600；閒置二十分鐘失效，清除對話同步清除本機保存內容。
 - 圖片成功辨識後保存文字描述，下一題可以接續詢問；只保留描述，不把私人圖片或 Drive 網址送去搜尋。
 - 啟動先检查 Ollama 與模型；終端標明本機 AI、退出後的雲端待辦模式、試算表紀錄開關。現有通道仍需保持執行。
-- 現行文字及圖片模型皆為 `gemma4:e2b-it-q4_K_M`；試算表紀錄關閉。下方舊版本段落保留沿革，現行設定以這一段為準。
+- 現行文字及圖片模型皆為 `gemma4:e4b-it-q4_K_M`；試算表紀錄關閉。下方舊版本段落保留沿革，現行設定以這一段為準。
 
 已於本次真實 LINE 測試取得手機回答與同一次問答的終端截圖，放在 `test-evidence/gemma4-line-phone.jpg` 與 `test-evidence/gemma4-line-terminal.jpg`；另實測重啟後翻譯追問接續成功。若依老師後來的簡單版指南，模擬模式三題的終端截圖可作 A 路線證據。參考：[老師的簡單版指南](https://cwstedctw.github.io/ndhu-ted-course-hub/weekly/11501-ai-coding/w06/line-bot-lite.html)。
 
@@ -36,7 +44,7 @@ cd ndhu-line-todo-bot
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-lock.txt
-ollama pull gemma4:e2b-it-q4_K_M
+ollama pull gemma4:e4b-it-q4_K_M
 ```
 
 若使用 Python 3.11，可將 `python3.12` 換成 `python3.11`。Windows 啟用虛擬環境使用 `.venv\Scripts\Activate.ps1`。`requirements-lock.txt` 固定這次測試的版本；`requirements.txt` 保留允許的更新範圍。
@@ -48,7 +56,7 @@ ollama pull gemma4:e2b-it-q4_K_M
 1. 已有本機 `.env` 的使用者可直接沿用，不需要重新設定 LINE 或 e學苑綁定。
 2. 新安裝時，把 `.env.example` **複製**成 `.env`，只在自己的編輯器內填入設定；不要覆蓋現有 `.env`。
 3. 設定 `LINE_CHANNEL_SECRET`、`LINE_CHANNEL_ACCESS_TOKEN`。未設定時，程式啟動會以隱藏輸入詢問，輸入值只留在記憶體。
-4. 可選設定 `OLLAMA_MODEL`，預設 `gemma4:e2b-it-q4_K_M`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
+4. 可選設定 `OLLAMA_MODEL`，預設 `gemma4:e4b-it-q4_K_M`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
 5. 使用以下指令啟動：
 
 ```sh
@@ -204,7 +212,7 @@ Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留
 
 人物／地點照片優先查找名稱吻合的維基百科介紹頁圖片；找不到可下載的照片時，再用 DuckDuckGo 與 Bing 備援。拒絕只有部分姓名相似的介紹頁，並保留來源連結。圖片下載仍限制公開 HTTPS IP、大小、格式與像素，轉 JPEG 後由本機通道提供 LINE 原圖及預覽。實測「瀨戶環奈的照片」取得圖片，兩個公開圖片網址均回 200／image/jpeg。不是每個人物都有介紹頁或可傳送照片，來源全部不可用時仍會如實提示。
 
-## 本次測試結果
+## E2B 階段測試結果（升級前）
 
 43 項 Python 測試、4 項 Apps Script 測試通過；真實手機查詢台灣現任總統，回覆附總統府官方來源，終端顯示搜尋、Gemma4 推論約 1.1 秒及 LINE 回覆 200。重啟後追問翻譯仍接續上一題。`--simulate --search` 三題與清除對話的真實執行紀錄在 `test-evidence/simulation-live.txt`。已檢查本次新增檔案未含本機金鑰設定；紀錄試算表保持關閉。Google Calendar 新行程與雲端待辦手機操作尚未於本次測試，不能將單元測試當成雲端端對端實測。
 
@@ -223,3 +231,5 @@ Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留
 - Webhook 接管失敗即停止，不啟動提醒，也不覆寫未知 Webhook；已嘗試切換但無法確認時，嘗試回復先前確認過的備援。
 
 驗證：51 項 Python 測試通過，含以上反例及啟動失敗／回復情境；4 項 Apps Script 測試通過。Gemma4 實際跑過「牛頓定律 → 詳細介紹周星馳 → 翻成英文 → 給我他的照片」，最後圖片來源為周星馳 Wikipedia 條目，記錄在 test-evidence/review-five-live.json。模型翻譯仍可能用詞不準；測試確認的是主題接續與來源處理，不保證每句生成內容正確。
+
+E4B 最新 LINE 手機與同次终端截圖：`test-evidence/gemma4-e4b-line-phone.jpg`、`test-evidence/gemma4-e4b-line-terminal.jpg`，本次模型生成約1.5秒；三題模擬模式紀錄見 `test-evidence/e4b-simulation-live.txt`。

@@ -241,7 +241,7 @@ def source_reply(answer, results):
 
 
 class LocalAI:
-    def __init__(self, model="gemma4:e2b-it-q4_K_M", base_url="http://127.0.0.1:11434", photos=None, http=read_http, clock=time.time, memory_path=None):
+    def __init__(self, model="gemma4:e4b-it-q4_K_M", base_url="http://127.0.0.1:11434", photos=None, http=read_http, clock=time.time, memory_path=None):
         url = urlsplit(base_url)
         if url.hostname not in ("localhost", "127.0.0.1", "::1") or url.scheme not in ("http", "https") or url.username or url.password:
             raise ValueError("Ollama URL must be local")
@@ -465,7 +465,7 @@ class LocalAI:
         LOG.info("[Ollama] %s 回答完成（%.1f 秒）", model, time.monotonic() - started)
         return content
 
-    def describe_image(self, image, model="gemma4:e2b-it-q4_K_M"):
+    def describe_image(self, image, model="gemma4:e4b-it-q4_K_M"):
         details = json.loads(self.http(urljoin(self.base_url, "/api/show"), method="POST", timeout=5, json=dict(model=model)))
         if "vision" not in details.get("capabilities", []):
             raise ValueError("A vision-capable local model is required")
@@ -503,7 +503,8 @@ def validate_event(text, value, now):
         return None
     if not value["title"].strip() or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value["date"]):
         return None
-    normalized_time = re.sub(r"(\d{1,2}:\d{2}):00(?=$|[-–])", r"\1", value["time"])
+    normalized_time = re.sub(r"\s+", "", value["time"]).replace("：", ":")
+    normalized_time = re.sub(r"(\d{1,2}:\d{2}):00(?=$|[-–])", r"\1", normalized_time)
     if not re.fullmatch(r"\d{1,2}:\d{2}(?:[-–]\d{1,2}:\d{2})?", normalized_time):
         return None
     if not re.search(r"\d{1,2}:\d{2}|[0-9一二三四五六七八九十兩]+\s*[點時]", text):
@@ -618,7 +619,7 @@ class GoogleWorkspace:
 
 class TeacherFeatures:
     """Teacher workflows, private-chat ownership and persistent write receipts."""
-    def __init__(self, ai, google=None, enabled=False, owner_id=None, vision_model="gemma4:e2b-it-q4_K_M",
+    def __init__(self, ai, google=None, enabled=False, owner_id=None, vision_model="gemma4:e4b-it-q4_K_M",
                  token=None, http=read_http, state_file="./data/google-actions.json", clock=time.time,
                  sheet_logging=False):
         self.ai, self.google, self.enabled, self.owner_id = ai, google, enabled, owner_id
@@ -1296,7 +1297,7 @@ def check_model(ai):
         return False
 
 
-def simulate(search=False, model="gemma4:e2b-it-q4_K_M"):
+def simulate(search=False, model="gemma4:e4b-it-q4_K_M"):
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%H:%M:%S")
     ai = LocalAI(model)
     ai.search_enabled = search
@@ -1345,7 +1346,7 @@ def main():
         raise ValueError("Missing LINE settings")
     elearn = Elearn(os.getenv("ELEARN_CALENDAR_URL"), token, os.getenv("ELEARN_STATE_FILE", "./data/elearn.json"))
     photos = Photos(os.getenv("PUBLIC_BASE_URL"))
-    ai = LocalAI(os.getenv("OLLAMA_MODEL") or os.getenv("MODEL", "gemma4:e2b-it-q4_K_M"), os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434"), photos, memory_path="./data/conversations.json")
+    ai = LocalAI(os.getenv("OLLAMA_MODEL") or os.getenv("MODEL", "gemma4:e4b-it-q4_K_M"), os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434"), photos, memory_path="./data/conversations.json")
     if not check_model(ai):
         raise ValueError("Local model unavailable")
     google = GoogleWorkspace(sheet_id=os.getenv("SHEET_ID"), calendar_id=os.getenv("CALENDAR_ID", "primary"),
@@ -1353,7 +1354,7 @@ def main():
     teacher = TeacherFeatures(ai, google, enabled=os.getenv("GOOGLE_ENABLED") == "1",
         sheet_logging=os.getenv("ENABLE_SHEET_LOGGING") == "1",
         owner_id=os.getenv("GOOGLE_OWNER_ID") or elearn.state.get("ownerId"),
-        vision_model=os.getenv("OLLAMA_VISION_MODEL", "gemma4:e2b-it-q4_K_M"), token=token,
+        vision_model=os.getenv("OLLAMA_VISION_MODEL", "gemma4:e4b-it-q4_K_M"), token=token,
         state_file=os.getenv("GOOGLE_STATE_FILE", "./data/google-actions.json"))
     runtime = BotRuntime(secret, token, TodoStore(os.getenv("TODO_FILE", "./data/todos.jsonl")), ai, elearn, photos, teacher=teacher)
     stop = threading.Event()
@@ -1431,7 +1432,7 @@ if __name__ == "__main__":
         parser = argparse.ArgumentParser()
         parser.add_argument("--simulate", action="store_true")
         parser.add_argument("--search", action="store_true")
-        parser.add_argument("--model", default="gemma4:e2b-it-q4_K_M")
+        parser.add_argument("--model", default="gemma4:e4b-it-q4_K_M")
         args = parser.parse_args()
         raise SystemExit(simulate(args.search, args.model))
     elif sys.argv[1:]:

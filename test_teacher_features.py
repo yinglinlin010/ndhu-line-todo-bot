@@ -76,6 +76,11 @@ class TeacherFeatureTests(unittest.TestCase):
                         http=lambda *a, **k: self.image, state_file=self.path / "google.json", clock=lambda: NOW)
         return bot.TeacherFeatures(**(defaults | kwargs))
 
+    def test_calendar_model_time_spacing_is_normalized(self):
+        parsed = bot.validate_event("2026-10-11 下午3點到4點模型測試",
+            dict(isEvent=True, title="模型測試", date="2026-10-11", time="15:00 - 16:00"), NOW)
+        self.assertEqual(parsed["time"], "15:00–16:00")
+
     def test_event_validation_rejects_invalid_and_hallucinated_dates(self):
         valid = dict(isEvent=True, title="開會", date="2026-10-11", time="15:00-16:00")
         self.assertIsNotNone(bot.validate_event("明天下午三點開會", valid, NOW))
@@ -248,7 +253,7 @@ class TeacherFeatureTests(unittest.TestCase):
             return json.dumps(dict(capabilities=["vision"]) if url.endswith("/api/show") else dict(message=dict(content="照片內容"))).encode()
         ai = bot.LocalAI(http=http)
         self.assertEqual(ai.describe_image(b"image"), "照片內容")
-        self.assertEqual(calls[1][1]["json"]["model"], "gemma4:e2b-it-q4_K_M")
+        self.assertEqual(calls[1][1]["json"]["model"], "gemma4:e4b-it-q4_K_M")
         self.assertIn("images", calls[1][1]["json"]["messages"][0])
         ai.http = lambda *a, **k: b'{"capabilities":["completion"]}'
         with self.assertRaises(ValueError):

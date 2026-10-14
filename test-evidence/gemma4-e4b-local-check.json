@@ -1,0 +1,50 @@
+{
+  "model": "gemma4:e4b-it-q4_K_M",
+  "context": 4096,
+  "checked_at": "2026-10-15T03:58:33.140622+08:00",
+  "tests": [
+    {
+      "kind": "text",
+      "question": "教我玉山的高度是多少？請只回答高度。",
+      "answer": "玉山的主峰高度是 3952 公尺。\n\n補充資訊：\n玉山是台灣最高的山峰，位於台灣中部的玉山國家公園內。\n山峰的地理位置在台灣的中央山脈系統中。\n由於山體結構複雜，不同測點的標高可能略有差異。",
+      "seconds": 1.37
+    },
+    {
+      "kind": "text",
+      "question": "台灣現在的總統是誰？",
+      "answer": "台灣（中華民國）的現任總統是賴清德。[1]",
+      "seconds": 1.15
+    },
+    {
+      "kind": "text",
+      "question": "翻成英文",
+      "answer": "The current President of Taiwan (Republic of China) is Lai Ching-te.",
+      "seconds": 0.45
+    },
+    {
+      "kind": "synthetic-image",
+      "answer": "圖片中只有白底黑字的文字。清晰可見的文字是「MEETING 2026-10-20 15:00」。這是一個關於會議的標題，其中包含了日期和時間資訊。",
+      "seconds": 0.7
+    },
+    {
+      "kind": "calendar-parse-only",
+      "event": {
+        "title": "W6 模型測試",
+        "date": "2026-10-16",
+        "time": "15:00–16:00",
+        "start": "2026-10-16T15:00:00+08:00",
+        "end": "2026-10-16T16:00:00+08:00"
+      },
+      "seconds": 0.63
+    }
+  ],
+  "runner_rss_mib": [
+    4466.6
+  ],
+  "google_read_checks": {
+    "drive": "read access verified",
+    "calendar": "read access verified"
+  },
+  "first_cold_answer_seconds": 7.93,
+  "rss_note": "Runner RSS at this test point only; not total unified memory usage or peak."
+}
