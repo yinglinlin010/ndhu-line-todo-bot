@@ -338,6 +338,28 @@ class PythonBotTests(unittest.TestCase):
         finally:
             runtime.close()
 
+    def test_photo_wiki_title_match_avoids_similarly_named_person(self):
+        buffer=io.BytesIO();Image.new('RGB',(200,300),'blue').save(buffer,'PNG')
+        seen=[]
+        def download(url,**kwargs):
+            seen.append(url)
+            if 'w/api.php' in url:
+                body=json.dumps({'query':{'pages':{'1':{'title':'橋本環奈','index':1,'thumbnail':{'source':'https://images.example.org/wrong.png'},'fullurl':'https://example.org/wrong'},'2':{'title':'瀨戶環奈','index':2,'thumbnail':{'source':'https://images.example.org/right.png'},'fullurl':'https://example.org/right'}}}},ensure_ascii=False).encode()
+            elif url.endswith('/right.png'):body=buffer.getvalue()
+            else:self.fail('Wrong person or unnecessary fallback requested')
+            return dict(body=body,url=url)
+        photos=bot.Photos('https://bot.example.org',self.path,download)
+        reply=photos.handle('搜尋瀨戶環奈的照片')
+        self.assertEqual(reply[1]['type'],'image');self.assertIn('example.org/right',reply[0]['text'])
+        self.assertEqual(len(seen),2)
+
+    def test_photo_search_falls_back_when_primary_source_is_blocked(self):
+        def download(url,**kwargs):
+            if 'bing.com' in url:return dict(body=RSS,url=url)
+            raise RuntimeError('source blocked')
+        photos=bot.Photos('https://bot.example.org',self.path,download)
+        self.assertEqual(len(list(photos.source_pages('科學新聞',time.monotonic()+10))),1)
+
     def test_webhook_immediate_ack_dedup_validation_and_background_reply(self):
         gate, done, calls, replies = threading.Event(), threading.Event(), [], []
         class AI:

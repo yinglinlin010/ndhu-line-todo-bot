@@ -913,7 +913,7 @@ def get_public(url, max_bytes=3 * 1024 * 1024, deadline=None, redirects=3):
 def photo_subject(raw, previous=""):
     if not re.search(r"照片|圖片|相片|圖像", raw) or re.search(r"生成|畫一|畫個|繪製|辨識|分析圖片", raw):
         return None
-    topic = re.sub(r"^(可以|能不能|請|麻煩|幫我|給我|傳給我|傳我|找一下|找|看看|看|我想看|我想要|我要|有沒有|來一張|來幾張|一張|幾張|張|的|一下|傳|送|我)+", "", raw)
+    topic = re.sub(r"^(可以|能不能|請|麻煩|幫我|給我|傳給我|傳我|搜尋|搜索|查詢|找一下|找|看看|看|我想看|我想要|我要|有沒有|來一張|來幾張|一張|幾張|張|的|一下|傳|送|我)+", "", raw)
     topic = re.sub(r"(?:的)?(?:照片|圖片|相片|圖像).*$", "", topic).strip()
     if not topic or topic in ("他", "她", "它", "這個", "那個"):
         topic = re.sub(r"的?(評價|介紹|資料|消息).*$", "", re.sub(r"[？?！!]", "", previous)).strip()
@@ -945,6 +945,37 @@ class Photos:
         self.base_url, self.cache_dir, self.download = base_url, Path(cache_dir), download
         self.memo, self.lock = {}, threading.RLock()
 
+    def source_pages(self, subject, deadline):
+        # A title match is essential: a search for one person may rank another
+        # person with a similar name above the actual requested biography.
+        try:
+            LOG.info("[Photos] 查找維基百科介紹頁照片")
+            url = "https://zh.wikipedia.org/w/api.php?" + urlencode(dict(action="query", generator="search",
+                gsrsearch=subject, gsrlimit=3, prop="pageimages|info", pithumbsize=1000, inprop="url", format="json"))
+            data = json.loads(self.download(url, deadline=deadline)["body"])
+            rows = data.get("query", {}).get("pages", {}).values()
+            for page in sorted(rows, key=lambda p: (p.get("title") != subject, p.get("index", 99))):
+                title = page.get("title", "")
+                image = page.get("thumbnail", {}).get("source", "")
+                source = page.get("fullurl", "")
+                if title and (subject in title or title in subject) and image.startswith("https://") and source.startswith("https://"):
+                    yield dict(title=title, url=source, image=image)
+        except Exception:
+            LOG.info("[Photos] 介紹頁未取得可用照片，改用網頁來源")
+        for provider, url in [("DuckDuckGo", "https://lite.duckduckgo.com/lite/?" + urlencode(dict(q=subject + " 照片"))),
+                              ("Bing", "https://www.bing.com/search?" + urlencode(dict(q=subject + " 照片", format="rss")))]:
+            if time.monotonic() > deadline:
+                return
+            try:
+                LOG.info("[Photos] %s 備援搜尋", provider)
+                response = self.download(url, deadline=deadline)
+                rows = parse_search_html(response["body"]) if provider == "DuckDuckGo" else parse_search_feed(response["body"])
+                if provider == "Bing":
+                    rows = relevant_sources(rows, subject)
+                yield from rows[:6]
+            except Exception:
+                LOG.info("[Photos] 此備援來源暫時不可用")
+
     def handle(self, raw, previous=""):
         subject = photo_subject(raw, previous)
         if subject is None:
@@ -959,19 +990,21 @@ class Photos:
         deadline = time.monotonic() + 25
         try:
             LOG.info("[Photos] 搜尋公開來源照片")
-            search = self.download("https://lite.duckduckgo.com/lite/?" + urlencode(dict(q=subject + " 照片")), deadline=deadline)
-            pages = parse_search_html(search["body"])
             person = re.search(r"大學\s*([\u4e00-\u9fff]{2,4})(?:老師|教授)", subject)
-            for page in pages:
+            for page in self.source_pages(subject, deadline):
                 if person and person[1] not in page["title"]:
                     continue
                 try:
-                    response = self.download(page["url"], deadline=deadline)
-                    html = response["body"]
-                    title = BeautifulSoup(html, "html.parser").title
-                    if person and (not title or person[1] not in title.get_text()):
-                        continue
-                    for url in image_candidates(html, response["url"], person[1] if person else subject):
+                    if page.get("image"):
+                        candidates = [page["image"]]
+                    else:
+                        response = self.download(page["url"], deadline=deadline)
+                        html = response["body"]
+                        title = BeautifulSoup(html, "html.parser").title
+                        if person and (not title or person[1] not in title.get_text()):
+                            continue
+                        candidates = image_candidates(html, response["url"], person[1] if person else subject)
+                    for url in candidates:
                         try:
                             image = self.download(url, max_bytes=5 * 1024 * 1024, deadline=deadline)
                             with warnings.catch_warnings():
