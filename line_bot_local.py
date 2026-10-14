@@ -220,7 +220,7 @@ def source_reply(answer, results):
 
 
 class LocalAI:
-    def __init__(self, model="qwen2.5:3b", base_url="http://127.0.0.1:11434", photos=None, http=read_http, clock=time.time):
+    def __init__(self, model="gemma4:e2b-it-q4_K_M", base_url="http://127.0.0.1:11434", photos=None, http=read_http, clock=time.time):
         url = urlsplit(base_url)
         if url.hostname not in ("localhost", "127.0.0.1", "::1") or url.scheme not in ("http", "https") or url.username or url.password:
             raise ValueError("Ollama URL must be local")
@@ -366,7 +366,7 @@ class LocalAI:
         LOG.info("[Ollama] %s 回答完成（%.1f 秒）", model, time.monotonic() - started)
         return content
 
-    def describe_image(self, image, model="qwen2.5vl:3b"):
+    def describe_image(self, image, model="gemma4:e2b-it-q4_K_M"):
         details = json.loads(self.http(urljoin(self.base_url, "/api/show"), method="POST", timeout=5, json=dict(model=model)))
         if "vision" not in details.get("capabilities", []):
             raise ValueError("A vision-capable local model is required")
@@ -519,7 +519,7 @@ class GoogleWorkspace:
 
 class TeacherFeatures:
     """Teacher workflows, private-chat ownership and persistent write receipts."""
-    def __init__(self, ai, google=None, enabled=False, owner_id=None, vision_model="qwen2.5vl:3b",
+    def __init__(self, ai, google=None, enabled=False, owner_id=None, vision_model="gemma4:e2b-it-q4_K_M",
                  token=None, http=read_http, state_file="./data/google-actions.json", clock=time.time,
                  sheet_logging=False):
         self.ai, self.google, self.enabled, self.owner_id = ai, google, enabled, owner_id
@@ -1149,13 +1149,13 @@ def main():
         raise ValueError("Missing LINE settings")
     elearn = Elearn(os.getenv("ELEARN_CALENDAR_URL"), token, os.getenv("ELEARN_STATE_FILE", "./data/elearn.json"))
     photos = Photos(os.getenv("PUBLIC_BASE_URL"))
-    ai = LocalAI(os.getenv("OLLAMA_MODEL") or os.getenv("MODEL", "qwen2.5:3b"), os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434"), photos)
+    ai = LocalAI(os.getenv("OLLAMA_MODEL") or os.getenv("MODEL", "gemma4:e2b-it-q4_K_M"), os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434"), photos)
     google = GoogleWorkspace(sheet_id=os.getenv("SHEET_ID"), calendar_id=os.getenv("CALENDAR_ID", "primary"),
                              folder=os.getenv("PHOTO_FOLDER", "LINE待辦照片"))
     teacher = TeacherFeatures(ai, google, enabled=os.getenv("GOOGLE_ENABLED") == "1",
         sheet_logging=os.getenv("ENABLE_SHEET_LOGGING") == "1",
         owner_id=os.getenv("GOOGLE_OWNER_ID") or elearn.state.get("ownerId"),
-        vision_model=os.getenv("OLLAMA_VISION_MODEL", "qwen2.5vl:3b"), token=token,
+        vision_model=os.getenv("OLLAMA_VISION_MODEL", "gemma4:e2b-it-q4_K_M"), token=token,
         state_file=os.getenv("GOOGLE_STATE_FILE", "./data/google-actions.json"))
     runtime = BotRuntime(secret, token, TodoStore(os.getenv("TODO_FILE", "./data/todos.jsonl")), ai, elearn, photos, teacher=teacher)
     stop = threading.Event()

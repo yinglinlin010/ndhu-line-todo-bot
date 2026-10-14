@@ -1,0 +1,26 @@
+{
+  "model": "gemma4:e2b-it-q4_K_M",
+  "context": 4096,
+  "ollama_size_bytes": 237670235,
+  "ollama_vram_bytes": 237670235,
+  "checks": [
+    {
+      "test": "首次載入",
+      "seconds": 4.42,
+      "answer": "台灣最高的山是玉山，海拔約3,952公尺。"
+    },
+    {
+      "test": "已載入後",
+      "seconds": 0.2,
+      "answer": "台灣最高的山是玉山，海拔約3,952公尺。"
+    },
+    {
+      "test": "照片測試",
+      "seconds": 0.77,
+      "answer": "這張圖片包含文字資訊。可見的文字是「MEETING 2026-10-16 15:00」。這表示有一個會議的日期是2026年10月16日，時間是下午三點。"
+    }
+  ],
+  "runner_rss_bytes": 4717592576,
+  "memory_note": "macOS RSS is resident process memory at this sample, not peak memory. Ollama /api/ps reported size is not the full runner RSS; GPU/system shared memory must not be summed as separate copies.",
+  "tested_at": "2026-10-15T01:42:04.174605+08:00"
+}

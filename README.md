@@ -14,7 +14,7 @@ cd ndhu-line-todo-bot
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-lock.txt
-ollama pull qwen2.5:3b
+ollama pull gemma4:e2b-it-q4_K_M
 ```
 
 若使用 Python 3.11，可將 `python3.12` 換成 `python3.11`。Windows 啟用虛擬環境使用 `.venv\Scripts\Activate.ps1`。`requirements-lock.txt` 固定這次測試的版本；`requirements.txt` 保留允許的更新範圍。
@@ -26,7 +26,7 @@ ollama pull qwen2.5:3b
 1. 已有本機 `.env` 的使用者可直接沿用，不需要重新設定 LINE 或 e學苑綁定。
 2. 新安裝時，把 `.env.example` **複製**成 `.env`，只在自己的編輯器內填入設定；不要覆蓋現有 `.env`。
 3. 設定 `LINE_CHANNEL_SECRET`、`LINE_CHANNEL_ACCESS_TOKEN`。未設定時，程式啟動會以隱藏輸入詢問，輸入值只留在記憶體。
-4. 可選設定 `OLLAMA_MODEL`，預設 `qwen2.5:3b`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
+4. 可選設定 `OLLAMA_MODEL`，預設 `gemma4:e2b-it-q4_K_M`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
 5. 使用以下指令啟動：
 
 ```sh
@@ -120,10 +120,10 @@ Python 版已完成 LINE 問答實測；繳交仍須附同次手機與終端截�
 
 ## 老師版照片與 Google 功能
 
-文字問答維持 `qwen2.5:3b`；它不能看圖。照片使用 `OLLAMA_VISION_MODEL`，預設 `qwen2.5vl:3b`。先安裝照片模型：
+目前文字與照片都使用老師推薦的 Gemma 4 E2B，選用較省資源的 Q4_K_M 版本 `gemma4:e2b-it-q4_K_M`。照片使用 `OLLAMA_VISION_MODEL`，預設同一型號，只需下載一次：
 
 ```sh
-ollama pull qwen2.5vl:3b
+ollama pull gemma4:e2b-it-q4_K_M
 ```
 
 Google 功能使用 [Google Workspace CLI](https://github.com/googleworkspace/cli)，可安裝在被 Git 忽略的本機工具目錄：
@@ -167,3 +167,9 @@ Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留
 ## Apps Script 基本待辦備援
 
 雲端程式與操作說明在 [apps-script/README.md](apps-script/README.md)，支援綁定者私聊新增待辦與查詢最新十筆。已完成 Apps Script 授權與公開部署；匿名 GET／空事件 POST 都執行到程式、LINE 官方入口驗證 success=true。正常 Ctrl+C 退出已切到備援，重新啟動 Python 已切回本機通道，兩次均透過 LINE API 讀回一致。完整的手機新增待辦／查詢流程仍待實測。獨立隨機 key 保護的網址只保存於本機與 LINE。
+
+## 2026-10-15 改用老師推薦的 Gemma 4
+
+目前文字與照片模型均為 `gemma4:e2b-it-q4_K_M`，即 Gemma 4 E2B 的 4.6 GB Q4 版本，避免 Apple Silicon 預設標籤選到 7.5 GB MLX 版。原有 Qwen 測試紀錄是歷史證據，不代表目前仍使用 Qwen。
+
+在 Apple M5 Pro、24 GB 統一記憶體的電腦，4,096-token 設定實測：首次載入並回答玉山問題 4.42 秒，載入後同題 0.20 秒（重複提示可受快取影響）；照片辨識 0.77 秒，正確讀出測試卡日期與時間。macOS 模型程序 RSS 約 4.4 GiB，為當時常駐用量，不是峰值或整台電腦用量，圖片／長對話／併發請求可能增加。Ollama API 的 size 欄在此版本回報較小的估計，不能把它當成程序總占用。安全測試紀錄見 [Gemma 4 實測](test-evidence/gemma4-local-check.json)。

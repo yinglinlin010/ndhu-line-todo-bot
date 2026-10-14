@@ -245,7 +245,7 @@ class TeacherFeatureTests(unittest.TestCase):
             return json.dumps(dict(capabilities=["vision"]) if url.endswith("/api/show") else dict(message=dict(content="照片內容"))).encode()
         ai = bot.LocalAI(http=http)
         self.assertEqual(ai.describe_image(b"image"), "照片內容")
-        self.assertEqual(calls[1][1]["json"]["model"], "qwen2.5vl:3b")
+        self.assertEqual(calls[1][1]["json"]["model"], "gemma4:e2b-it-q4_K_M")
         self.assertIn("images", calls[1][1]["json"]["messages"][0])
         ai.http = lambda *a, **k: b'{"capabilities":["completion"]}'
         with self.assertRaises(ValueError):
