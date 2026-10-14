@@ -233,3 +233,14 @@ Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留
 驗證：51 項 Python 測試通過，含以上反例及啟動失敗／回復情境；4 項 Apps Script 測試通過。Gemma4 實際跑過「牛頓定律 → 詳細介紹周星馳 → 翻成英文 → 給我他的照片」，最後圖片來源為周星馳 Wikipedia 條目，記錄在 test-evidence/review-five-live.json。模型翻譯仍可能用詞不準；測試確認的是主題接續與來源處理，不保證每句生成內容正確。
 
 E4B 最新 LINE 手機與同次终端截圖：`test-evidence/gemma4-e4b-line-phone.jpg`、`test-evidence/gemma4-e4b-line-terminal.jpg`，本次模型生成約1.5秒；三題模擬模式紀錄見 `test-evidence/e4b-simulation-live.txt`。
+
+## 老師指定三題補測
+
+依老師輕量版指南 2-2 的原題測試：`hi`、`台灣最高的山是哪一座？多高？`、`2026 年諾貝爾物理獎得主是誰？`。先前的總統查詢是另出題，不冒充諾貝爾原題。
+
+- hi 現在直接回使用說明，不呼叫模型。
+- 玉山題曾答對3952公尺，也曾在一輪純本機測試誤答3009公尺；完整保留 `test-evidence/teacher-three-offline.txt` 的失敗紀錄，不能宣稱模型每次都正確。
+- 本年度資訊在未開搜尋時要求查證；開搜尋後這次未取得可靠的諾貝爾來源，明確拒絕猜得主，不把連假網頁附作獎項來源。這題尚未驗證出正確得主。
+- 本次修正僅年份命中就放行的來源篩選，並排除以金融／泛旅遊頁充當最高山高度來源的情況。53項Python回歸測試通過；這不代表所有模型生成事實都正確。
+
+搜尋模式紀錄：`test-evidence/teacher-three-search.txt`；可見終端補測截圖：`test-evidence/teacher-three-terminal.jpg`（另一輪純本機實測，玉山答3952公尺）。關卡B的手機總統查詢截圖仍是獨立的另出題證據。

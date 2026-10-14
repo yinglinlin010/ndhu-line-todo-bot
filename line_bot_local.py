@@ -194,7 +194,7 @@ def search_query(question):
 
 
 def relevant_sources(results, query, definitions=False):
-    terms = [t for t in re.findall(r"[a-zA-Z0-9]{2,}|[\u4e00-\u9fff]+", query.lower()) if t not in {"the", "is", "of", "who", "what", "ho", "in", "and", "current", "now", "please"}]
+    terms = [t for t in re.findall(r"[a-zA-Z0-9]{2,}|[\u4e00-\u9fff]+", query.lower()) if not (t.isdigit() and len(t) == 4) and t not in {"the", "is", "of", "who", "what", "ho", "in", "and", "current", "now", "please"}]
     # Ignore conversational/time qualifiers when testing topical overlap.
     topics = re.sub(r"今天|今日|現在|目前|最近|最新|現任|查詢|請問|什麼|誰|哪些|有沒有|怎麼|為什麼|的|是", " ", query.lower())
     chunks = re.findall(r"[a-zA-Z0-9]{2,}|[\u4e00-\u9fff]{2,}", topics)
@@ -203,6 +203,11 @@ def relevant_sources(results, query, definitions=False):
     for r in results:
         text = (r["title"] + " " + r["snippet"]).lower()
         if not definitions and re.search(r"國語辭典|國語字典|重編國語|漢典|dictionary|辭典檢視", text + " " + r["url"]):
+            continue
+        if "山" in query and re.search(r"最高|高度|多高", query) and not re.search(r"玉山|山峰|高山|海拔|mountain|peak", text, re.I):
+            continue
+        overlap = sum(1 for g in grams if g in text)
+        if grams and overlap < min(2, len(grams)):
             continue
         score = sum(2 for t in terms if (re.search(r"\b" + re.escape(t) + r"\b", text) if t.isascii() else t in text)) + sum(1 for g in grams if g in text)
         if (grams or terms) and score == 0:
@@ -321,7 +326,11 @@ class LocalAI:
                 self.conversations.pop(conversation_id, None)
                 self.save_memory()
             return "已清除這段對話的記憶。"
+        if re.fullmatch(r"hi|hello|你好|嗨|哈囉|測試|test", raw.strip(), re.I):
+            return "你好！我是跑在你電腦上的 LINE 小幫手。可以問我問題、搜尋附來源、傳照片辨識，或輸入「記錄：事項」和「查詢」。"
         question, wants_search, recent = question_mode(raw)
+        this_year = datetime.fromtimestamp(self.clock(), TAIPEI).year
+        recent = recent or bool(re.search(r"(?<!\d)" + str(this_year) + r"\s*年", question))
         if re.fullmatch(r"(?:(?:台灣|臺灣|中華民國|美國)的?)?總統(?:候選人|當選人)", search_query(question)):
             return "你想查哪個國家、哪一年的總統選舉？例如「2024 年台灣總統當選人」。現任總統與某次選舉的候選人／當選人是不同問題。"
         if not question:

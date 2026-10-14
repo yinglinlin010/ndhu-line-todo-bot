@@ -196,6 +196,16 @@ class PythonBotTests(unittest.TestCase):
         ai.lookup=lambda *a: self.fail('Must not search an unresolved pronoun')
         self.assertIn('請補上名稱',ai.ask('他幾歲','owner'))
 
+    def test_teacher_questions_greeting_offline_year_and_search_topic(self):
+        ai = bot.LocalAI(http=lambda *a, **k: self.fail("No model or search call expected"), clock=lambda: NOW)
+        self.assertIn("小幫手", ai.ask("hi"))
+        ai.search_enabled = False
+        self.assertIn("--search", ai.ask("2026 年諾貝爾物理獎得主是誰？"))
+        rows = [dict(title="2026 年台灣行事曆", snippet="2026 連假", url="https://example.org/holidays")]
+        self.assertEqual(bot.relevant_sources(rows, "2026 年諾貝爾物理獎得主"), [])
+        rows = [dict(title="台灣銀行", snippet="台灣最高品質金融服務", url="https://example.org/bank")]
+        self.assertEqual(bot.relevant_sources(rows, "台灣最高的山是哪一座 多高"), [])
+
     def test_named_new_topic_is_not_a_continuation(self):
         calls, searches = [], []
         def http(url, **kwargs):
