@@ -207,3 +207,19 @@ Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留
 ## 本次測試結果
 
 43 項 Python 測試、4 項 Apps Script 測試通過；真實手機查詢台灣現任總統，回覆附總統府官方來源，終端顯示搜尋、Gemma4 推論約 1.1 秒及 LINE 回覆 200。重啟後追問翻譯仍接續上一題。`--simulate --search` 三題與清除對話的真實執行紀錄在 `test-evidence/simulation-live.txt`。已檢查本次新增檔案未含本機金鑰設定；紀錄試算表保持關閉。Google Calendar 新行程與雲端待辦手機操作尚未於本次測試，不能將單元測試當成雲端端對端實測。
+
+## 對照老師提供的輕量版程式本體
+
+參考程式：[line_bot_lite.py](https://cwstedctw.github.io/ndhu-ted-course-hub/weekly/11501-ai-coding/w06/starter/line_bot_lite.py)。本專案為先前 Node.js bot 的 Python 移植與擴充，並非原檔不修改直接使用。
+
+老師版只做文字問答、模擬模式與可選搜尋；搜尋由模型呼叫 Ollama 的 experimental web_search。本專案共用模擬及 LINE 的訊息處理路徑，搜尋採公開搜尋服務與官方來源查核，另外保留待辦、短期對話記憶、圖片及 Google 功能。老師原檔只需 Python 內建套件；本專案需先安裝 requirements-lock.txt。老師版會自動建立通道；本專案沿用已啟動通道。兩版的 Webhook 路徑分別是 /callback 與 /webhook，設定不能混用。
+
+### 本次五項修正
+
+- 只有不帶新主題的翻譯、補充、簡化指令才接續上一則；指定新人物時重新查詢。新主題即使查不到來源，也更新對話脈絡，後續不跳回舊題。
+- 英文台灣總統的官方姓名查核限定詢問身分的問法；年齡、政策與歷任問題保留原查詢。
+- 照片代詞追問使用保存的主題與近期對話釐清人名，並移除「提供」等前綴；短中文主題的備援照片來源需包含完整名稱。
+- 來源網址移除片段及結尾斜線後去重，同一中文 Wikipedia 條目的地區顯示網址亦合併。
+- Webhook 接管失敗即停止，不啟動提醒，也不覆寫未知 Webhook；已嘗試切換但無法確認時，嘗試回復先前確認過的備援。
+
+驗證：51 項 Python 測試通過，含以上反例及啟動失敗／回復情境；4 項 Apps Script 測試通過。Gemma4 實際跑過「牛頓定律 → 詳細介紹周星馳 → 翻成英文 → 給我他的照片」，最後圖片來源為周星馳 Wikipedia 條目，記錄在 test-evidence/review-five-live.json。模型翻譯仍可能用詞不準；測試確認的是主題接續與來源處理，不保證每句生成內容正確。

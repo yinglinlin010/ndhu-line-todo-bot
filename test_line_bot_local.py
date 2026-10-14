@@ -196,6 +196,121 @@ class PythonBotTests(unittest.TestCase):
         ai.lookup=lambda *a: self.fail('Must not search an unresolved pronoun')
         self.assertIn('請補上名稱',ai.ask('他幾歲','owner'))
 
+    def test_named_new_topic_is_not_a_continuation(self):
+        calls, searches = [], []
+        def http(url, **kwargs):
+            calls.append(kwargs["json"])
+            return json.dumps(dict(message=dict(content="新主題回答 [1]"))).encode()
+        ai = bot.LocalAI(http=http, clock=lambda: NOW)
+        ai.remember("owner", [], "解釋牛頓定律", "F=ma")
+        ai.lookup = lambda q, *args: searches.append(q) or [dict(title="周星馳", snippet="人物介紹", url="https://example.org/person", published=None)]
+        ai.ask("詳細介紹周星馳", "owner")
+        self.assertEqual(searches, ["詳細介紹周星馳"])
+        self.assertNotIn("F=ma", str(calls[-1]["messages"]))
+        self.assertNotIn("只針對緊接上一則", calls[-1]["messages"][-1]["content"])
+        self.assertEqual(ai.conversations["owner"]["topic"][0]["content"], "詳細介紹周星馳")
+        for text in ["翻成英文", "幫我翻成英文", "再詳細一點", "那詳細說明一下", "Translate your last answer to English"]:
+            self.assertTrue(bot.continuation_request(text), text)
+        for text in ["詳細介紹周星馳", "給我台灣新聞", "翻譯這篇新文章", "Explain more about Newton"]:
+            self.assertFalse(bot.continuation_request(text), text)
+
+    def test_english_president_identity_does_not_replace_age_or_policy(self):
+        calls = []
+        def http(url, **kwargs):
+            calls.append(url)
+            if "president.gov.tw" in url:
+                return '<title>測試人物總統-總統與副總統｜中華民國總統府</title>'.encode()
+            return b'<rss><channel/></rss>'
+        ai = bot.LocalAI(http=http)
+        self.assertEqual(ai.lookup("Who is the current president of Taiwan?")[0]["url"], "https://www.president.gov.tw/Page/694")
+        for text in ["How old is the president of Taiwan?", "What are the policies of the president of Taiwan?", "Who was the president of Taiwan in 2020?"]:
+            calls.clear()
+            ai.lookup(text)
+            self.assertFalse(any("president.gov.tw/Page/694" in url for url in calls), text)
+
+    def test_photo_pronoun_uses_topic_after_translation(self):
+        from unittest.mock import Mock
+        photos = Mock()
+        photos.handle.return_value = [dict(type="text", text="照片來源")]
+        def http(url, **kwargs):
+            history = json.loads(kwargs["json"]["messages"][-1]["content"])["history"]
+            self.assertIn("瀨戶環奈", str(history))
+            return json.dumps(dict(message=dict(content=json.dumps(dict(question="瀨戶環奈的照片"), ensure_ascii=False)))).encode()
+        ai = bot.LocalAI(http=http, photos=photos, clock=lambda: NOW)
+        ai.remember("owner", [], "瀨戶環奈介紹", "瀨戶環奈人物介紹")
+        ai.remember("owner", [], "翻成英文", "English description")
+        ai.ask("給我她的照片", "owner")
+        photos.handle.assert_called_once_with("瀨戶環奈的照片")
+        self.assertEqual(ai.conversations["owner"]["topic"][0]["content"], "瀨戶環奈")
+        photos.handle.reset_mock()
+        self.assertIn("補上名稱", ai.ask("給我他的照片", "other"))
+        photos.handle.assert_not_called()
+
+    def test_failed_new_topic_updates_context_before_translation(self):
+        bodies = []
+        def http(url, **kwargs):
+            bodies.append(kwargs["json"])
+            return json.dumps(dict(message=dict(content="Translated latest refusal"))).encode()
+        ai = bot.LocalAI(http=http, clock=lambda: NOW)
+        ai.remember("owner", [], "牛頓定律", "F=ma")
+        ai.lookup = lambda *args: []
+        ai.ask("詳細介紹周星馳", "owner")
+        ai.ask("翻成英文", "owner")
+        self.assertNotIn("F=ma", str(bodies[-1]["messages"]))
+        self.assertIn("沒有找到", str(bodies[-1]["messages"]))
+        self.assertIn("周星馳", str(ai.conversations["owner"]["topic"]))
+
+    def test_photo_command_prefix_and_unrelated_provider_results(self):
+        self.assertEqual(bot.photo_subject("提供周星馳的照片"), "周星馳")
+        def download(url, **kwargs):
+            if "w/api.php" in url:
+                return dict(body=b'{}', url=url)
+            if "duckduckgo" in url:
+                return dict(body=b'<html></html>', url=url)
+            return dict(body='<rss><channel><item><title>提供股票行情</title><link>https://example.org/stock</link><description>提供免費查詢</description></item></channel></rss>'.encode(), url=url)
+        photos = bot.Photos("https://example.org", download=download)
+        self.assertEqual(list(photos.source_pages("周星馳", time.monotonic()+5)), [])
+
+    def test_source_cards_deduplicate_same_url_fragment_and_slash(self):
+        rows = [dict(title="台灣總統", snippet="官方", url=url) for url in
+                ["https://example.org/person", "https://example.org/person/#bio", "https://example.org/person#title", "https://other.example/person"]]
+        results = bot.relevant_sources(rows, "台灣總統")
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[0]["url"], rows[0]["url"])
+        wiki = [dict(title="周星馳", snippet="周星馳", url=url) for url in ["https://zh.wikipedia.org/zh-tw/%E5%91%A8%E6%98%9F%E9%A6%B3", "https://zh.wikipedia.org/wiki/周星馳", "https://zh.wikipedia.org/zh/周星馳"]]
+        self.assertEqual(len(bot.relevant_sources(wiki, "周星馳")), 1)
+
+    def test_startup_activation_failure_stops_and_preserves_unknown_webhook(self):
+        from contextlib import ExitStack
+        from unittest.mock import Mock
+        server = Mock(server_port=3000)
+        runtime = Mock()
+        thread = Mock(ident=None)
+        with ExitStack() as stack:
+            stack.enter_context(patch.dict(os.environ, dict(LINE_CHANNEL_SECRET="test-secret", LINE_CHANNEL_ACCESS_TOKEN="test-token",
+                PUBLIC_BASE_URL="https://tunnel.example", W5_WEBHOOK_URL="https://backup.example"), clear=True))
+            stack.enter_context(patch.object(bot, "load_dotenv"))
+            stack.enter_context(patch.object(bot.logging, "basicConfig"))
+            stack.enter_context(patch.object(bot, "Elearn", return_value=Mock(url=None, bind_code=None, state={})))
+            for name in ["LocalAI", "Photos", "GoogleWorkspace", "TeacherFeatures", "TodoStore"]:
+                stack.enter_context(patch.object(bot, name))
+            stack.enter_context(patch.object(bot, "check_model", return_value=True))
+            stack.enter_context(patch.object(bot, "make_server", return_value=server))
+            stack.enter_context(patch.object(bot, "BotRuntime", return_value=runtime))
+            stack.enter_context(patch.object(bot, "create_app"))
+            stack.enter_context(patch.object(bot.threading, "Thread", return_value=thread))
+            stack.enter_context(patch.object(bot.signal, "signal"))
+            activate = stack.enter_context(patch.object(bot, "activate_local_webhook", side_effect=RuntimeError("unknown webhook")))
+            restore = stack.enter_context(patch.object(bot, "restore_webhook"))
+            with self.assertRaisesRegex(RuntimeError, "Webhook activation failed"):
+                bot.main()
+            activate.assert_called_once()
+            restore.assert_not_called()
+            server.handle_request.assert_not_called()
+            server.server_close.assert_called_once()
+            runtime.close.assert_called_once()
+            thread.start.assert_not_called()
+
     def test_unrelated_english_sources_and_restart_memory(self):
         rows = [dict(title="PChome 股票行情", snippet="今天的股市", url="https://example.org/stock")]
         self.assertEqual(bot.relevant_sources(rows, "who is the current president of Taiwan"), [])
@@ -338,7 +453,7 @@ class PythonBotTests(unittest.TestCase):
         Image.new("RGB", (300, 400), "blue").save(buffer, "PNG")
         def download(url, **kwargs):
             if "duckduckgo" in url:
-                body = b'<a class="result-link" href="https://school.example.org/teacher">Teacher</a>'
+                body = '<a class="result-link" href="https://school.example.org/teacher">東華大學</a>'.encode()
             elif url.endswith("/teacher"):
                 body = b'<title>Teacher</title><img src="https://school.example.org/photo.png">'
             else:
@@ -457,6 +572,14 @@ class PythonBotTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 bot.activate_local_webhook('test-token','https://tunnel.example.org',backup)
             self.assertEqual(call.call_count,1)
+
+    def test_activation_readback_failure_rolls_back_known_previous_endpoint(self):
+        backup = "https://script.google.com/macros/s/test-only/exec"
+        with patch.object(bot, "read_http", return_value=json.dumps(dict(endpoint=backup)).encode()), \
+             patch.object(bot, "set_line_webhook", side_effect=[RuntimeError("readback timeout"), None]) as setter:
+            with self.assertRaisesRegex(RuntimeError, "Could not activate"):
+                bot.activate_local_webhook("test-token", "https://tunnel.example.org", backup)
+            self.assertEqual([call.args[1] for call in setter.call_args_list], ["https://tunnel.example.org/webhook", backup])
 
     def test_real_http_server_start_health_and_sigint_without_line_calls(self):
         environment = dict(os.environ, LINE_CHANNEL_SECRET="test-secret", LINE_CHANNEL_ACCESS_TOKEN="test-token",

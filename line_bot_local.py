@@ -30,7 +30,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
-from urllib.parse import parse_qs, urlencode, urljoin, urlsplit
+from urllib.parse import parse_qs, urlencode, urljoin, urlsplit, unquote
 from zoneinfo import ZoneInfo
 
 import requests
@@ -137,6 +137,18 @@ def question_mode(raw):
     return question, bool(explicit or recent or not local), recent
 
 
+def continuation_request(question):
+    """Only subject-free rewrites continue the preceding answer."""
+    text = re.sub(r"^(?:請|幫我)\s*", "", question.strip()).rstrip("？?。！! ")
+    return bool(re.fullmatch(
+        r"(?:那)?(?:再)?(?:詳細|簡單|簡短)(?:一點|一些|點)?(?:說明|解釋|介紹)?(?:一下)?"
+        r"|(?:再)?(?:說明|解釋|說|講)(?:一次|一下|詳細一點|簡單一點)"
+        r"|繼續|補充(?:一下)?|舉例(?:說明|一下)?|換個說法|給(?:我)?(?:個|一個)?例子"
+        r"|(?:翻成|翻譯(?:成)?)(?:英文|中文|日文|韓文|繁體中文|簡體中文)"
+        r"|用(?:英文|中文|白話)(?:說明|解釋|說|回答)?"
+        r"|(?:translate(?: your last answer)? (?:to|into) \w+|explain more|summarize|give an example|continue)", text, re.I))
+
+
 def parse_search_html(html):
     soup = BeautifulSoup(html, "html.parser")
     results = []
@@ -187,7 +199,7 @@ def relevant_sources(results, query, definitions=False):
     topics = re.sub(r"今天|今日|現在|目前|最近|最新|現任|查詢|請問|什麼|誰|哪些|有沒有|怎麼|為什麼|的|是", " ", query.lower())
     chunks = re.findall(r"[a-zA-Z0-9]{2,}|[\u4e00-\u9fff]{2,}", topics)
     grams = {chunk[i:i+2] for chunk in chunks if not chunk.isascii() for i in range(len(chunk)-1)}
-    ranked = []
+    ranked, seen = [], set()
     for r in results:
         text = (r["title"] + " " + r["snippet"]).lower()
         if not definitions and re.search(r"國語辭典|國語字典|重編國語|漢典|dictionary|辭典檢視", text + " " + r["url"]):
@@ -195,7 +207,15 @@ def relevant_sources(results, query, definitions=False):
         score = sum(2 for t in terms if (re.search(r"\b" + re.escape(t) + r"\b", text) if t.isascii() else t in text)) + sum(1 for g in grams if g in text)
         if (grams or terms) and score == 0:
             continue
-        host = urlsplit(r["url"]).hostname or ""
+        parsed = urlsplit(r["url"])
+        path = unquote(parsed.path).rstrip("/")
+        if parsed.hostname == "zh.wikipedia.org":
+            path = re.sub(r"^/(?:wiki|zh(?:-(?:tw|hk|hant|hans|cn))?)/", "/wiki/", path)
+        identity = (parsed.scheme.lower(), parsed.netloc.lower(), path, parsed.query)
+        if identity in seen:
+            continue
+        seen.add(identity)
+        host = parsed.hostname or ""
         score += 1 if re.search(r"(?:^|\.)(?:gov\.tw|edu\.tw)$", host) else 0
         ranked.append((score, r))
     return [r for _, r in sorted(ranked, key=lambda x: x[0], reverse=True)[:3]]
@@ -241,8 +261,10 @@ class LocalAI:
         self.search_enabled = True
 
     def lookup(self, question, news=False, days=7):
-        query = search_query(question)
-        if re.search(r"\bpresident\b", query, re.I) and re.search(r"\b(?:taiwan|republic of china)\b", query, re.I) and not re.search(r"born|birth|former|candidate|election|\d{4}", query, re.I):
+        query = re.sub(r"^(?:詳細)?介紹\s*", "", search_query(question))
+        if re.fullmatch(
+                r"(?:who is|what is the name of|tell me the name of) (?:the )?(?:current )?president of (?:taiwan|(?:the )?republic of china)"
+                r"|(?:taiwan(?:'s)?|republic of china(?:'s)?) (?:current )?president", query.strip(), re.I):
             query = "台灣現任總統是誰"
         definitions = bool(re.search(r"意思|定義|字典|辭典|讀音|怎麼念", question))
         taiwan_president = re.fullmatch(
@@ -312,13 +334,23 @@ class LocalAI:
             topic = list(self.conversations.get(conversation_id, {}).get("topic", []))
         if self.photos:
             previous_topic = next((m["content"] for m in reversed(previous) if m["role"] == "user"), "")
-            photo = self.photos.handle(raw, previous_topic)
+            photo_raw = raw
+            subject = photo_subject(raw)
+            if subject == "":
+                if not previous:
+                    return "你想看誰或什麼的照片？請補上名稱。"
+                try:
+                    photo_raw = self.resolve_followup(raw, [*topic, *previous[-4:]])
+                    if not photo_subject(photo_raw):
+                        raise ValueError("Missing photo subject")
+                except Exception:
+                    return "我還不能確定你要看誰的照片，請補上名稱。"
+            photo = self.photos.handle(photo_raw)
             if photo is not None:
                 if isinstance(photo, list):
-                    self.remember(conversation_id, previous, photo_subject(raw, previous_topic), "已提供來源照片。")
+                    self.remember(conversation_id, previous, photo_subject(photo_raw), "已提供來源照片。")
                 return photo
-        continuation = bool(previous and re.match(r"^(?:請|幫我)?(?:再(?:說|講|解釋|詳細|簡單|舉例|多說|多講)|繼續|詳細|簡單|簡短|補充|說明|給(?:我)?(?:個|一個)?例子|舉例|換個說法|翻成|翻譯|用(?:英文|中文|白話)|那(?:詳細|簡單|解釋|說明))", question))
-        continuation = continuation or bool(previous and re.match(r"^(translate|explain more|summarize|give an example|continue)\b", question, re.I))
+        continuation = bool(previous and continuation_request(question))
         followup = bool(previous and re.match(r"^(那|還有|為什麼|怎麼說|這個|這位|這裡|那裡|它|他|她|哪裡|幾歲|多高|多大|出生|任期)", question))
         followup = followup or bool(previous and re.match(r"^(he|she|it|where was|when was|what about|his|her)\b", question, re.I))
         search = wants_search and not (continuation and not recent)
@@ -358,7 +390,9 @@ class LocalAI:
         if search and not self.search_enabled:
             return "這題需要上網查證；請用 --simulate --search 啟動搜尋模式。"
         if search and not results:
-            return "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。"
+            answer = "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。"
+            self.remember(conversation_id, [], lookup_question, answer)
+            return answer
         model_previous = [] if search else (previous[-2:] if continuation else previous)
         system = ("你是使用者的 LINE 小幫手。使用台灣繁體中文，先直接回答，再補充兩三項必要資訊。"
                   "一般回答以120字內為主；使用者要求詳細才展開。使用純文字，不使用Markdown標題或LaTeX。不要以「根據提供的資料」開頭，不要複製搜尋標題。現在台灣日期是 "
@@ -411,8 +445,7 @@ class LocalAI:
                 if len(self.conversations) >= 200 and key not in self.conversations:
                     self.conversations.pop(next(iter(self.conversations)))
                 pair = [dict(role="user", content=question), dict(role="assistant", content=answer)]
-                modifying = bool(re.match(r"^(?:請|幫我)?(?:再|繼續|詳細|簡單|簡短|補充|說明|給|舉例|換個說法|翻成|翻譯|用英文|用中文|用白話)", question))
-                modifying = modifying or bool(re.match(r"^(translate|explain more|summarize|give an example|continue)\b", question, re.I))
+                modifying = continuation_request(question)
                 topic = self.conversations.get(key, {}).get("topic", pair) if modifying else pair
                 self.conversations[key] = dict(at=self.clock(), topic=topic, messages=[*previous, *pair][-6:])
                 self.save_memory()
@@ -954,7 +987,7 @@ def get_public(url, max_bytes=3 * 1024 * 1024, deadline=None, redirects=3):
 def photo_subject(raw, previous=""):
     if not re.search(r"照片|圖片|相片|圖像", raw) or re.search(r"生成|畫一|畫個|繪製|辨識|分析圖片", raw):
         return None
-    topic = re.sub(r"^(可以|能不能|請|麻煩|幫我|給我|傳給我|傳我|搜尋|搜索|查詢|找一下|找|看看|看|我想看|我想要|我要|有沒有|來一張|來幾張|一張|幾張|張|的|一下|傳|送|我)+", "", raw)
+    topic = re.sub(r"^(可以|能不能|請|麻煩|幫我|給我|提供|傳給我|傳我|搜尋|搜索|查詢|找一下|找|看看|看|我想看|我想要|我要|有沒有|來一張|來幾張|一張|幾張|張|的|一下|傳|送|我)+", "", raw)
     topic = re.sub(r"(?:的)?(?:照片|圖片|相片|圖像).*$", "", topic).strip()
     if not topic or topic in ("他", "她", "它", "這個", "那個"):
         topic = re.sub(r"的?(評價|介紹|資料|消息).*$", "", re.sub(r"[？?！!]", "", previous)).strip()
@@ -1011,8 +1044,9 @@ class Photos:
                 LOG.info("[Photos] %s 備援搜尋", provider)
                 response = self.download(url, deadline=deadline)
                 rows = parse_search_html(response["body"]) if provider == "DuckDuckGo" else parse_search_feed(response["body"])
-                if provider == "Bing":
-                    rows = relevant_sources(rows, subject)
+                rows = relevant_sources(rows, subject)
+                if re.fullmatch(r"[\u4e00-\u9fff]{2,8}", subject):
+                    rows = [r for r in rows if subject in r["title"] + r["snippet"]]
                 yield from rows[:6]
             except Exception:
                 LOG.info("[Photos] 此備援來源暫時不可用")
@@ -1241,7 +1275,15 @@ def activate_local_webhook(token, base, backup):
     if current not in (endpoint, backup):
         raise RuntimeError("Unknown active Webhook; refusing to replace it")
     if current != endpoint:
-        set_line_webhook(token, endpoint)
+        try:
+            set_line_webhook(token, endpoint)
+        except Exception:
+            try:
+                set_line_webhook(token, current)
+                LOG.info("[Webhook] 接管未確認，已回復原先的待辦備援。")
+            except Exception:
+                LOG.error("[Webhook] 接管與回復均未能確認，請至 LINE Console 檢查。")
+            raise RuntimeError("Could not activate local Webhook") from None
 
 
 def check_model(ai):
@@ -1328,7 +1370,6 @@ def main():
             stop.wait(60)
 
     thread = threading.Thread(target=reminders, daemon=True)
-    thread.start()
     bind_path = None
     LOG.info("[Python] LINE Bot listening on http://127.0.0.1:%s", server.server_port)
     LOG.info("[Ollama] 本機模型：%s", ai.model)
@@ -1344,13 +1385,17 @@ def main():
         # Persist only locally so --bind-code can retrieve this running instance.
         bind_path = Path("./data/python-bind.json")
         private_json(bind_path, dict(code=elearn.bind_code))
+    webhook_active = False
     try:
         if os.getenv("W5_WEBHOOK_URL") and os.getenv("PUBLIC_BASE_URL"):
             try:
                 activate_local_webhook(token, os.environ["PUBLIC_BASE_URL"], os.environ["W5_WEBHOOK_URL"])
+                webhook_active = True
                 LOG.info("[Webhook] 已連接本機 Python（退出後切回待辦備援）")
             except Exception:
-                LOG.error("[Webhook] 未能切回本機，請核對目前 LINE Webhook 與公開通道。")
+                LOG.error("[Webhook] 連接失敗，停止啟動；請核對目前 LINE Webhook 與公開通道。")
+                raise RuntimeError("Webhook activation failed") from None
+        thread.start()
         while not stop.is_set():
             server.handle_request()
     finally:
@@ -1358,18 +1403,19 @@ def main():
         server.server_close()
         LOG.info("[Python] 等待已接收的訊息處理完成…")
         runtime.close()
-        thread.join(timeout=12)
+        if thread.ident is not None:
+            thread.join(timeout=12)
         if bind_path:
             bind_path.unlink(missing_ok=True)
         old_webhook = os.getenv("W5_WEBHOOK_URL")
-        if old_webhook:
+        if old_webhook and webhook_active:
             try:
                 restore_webhook(token, old_webhook)
                 LOG.info("[Webhook] 已恢復 W5 Apps Script")
             except Exception:
                 LOG.error("[Webhook] 恢復失敗，請在 LINE Console 手動恢復 W5。")
         else:
-            LOG.info("[Webhook] 未設定 W5_WEBHOOK_URL，請視需要在 LINE Console 手動恢復 W5。")
+            LOG.info("[Webhook] 本次未完成自動接管，未自動覆寫退出時的 Webhook。")
         LOG.info("[Python] 已停止")
 
 
