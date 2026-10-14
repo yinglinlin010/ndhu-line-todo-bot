@@ -169,6 +169,33 @@ class PythonBotTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             bot.LocalAI(base_url="https://cloud.example.org")
 
+    def test_search_followup_resolves_topic_then_keeps_latest_answer_for_continuation(self):
+        prompts = []
+        def http(url, **kwargs):
+            self.assertTrue(url.startswith('http://127.0.0.1'))
+            body = kwargs['json']; prompts.append(body)
+            if body.get('format'):
+                return json.dumps({'message':{'content':json.dumps({'question':'測試人物出生地在哪裡？'},ensure_ascii=False)}}).encode()
+            return json.dumps({'message':{'content':'出生地回答 [1]'}},ensure_ascii=False).encode()
+        ai=bot.LocalAI(http=http,clock=lambda:NOW)
+        ai.remember('owner',[],'現在的總統是誰','現任總統是測試人物。[1]')
+        seen=[]
+        ai.lookup=lambda q,news=False,*args: seen.append(q) or [dict(title='測試人物介紹',snippet='已查證的出生地',url='https://example.org/person',published=None)]
+        ai.ask('他出生在哪裡？','owner')
+        self.assertEqual(seen,['測試人物出生地在哪裡？'])
+        self.assertEqual(len(prompts[-1]['messages']),2)
+        self.assertIn('測試人物出生地',prompts[-1]['messages'][-1]['content'])
+        ai.ask('幫我翻成英文','owner')
+        self.assertEqual(len(seen),1)
+        self.assertIn('出生地回答',str(prompts[-1]['messages'][:-1]))
+        self.assertIn('現在的總統',str(ai.conversations['owner']))
+
+    def test_unresolved_followup_does_not_search_an_unrelated_pronoun(self):
+        ai=bot.LocalAI(http=lambda *a,**k:b'{"message":{"content":"{}"}}',clock=lambda:NOW)
+        ai.remember('owner',[],'問題','回答')
+        ai.lookup=lambda *a: self.fail('Must not search an unresolved pronoun')
+        self.assertIn('請補上名稱',ai.ask('他幾歲','owner'))
+
     def test_search_failures_and_model_failure_do_not_fake_news(self):
         calls = []
         def http(url, **kwargs):
