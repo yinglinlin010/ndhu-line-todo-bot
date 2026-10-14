@@ -4,6 +4,28 @@
 
 Repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 
+## 作業用模擬模式（不需要 LINE 金鑰）
+
+安裝完成後執行：
+
+```sh
+.venv/bin/python line_bot_local.py --simulate --search
+```
+
+依序輸入「你好」、「解釋牛頓第二定律」、「台灣現在的總統是誰」。這個模式和 LINE 共用 `BotRuntime.process`，會顯示回答、實際來源網址、搜尋紀錄、模型名稱和耗時。不讀取 `.env`、不啟動通道、不改 Webhook、不登入 Google；待辦放在臨時目錄，退出即移除。不加 `--search` 時完全不進行網路搜尋，一般知識交給本機模型，時效性或指定搜尋的問題會請你啟用搜尋。輸入 `/quit` 結束。
+
+### 最新改進與驗證範圍
+
+- 補上老師簡單版指南的 `--simulate` 與 `--search`；可用 `--model 名稱` 選另一個已安裝模型。
+- 查不到相關來源時直接說明，不再讓模型編造查詢答案；保留來源篩選、總統府官方查核與來源卡片。
+- 傳送 `清除對話`、`清除記憶` 或 `/clear` 清除自己的聊天記憶；不刪除待辦或雲端資料。
+- 聊天記憶及目前主題保存在 Git 忽略的本機 `data/conversations.json`，檔案權限 600；閒置二十分鐘失效，清除對話同步清除本機保存內容。
+- 圖片成功辨識後保存文字描述，下一題可以接續詢問；只保留描述，不把私人圖片或 Drive 網址送去搜尋。
+- 啟動先检查 Ollama 與模型；終端標明本機 AI、退出後的雲端待辦模式、試算表紀錄開關。現有通道仍需保持執行。
+- 現行文字及圖片模型皆為 `gemma4:e2b-it-q4_K_M`；試算表紀錄關閉。下方舊版本段落保留沿革，現行設定以這一段為準。
+
+已於本次真實 LINE 測試取得手機回答與同一次問答的終端截圖，放在 `test-evidence/gemma4-line-phone.jpg` 與 `test-evidence/gemma4-line-terminal.jpg`；另實測重啟後翻譯追問接續成功。若依老師後來的簡單版指南，模擬模式三題的終端截圖可作 A 路線證據。參考：[老師的簡單版指南](https://cwstedctw.github.io/ndhu-ted-course-hub/weekly/11501-ai-coding/w06/line-bot-lite.html)。
+
 ## 怎麼裝
 
 需要 Python **3.11 以上**、Ollama，以及 LINE Messaging API channel。此電腦已用 Python 3.12 安裝並測試。
@@ -44,7 +66,7 @@ python line_bot_local.py
 
 - 將 Node.js 多模組版本改成 Python 單檔；不再需要 Node.js 來執行新版 bot。
 - 保留「記錄：事項」「查詢」、本人最新十筆待辦、空白／長度檢查與事件去重。
-- 保留 Ollama 本機問答、自動搜尋、來源 Flex 卡片及最近三輪追問。不同使用者／群組的對話隔離；閒置二十分鐘清除，重啟也清除。
+- 保留 Ollama 本機問答、自動搜尋、來源 Flex 卡片及最近三輪追問。不同使用者／群組的對話隔離；閒置二十分鐘失效，本機短期記憶可跨重啟；清除對話可立即清掉自己的記憶。
 - 保留自然語言照片搜尋、來源說明、JPEG 與縮圖快取。只下載公開 HTTPS 位址，逐次重新導向驗證並固定 DNS 位址，限制下載與解碼大小。
 - 新增收到 LINE 照片後的本機辨識，使用另一個支援圖片的 `qwen2.5vl:3b`，不把圖片交給雲端模型。
 - 新增老師版 Google 功能：照片存 Drive、行程寫 Calendar、問答記 Sheets。需要完成 Google 登入並在本機明確啟用；只允許綁定者的個人聊天。
@@ -181,3 +203,7 @@ Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留
 ## 圖片搜尋備援
 
 人物／地點照片優先查找名稱吻合的維基百科介紹頁圖片；找不到可下載的照片時，再用 DuckDuckGo 與 Bing 備援。拒絕只有部分姓名相似的介紹頁，並保留來源連結。圖片下載仍限制公開 HTTPS IP、大小、格式與像素，轉 JPEG 後由本機通道提供 LINE 原圖及預覽。實測「瀨戶環奈的照片」取得圖片，兩個公開圖片網址均回 200／image/jpeg。不是每個人物都有介紹頁或可傳送照片，來源全部不可用時仍會如實提示。
+
+## 本次測試結果
+
+43 項 Python 測試、4 項 Apps Script 測試通過；真實手機查詢台灣現任總統，回覆附總統府官方來源，終端顯示搜尋、Gemma4 推論約 1.1 秒及 LINE 回覆 200。重啟後追問翻譯仍接續上一題。`--simulate --search` 三題與清除對話的真實執行紀錄在 `test-evidence/simulation-live.txt`。已檢查本次新增檔案未含本機金鑰設定；紀錄試算表保持關閉。Google Calendar 新行程與雲端待辦手機操作尚未於本次測試，不能將單元測試當成雲端端對端實測。

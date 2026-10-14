@@ -196,6 +196,32 @@ class PythonBotTests(unittest.TestCase):
         ai.lookup=lambda *a: self.fail('Must not search an unresolved pronoun')
         self.assertIn('請補上名稱',ai.ask('他幾歲','owner'))
 
+    def test_unrelated_english_sources_and_restart_memory(self):
+        rows = [dict(title="PChome 股票行情", snippet="今天的股市", url="https://example.org/stock")]
+        self.assertEqual(bot.relevant_sources(rows, "who is the current president of Taiwan"), [])
+        path = self.path / "memory.json"
+        first = bot.LocalAI(clock=lambda: NOW, memory_path=path)
+        first.remember("a", [], "總統", "賴清德")
+        first.remember("a", [], "翻成英文", "Lai Ching-te")
+        second = bot.LocalAI(clock=lambda: NOW + 60, memory_path=path)
+        self.assertEqual(second.conversations["a"]["topic"][1]["content"], "賴清德")
+        self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+        second.ask("清除對話", "a")
+        self.assertNotIn("a", bot.LocalAI(clock=lambda: NOW + 60, memory_path=path).conversations)
+        self.assertEqual(bot.LocalAI(clock=lambda: NOW + 1300, memory_path=path).conversations, {})
+
+    def test_clear_is_private_and_simulation_disables_external_search(self):
+        calls = []
+        ai = bot.LocalAI(http=lambda url, **kwargs: calls.append(url))
+        ai.remember("a", [], "秘密", "答案")
+        ai.remember("b", [], "其他", "答案")
+        self.assertIn("已清除", ai.ask("清除對話", "a"))
+        self.assertNotIn("a", ai.conversations)
+        self.assertIn("b", ai.conversations)
+        ai.search_enabled = False
+        self.assertIn("--search", ai.ask("今天的新聞", "a"))
+        self.assertEqual(calls, [])
+
     def test_search_failures_and_model_failure_do_not_fake_news(self):
         calls = []
         def http(url, **kwargs):
@@ -205,8 +231,8 @@ class PythonBotTests(unittest.TestCase):
             self.assertIn("不可猜測", kwargs["json"]["messages"][0]["content"])
             return json.dumps(dict(message=dict(content="基本背景"))).encode()
         reply = bot.LocalAI(http=http).ask("今天有什麼新聞")
-        self.assertIn("沒查到可確認", reply)
-        self.assertEqual(len(calls), 4)
+        self.assertIn("沒有找到足以確認", reply)
+        self.assertEqual(len(calls), 3)
         def no_model(url, **kwargs):
             if url.startswith("https:"):
                 return RSS
@@ -441,6 +467,8 @@ class PythonBotTests(unittest.TestCase):
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
             line = process.stderr.readline()
+            while line and "listening on" not in line:
+                line = process.stderr.readline()
             match = re.search(r"http://127.0.0.1:(\d+)", line)
             self.assertIsNotNone(match, line)
             with urlopen(f"http://127.0.0.1:{match[1]}/health", timeout=3) as response:

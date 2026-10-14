@@ -1,0 +1,28 @@
+03:29:34 [Check] Ollama 可連線；模型已安裝；能力：completion, vision, audio, tools, thinking
+模擬模式：不讀取 LINE 金鑰、不變更 Webhook、不寫入 Google。輸入 /quit 結束；清除對話 可重置記憶。
+你：03:29:34 [Ollama] 本機模型 gemma4:e2b-it-q4_K_M 生成中
+03:29:35 [Ollama] gemma4:e2b-it-q4_K_M 回答完成（0.8 秒）
+Bot：您好！我是您的 LINE 小幫手，很高興為您服務。請問您今天需要我協助處理什麼事呢？無論是需要查詢資訊、設定提醒、或是其他任何問題，都隨時告訴我，我會盡力為您提供幫助。
+耗時：0.82 秒
+你：03:29:35 [Ollama] 本機模型 gemma4:e2b-it-q4_K_M 生成中
+03:29:37 [Ollama] gemma4:e2b-it-q4_K_M 回答完成（1.8 秒）
+Bot：玉山是台灣最高的山，主要原因在於它位於台灣的中央山脈上，是台灣本土最高峰。它的高度是3,952公尺。
+
+另外，台灣的最高峰地位也與地質構造有關，台灣位於歐亞大陸板塊的邊緣，地殼運動使得台灣形成複雜的山脈結構，玉山正是這些地質活動的結果。
+
+補充來說，台灣的地理環境非常多樣，除了玉山之外，台灣還有許多其他山脈和山丘，它們各自擁有不同的高度和生態特色，共同構成了台灣豐富的自然景觀。
+耗時：1.82 秒
+你：03:29:37 [Search] 查核台灣總統府官方頁面
+03:29:37 [Search] 找到 1 筆來源
+03:29:37 [Ollama] 本機模型 gemma4:e2b-it-q4_K_M 生成中
+03:29:38 [Ollama] gemma4:e2b-it-q4_K_M 回答完成（0.8 秒）
+Bot：台灣（中華民國）的現任總統是賴清德。[1]
+來源：https://www.president.gov.tw/Page/694
+耗時：0.91 秒
+你：03:29:38 [Ollama] 本機模型 gemma4:e2b-it-q4_K_M 生成中
+03:29:38 [Ollama] gemma4:e2b-it-q4_K_M 回答完成（0.3 秒）
+Bot：The current president of Taiwan (Republic of China) is Lai Ching-te.
+耗時：0.30 秒
+你：Bot：已清除這段對話的記憶。
+耗時：0.00 秒
+你：

@@ -27,6 +27,9 @@ class FakeAI:
         self.calls.append(("event", text))
         return bot.validate_event("明天下午三點開會", dict(isEvent=True, title="開會", date="2026-10-11", time="15:00"), NOW)
 
+    def remember(self, key, previous, question, answer):
+        self.calls.append(("remember", key, answer))
+
     def describe_image(self, image, model):
         self.calls.append(("image", model))
         return "照片顯示一個藍色方塊。"
