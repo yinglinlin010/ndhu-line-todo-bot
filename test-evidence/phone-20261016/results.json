@@ -1,0 +1,47 @@
+{
+  "time": "2026-10-15T18:19:30.787530+00:00",
+  "method": "Real iPhone Mirroring GUI -> actual LINE bot -> real local E4B/search -> visible phone reply, matched to terminal reply status 200. Not a synthetic webhook run.",
+  "code_sha256": "ef1c13498be8b3382921b1226b2a73bf60d484820ea628f7514fe2a1bcdb74e4",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "checks": [
+    {
+      "question": "Hi",
+      "status": "passed",
+      "observation": "Actual usage reply visible; terminal 02:14:33 reply status 200"
+    },
+    {
+      "question": "Taiwan highest mountain height?",
+      "status": "incomplete",
+      "observation": "Identified 玉山 but omitted height; source cards included general Taiwan portals, not supporting height.",
+      "processing_seconds_displayed": 6.52
+    },
+    {
+      "question": "What about its height in meters?",
+      "status": "failed_topic_continuity",
+      "observation": "Changed subject from 玉山 to 雪山 and answered 3886 metres; not a valid continuation.",
+      "processing_seconds_displayed": 2.52,
+      "screenshot": "mountain-followup-failure.png"
+    },
+    {
+      "question": "Recent international news, cite sources.",
+      "status": "failed_news_routing",
+      "observation": "Retrieved dictionary/encyclopedia definitions for the word recent instead of international news.",
+      "processing_seconds_displayed": 1.72,
+      "screenshot": "english-news-dictionary-failure.png"
+    }
+  ],
+  "pending": [
+    "Chinese today-news question awaits user input; Unicode typing through phone mirror failed, not reported as tested"
+  ],
+  "not_tested": [
+    "Real phone image upload and immediate followup",
+    "Actual calendar replacement and confirmation",
+    "Actual Sheets saving",
+    "Loading animation was not visually confirmed"
+  ],
+  "cloud_writes": "No new Google photo, calendar event or sheet row requested in this test",
+  "limitations": [
+    "English formulations are not claimed to be the teacher exact Chinese questions",
+    "Small directed test, not a general accuracy estimate"
+  ]
+}

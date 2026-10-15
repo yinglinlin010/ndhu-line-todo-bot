@@ -1,0 +1,49 @@
+{
+  "id": "1a70e9b9-d6da-47af-aca7-fbadebb4d792",
+  "ok": true,
+  "result": {
+    "terminal": {
+      "handle": "term_9f981e5e-1fbd-4105-817f-1603399c3f85",
+      "status": "running",
+      "tail": [
+        "02:14:33 [LINE] 已接收文字事件（背景處理）",
+        "02:14:33 [LINE] 回覆狀態：200",
+        "02:16:49 [LINE] 已接收文字事件（背景處理）",
+        "02:16:49 [Search] DuckDuckGo 搜尋中",
+        "02:16:50 [Search] Bing 搜尋中",
+        "02:16:50 [Search] 找到 3 筆來源",
+        "02:16:50 [Ollama] 本機模型 gemma4:e4b-it-q4_K_M 生成中",
+        "02:16:55 [Ollama] gemma4:e4b-it-q4_K_M 回答完成（5.6 秒）",
+        "02:16:56 [LINE] 回覆狀態：200",
+        "02:17:31 [LINE] 已接收文字事件（背景處理）",
+        "02:17:31 [Ollama] 本機模型 gemma4:e4b-it-q4_K_M 生成中",
+        "02:17:31 [Ollama] gemma4:e4b-it-q4_K_M 回答完成（0.6 秒）",
+        "02:17:31 [Conversation] 已將追問轉為完整查詢（不記錄私人內容）",
+        "02:17:31 [Search] DuckDuckGo 搜尋中",
+        "02:17:32 [Search] Bing 搜尋中",
+        "02:17:32 [Search] Wikipedia 內文備援搜尋",
+        "02:17:33 [Search] 找到 1 筆來源",
+        "02:17:33 [Ollama] 本機模型 gemma4:e4b-it-q4_K_M 生成中",
+        "02:17:33 [Ollama] gemma4:e4b-it-q4_K_M 回答完成（0.6 秒）",
+        "02:17:33 [LINE] 回覆狀態：200",
+        "02:18:22 [LINE] 已接收文字事件（背景處理）",
+        "02:18:22 [Search] DuckDuckGo 搜尋中",
+        "02:18:22 [Search] Bing 搜尋中",
+        "02:18:22 [Search] 找到 3 筆來源",
+        "02:18:22 [Ollama] 本機模型 gemma4:e4b-it-q4_K_M 生成中",
+        "02:18:23 [Ollama] gemma4:e4b-it-q4_K_M 回答完成（1.0 秒）",
+        "02:18:23 [LINE] 回覆狀態：200"
+      ],
+      "truncated": false,
+      "limited": false,
+      "oldestCursor": "0",
+      "nextCursor": "915",
+      "latestCursor": "915",
+      "returnedLineCount": 27,
+      "source": "stream"
+    }
+  },
+  "_meta": {
+    "runtimeId": "0cc1b408-6e20-451e-98ed-dd305a53ebdc"
+  }
+}
