@@ -1,0 +1,11 @@
+{
+  "method": "Read-only real Google Sheets and LINE endpoint/local/public health; no new writes or messages",
+  "checks": {
+    "approved_synthetic_sheet_row_still_exactly_one": true,
+    "automatic_sheet_logging_off": true,
+    "local_health": true,
+    "public_health": true,
+    "line_endpoint_matches": true,
+    "line_webhook_active": true
+  }
+}

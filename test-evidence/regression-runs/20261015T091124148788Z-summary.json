@@ -1,0 +1,42 @@
+{
+  "time": "2026-10-15T09:11:24.149626+00:00",
+  "code_sha256": "d35c3e20375d9de2ba4d7dd1294287f326fa13f9dba707bb62d06eb703a309e7",
+  "unit_tests": {
+    "passed": 93,
+    "failed": 0
+  },
+  "http_integration": {
+    "passed": 22,
+    "total": 22,
+    "report": "test-evidence/regression-runs/20261015T091124148788Z-http.json"
+  },
+  "faq": {
+    "report": "test-evidence/faq-runs/20261015T091004Z-b3cb2a.json",
+    "summary": {
+      "selected": 35,
+      "completed": 35,
+      "not_run": 0,
+      "checks_passed": 33,
+      "checks_failed": 0,
+      "manual": 2,
+      "by_status": {
+        "主答案字詞符合，需抽查": 15,
+        "待人工核對": 2,
+        "追問": 7,
+        "查不到": 2,
+        "符合預期": 8,
+        "圖片已產生": 1
+      }
+    },
+    "complete": true,
+    "expectations_sent_to_bot": false
+  },
+  "google_read_only_report": "test-evidence/classroom-runs/20261015T090932670842Z.json",
+  "service_and_sheet_report": "test-evidence/regression-runs/20261015T091006249564Z-service-and-sheet.json",
+  "limitations": [
+    "Synthetic LINE events and captured local replies; no new real LINE transport or phone UI verification",
+    "Current-person and news cases remain manual, not counted as correct",
+    "Primary reference matching is not full semantic verification",
+    "No new Google writes, no weight training, no GitHub push"
+  ]
+}

@@ -102,3 +102,7 @@
 一般AI文字及照片回覆新增模型設定與處理耗時。標示的是本機設定和本題處理時間，不把等待、搜尋或Google耗時冒稱模型推論時間。此輪沒有手機操作、新LINE收發截圖、新Drive上傳或新Calendar事件；沒有推送GitHub或提交作業。
 
 使用者另行同意後，已執行一次 `check-classroom-google.py --write-test-row`，透過TeacherFeatures新增一筆合成Sheets驗收紀錄，讀回確認內容只出現一次。Drive私人狀態、既有Calendar日期時間及Sheets讀取仍通過；自動聊天紀錄保持關閉。報告：`test-evidence/classroom-runs/20261015T064615012164Z.json`。此為真實Google寫入，入口為本機合成事件，不是LINE手機端到端測試。
+
+## 2026-10-15 課堂版再測
+
+相同程式版本完成93項自動測試、22項本機HTTP整合。完整35題回歸全部執行，33項符合自動檢查、0項失敗、2項時事待人工核對；題庫參考答案未送入bot，並非新盲測。Google唯讀確認Drive與Calendar既有測試資料、Sheets可讀，已核准的Sheets合成紀錄仍只有一筆；自動紀錄關閉。本機、公開HTTPS與LINE入口均通過。沒有新增雲端資料、手機操作或真實LINE傳送，沒有修改模型權重或推送GitHub。彙整報告：`test-evidence/regression-runs/20261015T091124148788Z-summary.json`。
