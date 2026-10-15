@@ -1,0 +1,20 @@
+{
+  "time": "2026-10-15T06:18:37.468959+00:00",
+  "code_sha256": "45a1912f5263beba969f4752a9a31a8888c782faaeb11b497963316dae316d34",
+  "unit_tests": {
+    "passed": 82,
+    "failed": 0,
+    "command": ".venv/bin/python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq"
+  },
+  "http_integration": {
+    "passed": 22,
+    "total": 22,
+    "report": "http-live-quality.json"
+  },
+  "live_news_report": "news-runs/20261015T061702Z-082c1d.json",
+  "limitations": [
+    "Extractive source consistency, not independent truth verification",
+    "Only matching normalized headlines are automatically grouped; semantic paraphrases remain separate",
+    "No real LINE message or phone UI test in this round"
+  ]
+}

@@ -37,16 +37,18 @@ def main():
             return u.scheme=='https' and not u.username and not u.password and ((u.hostname=='www.cna.com.tw' and u.path.startswith('/news/aopl/')) or (u.hostname=='news.ltn.com.tw' and u.path.startswith('/news/world/')))
         now=time.time();midnight=datetime.fromtimestamp(now,bot.TAIPEI).replace(hour=0,minute=0,second=0,microsecond=0).timestamp()
         numbers=[int(n) for group in re.findall(r'\[([\d,，、\s]+)\]',text) for n in re.findall(r'\d+',group)]
+        fallback = text == bot.grounded_news_answer("", evidence)[0]
+        grounded = bool(evidence) and (fallback or bot.grounded_news_answer(text, evidence)[1] == "source_extract")
         checks=dict(has_sources=bool(evidence),publisher_world_paths=bool(evidence) and all(scope(e) for e in evidence),
             published_today=bool(evidence) and all(e.get('published') is not None and midnight<=e['published']<=now for e in evidence),
             citation_indices=bool(numbers) and all(1<=n<=len(evidence) for n in numbers),
             source_cards_match_evidence=bool(evidence) and links==[e['url'] for e in evidence],
-            model_generated_summary=not text.startswith(('本機模型暫時','本機模型這次未能')))
-        row=dict(question=q,answer=text,seconds=round(time.monotonic()-start,2),checks=checks,passed=all(checks.values()),evidence=evidence)
+            source_grounding=grounded)
+        row=dict(question=q,answer=text,answer_mode="headline_fallback" if fallback else "model_source_extract",seconds=round(time.monotonic()-start,2),checks=checks,passed=all(checks.values()),evidence=evidence)
         rows.append(row);print(q,checks,flush=True)
     report=dict(method='Live publisher international RSS + real local model, source scope/date/citation mapping checks; no phone, LINE transport or weight training',
         model=a.model,code_sha256=code_hash,code_unchanged=code_hash==hashlib.sha256((ROOT/'line_bot_local.py').read_bytes()).hexdigest(),
-        semantic_limit='These checks do not independently verify every reported event or entailment of every generated sentence. RSS timestamps describe publication, not necessarily event occurrence.',
+        semantic_limit='These checks do not independently verify every reported event or entailment of every generated sentence. Extractive matching checks wording against the publisher, not whether the publisher is correct. RSS timestamps describe publication, not necessarily event occurrence.',
         passed=sum(r['passed'] for r in rows),total=len(rows),results=rows)
     output.parent.mkdir(parents=True,exist_ok=True);output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print('Result',report['passed'],'/',report['total'],'Report',output.relative_to(ROOT),flush=True)

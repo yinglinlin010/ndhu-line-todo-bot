@@ -405,6 +405,57 @@ class PythonBotTests(unittest.TestCase):
         self.assertFalse(bot.valid_source_citations("來源[0]",2))
         self.assertFalse(bot.valid_source_citations("沒有引用",2))
 
+    def test_news_guard_rejects_changed_numbers_names_dates_negation_and_uncertainty(self):
+        original = "甲國外交部據報尚未批准乙國2026年投資15億元計畫"
+        rows = [dict(title="中央通訊社｜" + original, publisher="中央通訊社", url="https://example.org/a", snippet="官方表示仍在審查。", published=NOW)]
+        for claim in [original.replace("15億元", "16億元"), original.replace("甲國", "丙國"),
+                      original.replace("2026", "2027"), original.replace("尚未", "已"),
+                      original.replace("據報", ""), original + "，將促進經濟成長"]:
+            with self.subTest(claim=claim):
+                result, status = bot.grounded_news_answer(claim + " [1]", rows)
+                self.assertEqual(status, "headline_fallback")
+                self.assertIn(original, result)
+                self.assertIn("尚未獨立核實", result)
+        result, status = bot.grounded_news_answer(original + " [1]", rows)
+        self.assertEqual(status, "source_extract")
+        self.assertEqual(result, original + " [1]")
+        self.assertEqual(bot.grounded_news_answer("官方表示仍在審查。 [1]", rows)[1], "source_extract")
+        self.assertEqual(bot.grounded_news_answer("官方表示仍在審查。 [2]", rows)[1], "headline_fallback")
+        self.assertEqual(bot.grounded_news_answer(original + " [1]\n虛構補充", rows)[1], "headline_fallback")
+        rows[0]["title"] = "某國公布利率1.5%調整方案"
+        self.assertEqual(bot.grounded_news_answer("某國公布利率15%調整方案 [1]", rows)[1], "headline_fallback")
+
+    def test_news_guard_checks_citation_mapping_and_followup(self):
+        rows = [dict(title="甲國據報尚未批准2026年投資計畫", url="https://example.org/1", snippet="仍在審查。", published=NOW, section="國際"),
+                dict(title="乙國公布2027年外交預算", url="https://example.org/2", snippet="預算仍需審議。", published=NOW, section="國際")]
+        self.assertEqual(bot.grounded_news_answer(rows[0]["title"]+" [2]",rows)[1],"headline_fallback")
+        ai=bot.LocalAI(clock=lambda:NOW,http=lambda *a,**k:json.dumps(dict(message=dict(content="甲國已批准2026年投資計畫 [1]"))).encode())
+        ai.remember("news-followup", [], "今天國際新聞", "原始導讀", evidence=rows)
+        reply=ai.ask("簡短一點","news-followup")
+        self.assertIn("尚未批准",reply[0]["text"])
+        self.assertNotIn("甲國已批准",reply[0]["text"])
+        self.assertIn("[2]",reply[0]["text"])
+
+    def test_news_event_clustering_is_conservative_preserves_originals_and_links(self):
+        title = "甲國外交部據報尚未批准乙國投資計畫"
+        def row(name, headline=title, at=NOW, snippet="仍在審查。"):
+            return dict(title=name+"｜"+headline, publisher=name, url="https://example.org/"+name, published=at, snippet=snippet)
+        a, b = row("媒體甲"), row("媒體乙", "甲國外交部 據報尚未批准乙國投資計畫")
+        original = json.loads(json.dumps([a,b]))
+        groups = bot.cluster_news([a,b])
+        self.assertEqual(len(groups),1)
+        self.assertEqual(groups[0]["related_sources"][0]["url"], b["url"])
+        self.assertEqual([a,b],original)
+        reply = bot.source_reply(title+" [1]",groups)
+        buttons = reply[1]["contents"]["contents"][0]["footer"]["contents"]
+        self.assertEqual([x["action"]["uri"] for x in buttons],[a["url"],b["url"]])
+        for other in [row("丙",title.replace("甲國","丙國")), row("丙",title.replace("尚未","已")),
+                      row("丙",title.replace("據報","")),row("丙",at=NOW-37*3600),
+                      row("丙",snippet="仍在審查15億元。"), row("丙",title+"第二案")]:
+            with self.subTest(other=other):
+                self.assertEqual(len(bot.cluster_news([a,other])),2)
+        self.assertEqual(len(bot.cluster_news([a,a])),1)
+
     def test_wikipedia_query_removes_question_words_without_inserting_answers(self):
         from urllib.parse import parse_qs, urlsplit
         seen = []

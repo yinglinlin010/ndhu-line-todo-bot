@@ -1,0 +1,105 @@
+{
+  "method": "Live publisher international RSS + real local model, source scope/date/citation mapping checks; no phone, LINE transport or weight training",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "code_sha256": "45a1912f5263beba969f4752a9a31a8888c782faaeb11b497963316dae316d34",
+  "code_unchanged": true,
+  "semantic_limit": "These checks do not independently verify every reported event or entailment of every generated sentence. Extractive matching checks wording against the publisher, not whether the publisher is correct. RSS timestamps describe publication, not necessarily event occurrence.",
+  "passed": 2,
+  "total": 2,
+  "results": [
+    {
+      "question": "今天有哪些國際新聞？請附來源。",
+      "answer": "嘔吐、掉髮多年竟是遭下毒！女工程師裝針孔 拍下同事往水壺倒粉末 [1]\n台灣也有份！川普再點名南韓投資阿拉斯加LNG 韓媒曝原因 [2]\n巴西國會通過縮短工時法案 魯拉盼為連任選戰添助力 [3]",
+      "answer_mode": "model_source_extract",
+      "seconds": 6.08,
+      "checks": {
+        "has_sources": true,
+        "publisher_world_paths": true,
+        "published_today": true,
+        "citation_indices": true,
+        "source_cards_match_evidence": true,
+        "source_grounding": true
+      },
+      "passed": true,
+      "evidence": [
+        {
+          "title": "自由時報｜嘔吐、掉髮多年竟是遭下毒！女工程師裝針孔 拍下同事往水壺倒粉末",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5607069",
+          "snippet": "美國加州一名華裔女工程師自2017年起反覆嘔吐、嚴重掉髮，就醫始終查不出病因，直到暗中架設攝影機，才拍下男同事在她的水壺中倒入不明物質，事後驗出含有劇毒重金屬鎘。男同事2023年...…",
+          "published": 1792044382.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml",
+          "related_sources": []
+        },
+        {
+          "title": "自由時報｜台灣也有份！川普再點名南韓投資阿拉斯加LNG 韓媒曝原因",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5606784",
+          "snippet": "美國總統川普14日再次宣稱，南韓已決定投資500億美元（約新台幣1.5兆元）參與美國阿拉斯加州液化天然氣（LNG）開發計畫。川普近日也曾表示，台灣已同意採購價值700億至800億...…",
+          "published": 1792040183.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml",
+          "related_sources": []
+        },
+        {
+          "title": "中央通訊社｜巴西國會通過縮短工時法案 魯拉盼為連任選戰添助力",
+          "url": "https://www.cna.com.tw/news/aopl/202610150095.aspx",
+          "snippet": "（中央社巴西利亞14日綜合外電報導）巴西參議院今天通過縮短每週工時法案。這是總統魯拉（Luiz Inacio Lula da Silva）寄望在10月25日總統選舉第2輪投票前，縮小與右翼對手佛拉維歐．波索納洛（Flavio Bolsonaro）差距的政策之一。",
+          "published": 1792038571.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld",
+          "related_sources": []
+        }
+      ]
+    },
+    {
+      "question": "今日世界新聞摘要，請附來源。",
+      "answer": "美國加州一名華裔女工程師自2017年起反覆嘔吐、嚴重掉髮，就醫始終查不出病因，直到暗中架設攝影機，才拍下男同事在她的水壺中倒入不明物質，事後驗出含有劇毒重金屬鎘。[1]\n台灣也有份！川普再點名南韓投資阿拉斯加LNG 韓媒曝原因[2]\n巴西國會通過縮短工時法案 魯拉盼為連任選戰添助力[3]",
+      "answer_mode": "model_source_extract",
+      "seconds": 2.6,
+      "checks": {
+        "has_sources": true,
+        "publisher_world_paths": true,
+        "published_today": true,
+        "citation_indices": true,
+        "source_cards_match_evidence": true,
+        "source_grounding": true
+      },
+      "passed": true,
+      "evidence": [
+        {
+          "title": "自由時報｜嘔吐、掉髮多年竟是遭下毒！女工程師裝針孔 拍下同事往水壺倒粉末",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5607069",
+          "snippet": "美國加州一名華裔女工程師自2017年起反覆嘔吐、嚴重掉髮，就醫始終查不出病因，直到暗中架設攝影機，才拍下男同事在她的水壺中倒入不明物質，事後驗出含有劇毒重金屬鎘。男同事2023年...…",
+          "published": 1792044382.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml",
+          "related_sources": []
+        },
+        {
+          "title": "自由時報｜台灣也有份！川普再點名南韓投資阿拉斯加LNG 韓媒曝原因",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5606784",
+          "snippet": "美國總統川普14日再次宣稱，南韓已決定投資500億美元（約新台幣1.5兆元）參與美國阿拉斯加州液化天然氣（LNG）開發計畫。川普近日也曾表示，台灣已同意採購價值700億至800億...…",
+          "published": 1792040183.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml",
+          "related_sources": []
+        },
+        {
+          "title": "中央通訊社｜巴西國會通過縮短工時法案 魯拉盼為連任選戰添助力",
+          "url": "https://www.cna.com.tw/news/aopl/202610150095.aspx",
+          "snippet": "（中央社巴西利亞14日綜合外電報導）巴西參議院今天通過縮短每週工時法案。這是總統魯拉（Luiz Inacio Lula da Silva）寄望在10月25日總統選舉第2輪投票前，縮小與右翼對手佛拉維歐．波索納洛（Flavio Bolsonaro）差距的政策之一。",
+          "published": 1792038571.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld",
+          "related_sources": []
+        }
+      ]
+    }
+  ]
+}

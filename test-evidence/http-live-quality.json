@@ -27,8 +27,8 @@
       "case": "todo_add",
       "question": "記錄：整合測試專用事項",
       "passed": true,
-      "ack_seconds": 0.005,
-      "total_seconds": 0.01,
+      "ack_seconds": 0.001,
+      "total_seconds": 0.0,
       "answer": "已記錄：整合測試專用事項。",
       "sources": []
     },
@@ -36,7 +36,7 @@
       "case": "todo_isolation",
       "question": "查詢",
       "passed": true,
-      "ack_seconds": 0.003,
+      "ack_seconds": 0.001,
       "total_seconds": 0.0,
       "answer": "目前沒有待辦事項。\n輸入「記錄：待辦事項」新增一筆。",
       "sources": []
@@ -45,7 +45,7 @@
       "case": "todo_reopen",
       "question": "查詢",
       "passed": true,
-      "ack_seconds": 0.003,
+      "ack_seconds": 0.001,
       "total_seconds": 0.0,
       "answer": "你的待辦事項（共 1 筆，顯示最新 1 筆）：\n1. 整合測試專用事項",
       "sources": []
@@ -54,9 +54,9 @@
       "case": "teacher_mountain",
       "question": "台灣最高的山是哪一座？多高？",
       "passed": true,
-      "ack_seconds": 0.008,
-      "total_seconds": 2.67,
-      "answer": "台灣最高的山是玉山，其最高峰玉山主峰的標高為 3,952 公尺 [2, 3]。雪山是台灣第二高山，最高峰標高為 3,886 公尺 [1]。",
+      "ack_seconds": 0.003,
+      "total_seconds": 3.09,
+      "answer": "台灣最高的山是玉山，其最高峰玉山主峰的標高是 3,952 公尺 [2, 3]。雪山是台灣第二高山，最高峰標高為 3,886 公尺 [1]。",
       "sources": [
         "https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3%E5%B1%B1%E5%B3%B0%E5%88%97%E8%A1%A8",
         "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1",
@@ -68,7 +68,7 @@
       "question": "2026 年諾貝爾物理獎得主是誰？",
       "passed": true,
       "ack_seconds": 0.004,
-      "total_seconds": 1.57,
+      "total_seconds": 1.25,
       "answer": "2026 年諾貝爾物理學獎得主是 Francis Halzen。[1]",
       "sources": [
         "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
@@ -80,8 +80,8 @@
       "question": "翻成英文",
       "passed": true,
       "ack_seconds": 0.003,
-      "total_seconds": 0.42,
-      "answer": "Francis Halzen is the recipient of the 2026 Nobel Prize in Physics.",
+      "total_seconds": 0.53,
+      "answer": "The winner of the 2026 Nobel Prize in Physics is Francis Halzen.",
       "sources": [
         "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
         "https://www.nobelprize.org/prizes/physics/2026/summary/"
@@ -91,27 +91,27 @@
       "case": "new_topic",
       "question": "解釋牛頓第二定律",
       "passed": true,
-      "ack_seconds": 0.004,
-      "total_seconds": 1.45,
-      "answer": "牛頓第二定律描述了物體運動的變化與作用在物體上的力之間的關係。它指出，物體所受的合外力等於物體的質量乘以物體加速度，用公式 F=ma 表示。簡單來說，力越大，物體加速得越快。",
+      "ack_seconds": 0.003,
+      "total_seconds": 1.15,
+      "answer": "牛頓第二定律描述了物體受到的加速度與作用在物體上的合外力成正比，且與物體的質量成反比。簡單來說，合外力等於質量乘以加速度，用公式 F=ma 表示。",
       "sources": []
     },
     {
       "case": "concise",
       "question": "簡短一點",
       "passed": true,
-      "ack_seconds": 0.003,
-      "total_seconds": 0.53,
-      "answer": "牛頓第二定律是 F=ma，表示物體受到的合外力等於其質量乘以加速度。",
+      "ack_seconds": 0.002,
+      "total_seconds": 0.52,
+      "answer": "合外力等於質量乘以加速度，用公式 F=ma 表示，說明物體受力會產生加速度。",
       "sources": []
     },
     {
       "case": "persisted_followup",
       "question": "翻成英文",
       "passed": true,
-      "ack_seconds": 0.004,
-      "total_seconds": 0.54,
-      "answer": "Newton's second law is F=ma, which states that the net external force on an object equals its mass times its acceleration.",
+      "ack_seconds": 0.005,
+      "total_seconds": 0.6,
+      "answer": "Net force equals mass times acceleration, expressed as the formula F=ma, which explains that an object subjected to a force will experience acceleration.",
       "sources": []
     },
     {
@@ -137,7 +137,7 @@
       "question": "搜尋 qzxv847293649不存在的測試獎項得主",
       "passed": true,
       "ack_seconds": 0.002,
-      "total_seconds": 1.14,
+      "total_seconds": 1.54,
       "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
       "sources": []
     },
@@ -145,8 +145,8 @@
       "case": "public_photo",
       "question": "給我周星馳的照片",
       "passed": true,
-      "ack_seconds": 0.003,
-      "total_seconds": 1.33,
+      "ack_seconds": 0.004,
+      "total_seconds": 1.4,
       "answer": "找到與「周星馳」相關的照片。\n來源：周星馳\nhttps://zh.wikipedia.org/wiki/%E5%91%A8%E6%98%9F%E9%A6%B3",
       "sources": []
     },
@@ -159,7 +159,7 @@
       "question": "synthetic image fixture",
       "passed": true,
       "ack_seconds": 0.002,
-      "total_seconds": 1.62,
+      "total_seconds": 1.49,
       "answer": "這張圖片是一張簡報幻燈片，內容是關於「SYNTHETIC TEST MEETING」（合成測試會議）。幻燈片上清楚顯示了會議日期為 2026-10-16，時間為 15:00-16:00，並註明「This is test data.」（這是測試資料）。整體背景為白色，文字為黑色。\n\nGoogle 儲存未啟用或此帳號未綁定，照片未上傳 Google Drive。",
       "sources": []
     },
@@ -168,16 +168,16 @@
       "question": "那幾點開始？",
       "passed": true,
       "ack_seconds": 0.004,
-      "total_seconds": 0.63,
-      "answer": "會議時間是 15:00-16:00。",
+      "total_seconds": 0.48,
+      "answer": "會議是從 15:00 開始。",
       "sources": []
     },
     {
       "case": "private_image_date_followup",
       "question": "圖片上的日期是什麼？",
       "passed": true,
-      "ack_seconds": 0.007,
-      "total_seconds": 0.58,
+      "ack_seconds": 0.003,
+      "total_seconds": 0.47,
       "answer": "圖片上的日期是 2026-10-16。",
       "sources": []
     },
