@@ -217,6 +217,26 @@ class PythonBotTests(unittest.TestCase):
         ai.remember("owner", [], "玉山多高", "玉山3952公尺。")
         self.assertEqual(ai.ask("簡短一點", "owner"), "玉山3952公尺。")
 
+    def test_private_image_followups_stay_local_and_keep_anchor_across_restart(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "memory.json"
+            def local_http(url, **kwargs):
+                self.assertTrue(url.startswith("http://127.0.0.1:11434/"))
+                return json.dumps(dict(message=dict(content="圖片上的行程是15:00開始。"))).encode()
+            ai = bot.LocalAI(http=local_http, memory_path=path)
+            ai.remember("owner", [], "使用者上傳了一張圖片，請依圖片辨識內容接續回答。", "私人的行程2026-10-16 15:00")
+            ai.lookup = lambda *a: self.fail("Private OCR must not be sent to search")
+            self.assertIn("15:00", ai.ask("那幾點開始？", "owner"))
+            photos = bot.Photos("https://quality.example", download=lambda *a, **k: self.fail("Private OCR must not trigger public photos"))
+            ai = bot.LocalAI(http=local_http, memory_path=path, photos=photos)
+            ai.lookup = lambda *a: self.fail("Private OCR must remain local after reload")
+            self.assertIn("15:00", ai.ask("圖片上的日期是什麼？", "owner"))
+            self.assertIn("公開人物", ai.ask("給我他的照片", "owner"))
+            lookups = []
+            ai.lookup = lambda *a: lookups.append(a) or []
+            ai.ask("台灣最高的山是哪一座？多高？", "owner")
+            self.assertTrue(lookups)
+
     def test_shutdown_restore_preserves_another_applications_route(self):
         local = "https://tunnel.example.org"
         backup = "https://script.google.com/macros/s/test/exec"
@@ -249,6 +269,8 @@ class PythonBotTests(unittest.TestCase):
             self.assertEqual(ai.lookup("2026 年諾貝爾物理獎得主是誰？"), [])
         self.assertEqual(ai.nobel_spec("去年諾貝爾化學獎得主是誰"), (2025, "che", "化學獎"))
         self.assertIsNone(ai.nobel_spec("2026 年諾貝爾物理獎得主幾歲"))
+        self.assertEqual(ai.nobel_spec("2100 年諾貝爾物理獎得主是誰？"), (2100, "phy", "物理學獎"))
+        self.assertIsNone(ai.nobel_spec("2026 年諾貝爾物理獎得主的研究貢獻是什麼？"))
 
     def test_nobel_api_still_usable_when_human_page_is_blocked(self):
         def http(url, **kwargs):
@@ -271,6 +293,21 @@ class PythonBotTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertIn("3952", rows[0]["snippet"])
         self.assertEqual(len(calls), 3)
+
+    def test_wikipedia_query_removes_question_words_without_inserting_answers(self):
+        from urllib.parse import parse_qs, urlsplit
+        seen = []
+        def http(url, **kwargs):
+            seen.append(parse_qs(urlsplit(url).query)["gsrsearch"][0])
+            return b'{"query":{"pages":{}}}'
+        ai = bot.LocalAI(http=http)
+        ai.lookup_wikipedia("某條運河連接哪兩個海？")
+        ai.lookup_wikipedia("某個衛星叫什麼？")
+        ai.lookup_wikipedia("某個海溝位於哪個海洋？")
+        self.assertTrue(all(not any(word in q for word in ["哪兩個", "叫什麼", "位於", "哪個"]) for q in seen))
+        self.assertIn("運河連接", seen[0])
+        self.assertIn("衛星", seen[1])
+        self.assertIn("海溝", seen[2])
 
     def test_teacher_questions_greeting_offline_year_and_search_topic(self):
         ai = bot.LocalAI(http=lambda *a, **k: self.fail("No model or search call expected"), clock=lambda: NOW)

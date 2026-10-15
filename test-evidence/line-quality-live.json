@@ -1,0 +1,50 @@
+{
+  "method": "Observed real iPhone LINE messages plus same-run terminal reply 200; no cloud writes in this phone sequence",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "checks": [
+    {
+      "question": "Hi",
+      "result": "usage reply received"
+    },
+    {
+      "question": "台灣最高的山是哪一座？多高？",
+      "result": "玉山3952公尺 and source cards",
+      "proof": "line-quality-mountain.png"
+    },
+    {
+      "question": "2026 年諾貝爾物理獎得主是誰？",
+      "result": "dynamic official API identity answer and two official sources; specialized lookup, not a pure model benchmark",
+      "proof": "line-quality-nobel.png"
+    },
+    {
+      "question": "翻成英文",
+      "result": "Nobel topic and sources retained",
+      "proof": "line-quality-translation.png"
+    },
+    {
+      "question": "解釋牛頓第二定律",
+      "result": "new topic replaces Nobel topic",
+      "proof": "line-quality-new-topic.png"
+    },
+    {
+      "question": "簡短一點",
+      "result": "one paragraph Newton F=ma answer",
+      "proof": "line-quality-concise.png"
+    },
+    {
+      "question": "翻成英文 after graceful service restart",
+      "result": "still Newton F=ma; no Nobel topic or cards",
+      "proof": "line-quality-restart.png"
+    },
+    {
+      "question": "2100 年諾貝爾物理獎得主是誰？",
+      "result": "no reliable sources, refuses to guess",
+      "proof": "line-quality-no-result.png"
+    }
+  ],
+  "not_tested_in_this_phone_sequence": [
+    "phone image upload to Drive",
+    "phone calendar creation/confirmation",
+    "group chat with multiple real users"
+  ]
+}

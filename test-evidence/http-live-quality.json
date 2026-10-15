@@ -1,0 +1,191 @@
+{
+  "method": "Real local HTTP signed webhook + worker + real Ollama/search/photo; captured reply sender and optional local synthetic image fixture, no LINE delivery or Google writes",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "results": [
+    {
+      "case": "invalid_signature",
+      "passed": true
+    },
+    {
+      "case": "malformed_events",
+      "passed": true
+    },
+    {
+      "case": "greeting",
+      "question": "hi",
+      "passed": true,
+      "ack_seconds": 0.001,
+      "total_seconds": 0.0,
+      "answer": "你好！我是跑在你電腦上的 LINE 小幫手。可以問我問題、搜尋附來源、傳照片辨識，或輸入「記錄：事項」和「查詢」。",
+      "sources": []
+    },
+    {
+      "case": "webhook_duplicate",
+      "passed": true
+    },
+    {
+      "case": "todo_add",
+      "question": "記錄：整合測試專用事項",
+      "passed": true,
+      "ack_seconds": 0.003,
+      "total_seconds": 0.0,
+      "answer": "已記錄：整合測試專用事項。",
+      "sources": []
+    },
+    {
+      "case": "todo_isolation",
+      "question": "查詢",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 0.0,
+      "answer": "目前沒有待辦事項。\n輸入「記錄：待辦事項」新增一筆。",
+      "sources": []
+    },
+    {
+      "case": "todo_reopen",
+      "question": "查詢",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 0.0,
+      "answer": "你的待辦事項（共 1 筆，顯示最新 1 筆）：\n1. 整合測試專用事項",
+      "sources": []
+    },
+    {
+      "case": "teacher_mountain",
+      "question": "台灣最高的山是哪一座？多高？",
+      "passed": true,
+      "ack_seconds": 0.006,
+      "total_seconds": 3.04,
+      "answer": "台灣最高的山是玉山，其最高峰玉山主峰的標高為 3,952 公尺 [2, 3]。玉山不僅是台灣最高的山峰，也是台灣百岳中地位最顯著的一座 [3]。\n\n補充資訊：\n1. 雪山是台灣第二高山，最高峰雪山主峰標高為 3,886 公尺 [1]。\n2. 台灣是全球高山密度最高的島嶼之一，擁有許多高山 [2]。\n3. 玉山與雪山等山峰共同構成台灣最具代表性的「五嶽」 [1, 3]。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3%E5%B1%B1%E5%B3%B0%E5%88%97%E8%A1%A8",
+        "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1",
+        "https://zh.wikipedia.org/wiki/%E9%9B%AA%E5%B1%B1_(%E5%8F%B0%E7%81%A3)"
+      ]
+    },
+    {
+      "case": "teacher_nobel",
+      "question": "2026 年諾貝爾物理獎得主是誰？",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 2.05,
+      "answer": "2026 年諾貝爾物理學獎得主是 Francis Halzen。[1]",
+      "sources": [
+        "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
+        "https://www.nobelprize.org/prizes/physics/2026/summary/"
+      ]
+    },
+    {
+      "case": "translation",
+      "question": "翻成英文",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 0.63,
+      "answer": "The winner of the 2026 Nobel Prize in Physics is Francis Halzen. [1, 2]",
+      "sources": [
+        "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
+        "https://www.nobelprize.org/prizes/physics/2026/summary/"
+      ]
+    },
+    {
+      "case": "new_topic",
+      "question": "解釋牛頓第二定律",
+      "passed": true,
+      "ack_seconds": 0.004,
+      "total_seconds": 4.49,
+      "answer": "牛頓第二定律描述了物體運動的變化與作用在物體上的力之間的關係。簡單來說，當一個物體受到外力作用時，它會產生加速度，這個加速度的大小與作用在物體上的力成正比，而與物體自身的質量成反比。其數學表達式為 F = ma，其中 F 是合外力，m 是物體質量，a 是加速度。\n\n補充資訊：\n1. 這是經典力學的基礎定律之一，適用於宏觀物體。\n2. 力的單位是牛頓 (N)，質量的單位是公斤 (kg)，加速度的單位是米每二次方秒 (m/s^2)。\n3. 這個定律是牛頓運動定律中的第二個定律。",
+      "sources": []
+    },
+    {
+      "case": "concise",
+      "question": "簡短一點",
+      "passed": true,
+      "ack_seconds": 0.003,
+      "total_seconds": 2.06,
+      "answer": "牛頓第二定律指出，物體受到的合外力等於物體的質量乘以其加速度，即 F = ma。",
+      "sources": []
+    },
+    {
+      "case": "persisted_followup",
+      "question": "翻成英文",
+      "passed": true,
+      "ack_seconds": 0.003,
+      "total_seconds": 1.59,
+      "answer": "Newton's second law states that the net external force on an object equals the object's mass multiplied by its acceleration, or F = ma.",
+      "sources": []
+    },
+    {
+      "case": "clear",
+      "question": "清除對話",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 0.0,
+      "answer": "已清除這段對話的記憶。",
+      "sources": []
+    },
+    {
+      "case": "pronoun_after_clear",
+      "question": "給我他的照片",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 0.0,
+      "answer": "你想看誰或什麼的照片？請補上名稱。",
+      "sources": []
+    },
+    {
+      "case": "unknown_factual_search",
+      "question": "搜尋 qzxv847293649不存在的測試獎項得主",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 1.09,
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": []
+    },
+    {
+      "case": "public_photo",
+      "question": "給我周星馳的照片",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 1.31,
+      "answer": "找到與「周星馳」相關的照片。\n來源：周星馳\nhttps://zh.wikipedia.org/wiki/%E5%91%A8%E6%98%9F%E9%A6%B3",
+      "sources": []
+    },
+    {
+      "case": "public_photo_served",
+      "passed": true
+    },
+    {
+      "case": "vision_fixture",
+      "question": "synthetic image fixture",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 1.46,
+      "answer": "這張圖片是一張簡報幻燈片，內容是關於「SYNTHETIC TEST MEETING」（合成測試會議）。幻燈片上清楚顯示了會議日期為 2026-10-16，時間為 15:00-16:00，並註明「This is test data.」（這是測試資料）。整體背景為白色，文字為黑色。\n\nGoogle 儲存未啟用或此帳號未綁定，照片未上傳 Google Drive。",
+      "sources": []
+    },
+    {
+      "case": "private_image_time_followup",
+      "question": "那幾點開始？",
+      "passed": true,
+      "ack_seconds": 0.002,
+      "total_seconds": 1.39,
+      "answer": "會議是從 15:00 開始的。\n\n補充資訊：\n這是一個測試資料的會議，日期是 2026-10-16。\n會議預計持續到 16:00。",
+      "sources": []
+    },
+    {
+      "case": "private_image_date_followup",
+      "question": "圖片上的日期是什麼？",
+      "passed": true,
+      "ack_seconds": 0.003,
+      "total_seconds": 1.22,
+      "answer": "緊接上一則助理回答中提到的日期是 2026-10-16。\n\n補充資訊：\n該日期是測試資料的會議日期。\n會議預計在該日期舉行。",
+      "sources": []
+    },
+    {
+      "case": "no_cloud_write_receipts",
+      "passed": true
+    }
+  ],
+  "passed": 22,
+  "total": 22
+}

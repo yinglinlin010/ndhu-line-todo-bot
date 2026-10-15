@@ -1,0 +1,71 @@
+{
+  "method": "Six unseen general questions; fresh conversation each, frozen code during run, reference patterns stay in test process; no claim that pretrained model has never seen these facts",
+  "code_sha256": "79af078b917ca5cc3779f0378405409cefce3f9d53943f5283b5eaa15a9246ab",
+  "code_unchanged": true,
+  "results": [
+    {
+      "question": "雷克雅維克是哪個國家的首都？",
+      "answer": "雷克雅維克是冰島的首都，也是冰島最大的城市 [1][2]。它位於冰島，是許多遊客規劃環島之旅的起點與終點 [3]。\n\n補充資訊：\n1. 冰島的土地面積約為 10.3 萬平方公里 [1]。\n2. 冰島的總人口中，約三分之二都集中在雷克雅維克 [1]。\n3. 雖然雷克雅維克規模不大，但擁有許多獨特且值得打卡的景點 [2]。",
+      "sources": [
+        "https://foodieteller.com/reykjavikpackage/",
+        "https://kimiyo.tw/reykjavik/",
+        "https://whereamber.com/reykjavik-attractions/"
+      ],
+      "expected_fact_present": true,
+      "supported_answer": true,
+      "seconds": 2.98
+    },
+    {
+      "question": "蘇伊士運河連接哪兩個海？",
+      "answer": "蘇伊士運河連接的是地中海和紅海。\n\n這條位於埃及的運河，是連接亞洲和非洲的重要地理節點，能大幅縮短從歐洲到亞洲的航行距離，避免繞道好望角 [1, 2]。\n\n補充資訊：\n1. 運河全長約為 193.3 公里 [3]。\n2. 它是世界上少數具有「海平面水道」特性的運河 [3]。\n3. 穿過此運河能讓航程縮短至少 43% [2]。",
+      "sources": [
+        "https://inf.news/zh-hant/world/73f6e173b070b459a382ab49306cbee3.html",
+        "https://uptogo.com.tw/%e5%9c%8b%e9%9a%9b/%e8%98%87%e4%bc%8a%e5%a3%ab%e9%81%8b%e6%b2%b3/",
+        "https://zh.wikipedia.org/zh-tw/%E8%8B%8F%E4%BC%8A%E5%A3%AB%E8%BF%90%E6%B2%B3"
+      ],
+      "expected_fact_present": true,
+      "supported_answer": true,
+      "seconds": 3.03
+    },
+    {
+      "question": "土星最大的衛星叫什麼？",
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "expected_fact_present": false,
+      "supported_answer": false,
+      "seconds": 1.11
+    },
+    {
+      "question": "威靈頓是哪個國家的首都？",
+      "answer": "威靈頓是紐西蘭的首都。它位於紐西蘭北島的南端，自從英國殖民政府將首都從奧克蘭遷至此後，就一直擔任首都的職務 [1, 3]。\n\n補充資訊：\n1. 威靈頓不僅是首都，也是紐西蘭第二大城市，被譽為「世界最酷小型首都」[1, 2]。\n2. 該城市因其電影特效產業的地位，也被稱為「威萊塢」，是許多知名電影的誕生地 [2]。\n3. 威靈頓的名稱在毛利語中是 Te Whanganui-a-Tara [3]。",
+      "sources": [
+        "https://lillian.tw/wellington/",
+        "https://uptogo.com.tw/%E6%97%85%E9%81%8A/%E7%B4%90%E8%A5%BF%E8%98%AD%E6%97%85%E9%81%8A/%E5%A8%81%E9%9D%88%E9%A0%93/",
+        "https://www.bring-you.info/zh-tw/wellington"
+      ],
+      "expected_fact_present": true,
+      "supported_answer": true,
+      "seconds": 3.34
+    },
+    {
+      "question": "伊斯坦堡是土耳其首都嗎？",
+      "answer": "不是，伊斯坦堡並不是土耳其的首都。土耳其的首都其實是安卡拉。\n\n伊斯坦堡是土耳其最大的城市，也是一個橫跨歐亞大陸的國際級大都市，擁有深厚的歷史底蘊，曾是重要的貿易和文化中心 [2, 3]。\n\n補充資訊：\n1. 伊斯坦堡橫跨歐洲和亞洲兩洲，由博斯普魯斯海峽分隔 [3]。\n2. 該城市因其戰略地位，在歷史上扮演了歐洲與中東的關鍵樞紐 [1]。\n3. 伊斯坦堡擁有超過兩千五百年的歷史，深受羅馬和鄂圖曼帝國的影響 [2]。",
+      "sources": [
+        "https://blog.sunshinetour.com.tw/turkey_travel29/",
+        "https://mimigo.tw/istanbul/",
+        "https://zh.wikipedia.org/zh-tw/%E4%BC%8A%E6%96%AF%E5%9D%A6%E5%A0%A1"
+      ],
+      "expected_fact_present": true,
+      "supported_answer": true,
+      "seconds": 4.15
+    },
+    {
+      "question": "馬里亞納海溝位於哪個海洋？",
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "expected_fact_present": false,
+      "supported_answer": false,
+      "seconds": 1.07
+    }
+  ]
+}

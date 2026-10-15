@@ -268,7 +268,7 @@ class LocalAI:
     def nobel_spec(self, question):
         if not re.search(r"諾貝爾|nobel", question, re.I) or not re.search(r"得主|獲獎者|誰|winner|laureate|who.*won", question, re.I):
             return None
-        if re.search(r"幾歲|出生|身高|評價|why|how old|born", question, re.I):
+        if re.search(r"幾歲|出生|身高|評價|研究|貢獻|成就|作品|為什麼|原因|why|how old|born|research|contribution", question, re.I):
             return None
         categories = [("phy", "物理學獎", r"物理|physics"), ("che", "化學獎", r"化學|chemistry"),
                       ("med", "生理學或醫學獎", r"生理|醫學|medicine|physiology"), ("lit", "文學獎", r"文學|literature"),
@@ -276,7 +276,7 @@ class LocalAI:
         category = next(((code, label) for code, label, pattern in categories if re.search(pattern, question, re.I)), None)
         if not category:
             return None
-        match = re.search(r"(?<!\d)(19\d{2}|20\d{2})(?!\d)", question)
+        match = re.search(r"(?<!\d)([1-9]\d{3})(?!\d)", question)
         year = int(match[1]) if match else datetime.fromtimestamp(self.clock(), TAIPEI).year - (2 if "前年" in question else 1 if "去年" in question else 0)
         return year, *category
 
@@ -323,7 +323,7 @@ class LocalAI:
 
     def lookup_wikipedia(self, query, definitions=False):
         # A factual fallback, rather than inventing facts from unrelated RSS hits.
-        keyword = re.sub(r"哪一座|是哪個|是什麼|多高|多少|在哪裡|的|是", " ", query)
+        keyword = re.sub(r"哪一座|是哪個|是什麼|叫什麼|叫什麽|在哪個|在哪裡|哪兩個|哪個|哪種|位於|多高|多少|大約|大概|的|是", " ", query)
         if "台灣" in query and "山" in query and "最高" in query:
             keyword = "台灣 最高 山 海拔"
         url = "https://zh.wikipedia.org/w/api.php?" + urlencode(dict(action="query", generator="search", gsrsearch=keyword,
@@ -430,11 +430,15 @@ class LocalAI:
             previous = list(self.conversations.get(conversation_id, {}).get("messages", []))
             topic = list(self.conversations.get(conversation_id, {}).get("topic", []))
             prior_evidence = list(self.conversations.get(conversation_id, {}).get("evidence", []))
-        if self.photos:
+        image_topic = bool(topic and topic[0].get("content", "").startswith("使用者上傳了一張圖片"))
+        image_reference = bool(re.match(r"^(?:請)?(?:這張|那張|圖片|照片|圖中|圖上|上面|只告訴我圖片)", question))
+        if self.photos and not (image_topic and image_reference):
             previous_topic = next((m["content"] for m in reversed(previous) if m["role"] == "user"), "")
             photo_raw = raw
             subject = photo_subject(raw)
             if subject == "":
+                if image_topic:
+                    return "請直接提供想搜尋的公開人物或主題名稱；不會將你上傳的私人圖片描述拿去搜尋。"
                 if not previous:
                     return "你想看誰或什麼的照片？請補上名稱。"
                 try:
@@ -451,7 +455,14 @@ class LocalAI:
         continuation = bool(previous and continuation_request(question))
         followup = bool(previous and re.match(r"^(那|還有|為什麼|怎麼說|這個|這位|這裡|那裡|它|他|她|哪裡|幾歲|多高|多大|出生|任期)", question))
         followup = followup or bool(previous and re.match(r"^(he|she|it|where was|when was|what about|his|her)\b", question, re.I))
+        image_followup = image_topic and (continuation or followup or image_reference)
+        explicit_search = bool(re.match(r"^(搜尋|搜索|查網路|上網查|最新)", raw))
+        if image_followup and not explicit_search:
+            # Private image descriptions remain local, including factual follow-ups.
+            continuation = True
         search = wants_search and not (continuation and not recent)
+        if image_followup and not explicit_search:
+            search = False
         if not self.search_enabled and not recent and not re.match(r"^(搜尋|搜索|查網路|上網查|最新)", raw):
             search = False
         lookup_question = question
@@ -529,7 +540,7 @@ class LocalAI:
             if concise:
                 answer = answer.split("\n", 1)[0].strip()
             remember_previous = [m for m in previous if m["role"] == "user"] if search else previous
-            self.remember(conversation_id, remember_previous, lookup_question, answer[:1800], evidence=results)
+            self.remember(conversation_id, remember_previous, lookup_question, answer[:1800], evidence=results, keep_topic=continuation)
             if results:
                 return source_reply(answer, results)
             return ("這次沒查到可確認的最新資料。\n" if search and recent else "") + answer[:4000]
@@ -544,13 +555,13 @@ class LocalAI:
             self.conversations = {k: v for k, v in self.conversations.items() if self.clock() - v["at"] <= 1200}
             private_json(self.memory_path, self.conversations)
 
-    def remember(self, key, previous, question, answer, evidence=None):
+    def remember(self, key, previous, question, answer, evidence=None, keep_topic=False):
         if key:
             with self.lock:
                 if len(self.conversations) >= 200 and key not in self.conversations:
                     self.conversations.pop(next(iter(self.conversations)))
                 pair = [dict(role="user", content=question), dict(role="assistant", content=answer)]
-                modifying = continuation_request(question)
+                modifying = keep_topic or continuation_request(question)
                 topic = self.conversations.get(key, {}).get("topic", pair) if modifying else pair
                 sources = self.conversations.get(key, {}).get("evidence", []) if modifying and evidence is None else evidence or []
                 self.conversations[key] = dict(at=self.clock(), topic=topic, evidence=sources[:3], messages=[*previous, *pair][-6:])

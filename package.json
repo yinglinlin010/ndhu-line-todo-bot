@@ -8,7 +8,8 @@
     "test": "node --test bot.test.mjs elearn.test.mjs local-ai.test.mjs photos.test.mjs",
     "evidence": "node scripts/compare-versions.mjs",
     "start:node": "node server.mjs",
-    "test:python": "python3 -m unittest -v test_line_bot_local.py test_teacher_features.py"
+    "test:python": "python3 -m unittest -v test_line_bot_local.py test_teacher_features.py test_service.py",
+    "test:live": "python3 scripts/check-live-quality.py"
   },
   "engines": {
     "node": ">=20.18.1"

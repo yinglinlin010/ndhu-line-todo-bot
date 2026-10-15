@@ -1,0 +1,8 @@
+{
+  "method": "Read-only check of the previously approved synthetic photo and calendar event; no new cloud data",
+  "drive_exists": true,
+  "drive_private": true,
+  "calendar_expected_event": true,
+  "calendar_expected_time": true,
+  "sheet_logging_disabled": true
+}

@@ -1,0 +1,38 @@
+{
+  "method": "Three fresh general holdout questions after generic normalization; not a statistical benchmark; fresh conversation each, frozen code during run, reference patterns stay in test process; no claim that pretrained model has never seen these facts",
+  "code_sha256": "dd752825049573dc2719b09888628a2880f10575b34cb4b22966181755941d39",
+  "code_unchanged": true,
+  "results": [
+    {
+      "question": "巴拿馬運河連接哪兩個海洋？",
+      "answer": "巴拿馬運河連接的是太平洋和加勒比海。\n\n這條運河是全球重要的航運要道，它縮短了跨大西洋航線的距離，讓船隻不必繞行南美洲的崎嶇海岸線。\n\n補充資訊：\n1. 運河的建造極大地促進了全球貿易的發展。\n2. 巴拿馬運河的運營涉及複雜的水位管理系統。\n3. 它是連接北美洲和南美洲的關鍵水路之一。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E8%8B%8F%E4%BC%8A%E5%A3%AB%E8%BF%90%E6%B2%B3",
+        "https://zh.wikipedia.org/wiki/%E8%BF%90%E6%B2%B3"
+      ],
+      "expected_fact_present": true,
+      "supported_answer": true,
+      "seconds": 4.19
+    },
+    {
+      "question": "木星最大的衛星叫什麼？",
+      "answer": "木星最大的衛星是伽利略衛星中的木衛三（Ganymede）。\n\n雖然提供的資料中沒有直接提到木星最大的衛星名稱，但木星擁有眾多衛星，其中木衛三是太陽系中最大的衛星之一。\n\n補充資訊：\n1. 木星本身是太陽系中體積最大的行星。\n2. 木星的衛星群體被稱為伽利略衛星。\n3. 木星的表面特徵包括雲帶條紋和著名的大紅斑。",
+      "sources": [
+        "https://baike.baidu.com/item/%E6%9C%A8%E6%98%9F/222105",
+        "https://kknews.cc/zh-tw/science/6r2bylp.html",
+        "https://starwalk.space/zh-Hant/news/jupiter-explained-the-mind-blowing-facts"
+      ],
+      "expected_fact_present": true,
+      "supported_answer": true,
+      "seconds": 2.71
+    },
+    {
+      "question": "澳洲的首都是哪座城市？",
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "expected_fact_present": false,
+      "supported_answer": false,
+      "seconds": 1.16
+    }
+  ]
+}

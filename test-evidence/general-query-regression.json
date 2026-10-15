@@ -1,0 +1,286 @@
+{
+  "method": "Retest of two known baseline failures after generic question-word normalization; not blind",
+  "results": [
+    {
+      "question": "土星最大的衛星叫什麼？",
+      "response": [
+        {
+          "type": "text",
+          "text": "土星最大的衛星是土衛六，也就是泰坦。它不僅是土星最大的衛星，也是太陽系第二大的衛星，而且擁有以氮氣為主的濃密大氣層，景觀上還有干涸的河流網絡和烴湖 [1, 2]。\n\n補充資訊：\n1. 土衛六（泰坦）的體積超越水星，但質量較小 [1]。\n2. 截至2026年6月，已確認的土星衛星數量已達293顆 [2]。\n3. 土星擁有太陽系最顯著的行星環系統，主要由冰粒和岩石碎屑構成 [1]。"
+        },
+        {
+          "type": "flex",
+          "altText": "搜尋結果：土星、土星的卫星、土星環",
+          "contents": {
+            "type": "carousel",
+            "contents": [
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[1] 土星",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "zh.wikipedia.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "土星（拉丁語：Saturnus）是太陽系中距離太陽第六近的行星，其體積僅次於木星，為太陽系第二大行星。作為氣體巨行星，土星平均半徑約為地球的9倍，但密度僅地球的八分之一，質量卻達地球的95倍以上。儘管",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://zh.wikipedia.org/wiki/%E5%9C%9F%E6%98%9F"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[2] 土星的卫星",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "zh.wikipedia.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "土星的衛星不僅數量眾多，種類也繁多，從直徑只有幾十米的微小小衛星到比行星水星更巨大的泰坦（土衛六）。迄2026年6月，已發現並確認軌道的衛星數量已有293顆。這個數目不包括嵌入密集環中的數千顆小衛星，",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://zh.wikipedia.org/wiki/%E5%9C%9F%E6%98%9F%E7%9A%84%E5%8D%AB%E6%98%9F"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[3] 土星環",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "zh.wikipedia.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "土星環是太陽系行星的行星環中最突出與明顯的一個，環中有不計其數的小顆粒，其大小從微米到米都有，軌道成叢集的繞著土星運轉。環中的顆粒主要成分都是冰，還有一些其它的化學物質。 雖然環的反射能夠增加土星的視",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://zh.wikipedia.org/wiki/%E5%9C%9F%E6%98%9F%E7%92%B0"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "question": "馬里亞納海溝位於哪個海洋？",
+      "response": [
+        {
+          "type": "text",
+          "text": "馬里亞納海溝位於西北太平洋。它是目前已知最深的海溝，地處關島和北馬里亞納群島的東部海床 [2]。\n\n補充資訊：\n1. 海溝的最大深度達海平面以下 11,034 公尺 [2]。\n2. 此海溝是太平洋板塊俯衝到菲律賓海板塊（或馬里亞納板塊）之下的俯衝帶 [2]。\n3. 該海溝的座標為 11°21′N 142°12′E [2]。"
+        },
+        {
+          "type": "flex",
+          "altText": "搜尋結果：汤加海沟、马里亚纳海沟",
+          "contents": {
+            "type": "carousel",
+            "contents": [
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[1] 汤加海沟",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "zh.wikipedia.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "汤加海沟是一个位于太平洋的海沟，它是南半球最深的海溝，也是地球上僅次於馬里亞納海溝的第二深的海溝。最深处是地平線深淵，深达10,800 ± 10米（35,433 ± 33英尺）。 太平洋板块在澳大利亚",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://zh.wikipedia.org/wiki/%E6%B1%A4%E5%8A%A0%E6%B5%B7%E6%B2%9F"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[2] 马里亚纳海沟",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "zh.wikipedia.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "馬里亞納海溝（英語：Mariana Trench，日語：マリアナ海溝）又作瑪麗亞娜海溝，或稱馬里亞納群島海溝，為地球目前已知最深的海溝。該海溝地處西北太平洋的海床，坐标11°21′N 142°12′E",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://zh.wikipedia.org/wiki/%E9%A9%AC%E9%87%8C%E4%BA%9A%E7%BA%B3%E6%B5%B7%E6%B2%9F"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
