@@ -1,0 +1,97 @@
+{
+  "method": "Live publisher international RSS + real local model, source scope/date/citation mapping checks; no phone, LINE transport or weight training",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "code_sha256": "9a566a1149b5f863815f7af76f4361ceb1b0bcf5f0fa37224bf377d845a560d9",
+  "code_unchanged": true,
+  "semantic_limit": "These checks do not independently verify every reported event or entailment of every generated sentence. RSS timestamps describe publication, not necessarily event occurrence.",
+  "passed": 2,
+  "total": 2,
+  "results": [
+    {
+      "question": "今天有哪些國際新聞？請附來源。",
+      "answer": "川普再點名南韓投資阿拉斯加LNG [1]；薄熙來前搭檔黃奇帆深圳機場遭帶走 [2]；巴西國會通過縮短工時法案 [3]。",
+      "seconds": 7.39,
+      "checks": {
+        "has_sources": true,
+        "publisher_world_paths": true,
+        "published_today": true,
+        "citation_indices": true,
+        "source_cards_match_evidence": true,
+        "model_generated_summary": true
+      },
+      "passed": true,
+      "evidence": [
+        {
+          "title": "自由時報｜台灣也有份！川普再點名南韓投資阿拉斯加LNG 韓媒曝原因",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5606784",
+          "snippet": "美國總統川普14日再次宣稱，南韓已決定投資500億美元（約新台幣1.5兆元）參與美國阿拉斯加州液化天然氣（LNG）開發計畫。川普近日也曾表示，台灣已同意採購價值700億至800億...…",
+          "published": 1792040183.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml"
+        },
+        {
+          "title": "自由時報｜薄熙來前搭檔黃奇帆深圳機場遭帶走！兒「靠爸」商界無所不能傳也被抓",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5606909",
+          "snippet": "中國前重慶市長黃奇帆退休10年後落馬，仍受外界關注，港媒爆料他10日出席廣東一場房地產活動後，在深圳機場被帶走，而他「出事」的原因或與家人斂財有關，兒子黃然非也被帶走調查。黃然非...…",
+          "published": 1792039348.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml"
+        },
+        {
+          "title": "中央通訊社｜巴西國會通過縮短工時法案 魯拉盼為連任選戰添助力",
+          "url": "https://www.cna.com.tw/news/aopl/202610150095.aspx",
+          "snippet": "（中央社巴西利亞14日綜合外電報導）巴西參議院今天通過縮短每週工時法案。這是總統魯拉（Luiz Inacio Lula da Silva）寄望在10月25日總統選舉第2輪投票前，縮小與右翼對手佛拉維歐．波索納洛（Flavio Bolsonaro）差距的政策之一。",
+          "published": 1792038571.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld"
+        }
+      ]
+    },
+    {
+      "question": "今日世界新聞摘要，請附來源。",
+      "answer": "川普再點名南韓投資阿拉斯加LNG [1]；薄熙來前搭檔黃奇帆深圳機場遭帶走 [2]；巴西國會通過縮短工時法案 [3]。",
+      "seconds": 2.13,
+      "checks": {
+        "has_sources": true,
+        "publisher_world_paths": true,
+        "published_today": true,
+        "citation_indices": true,
+        "source_cards_match_evidence": true,
+        "model_generated_summary": true
+      },
+      "passed": true,
+      "evidence": [
+        {
+          "title": "自由時報｜台灣也有份！川普再點名南韓投資阿拉斯加LNG 韓媒曝原因",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5606784",
+          "snippet": "美國總統川普14日再次宣稱，南韓已決定投資500億美元（約新台幣1.5兆元）參與美國阿拉斯加州液化天然氣（LNG）開發計畫。川普近日也曾表示，台灣已同意採購價值700億至800億...…",
+          "published": 1792040183.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml"
+        },
+        {
+          "title": "自由時報｜薄熙來前搭檔黃奇帆深圳機場遭帶走！兒「靠爸」商界無所不能傳也被抓",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5606909",
+          "snippet": "中國前重慶市長黃奇帆退休10年後落馬，仍受外界關注，港媒爆料他10日出席廣東一場房地產活動後，在深圳機場被帶走，而他「出事」的原因或與家人斂財有關，兒子黃然非也被帶走調查。黃然非...…",
+          "published": 1792039348.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml"
+        },
+        {
+          "title": "中央通訊社｜巴西國會通過縮短工時法案 魯拉盼為連任選戰添助力",
+          "url": "https://www.cna.com.tw/news/aopl/202610150095.aspx",
+          "snippet": "（中央社巴西利亞14日綜合外電報導）巴西參議院今天通過縮短每週工時法案。這是總統魯拉（Luiz Inacio Lula da Silva）寄望在10月25日總統選舉第2輪投票前，縮小與右翼對手佛拉維歐．波索納洛（Flavio Bolsonaro）差距的政策之一。",
+          "published": 1792038571.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld"
+        }
+      ]
+    }
+  ]
+}

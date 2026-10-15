@@ -345,12 +345,65 @@ class PythonBotTests(unittest.TestCase):
             calls.append(url)
             return rss
         ai = bot.LocalAI(http=http, clock=lambda: now)
-        rows = ai.lookup("今天有哪些國際新聞？請附來源。", news=True)
+        rows = ai.lookup("今天有哪些台灣新聞？請附來源。", news=True)
         self.assertEqual([r["url"] for r in rows], ["https://example.org/today"])
-        self.assertIn("/topic/WORLD", calls[0])
+        self.assertIn("/topic/NATION", calls[0])
         self.assertEqual(bot.broad_news_topic("今天台灣新聞，附上來源"), "NATION")
         self.assertIsNone(bot.broad_news_topic("台積電今天有什麼新聞？"))
         self.assertEqual(bot.search_query("加拿大首都？請附來源。"), "加拿大首都")
+
+    def test_world_news_checks_publisher_section_date_and_preserves_financial_world_news(self):
+        from datetime import datetime, timezone
+        from email.utils import format_datetime
+        from xml.sax.saxutils import escape
+        def rss(items):
+            return ("<rss><channel>" + "".join(f"<item><title>{escape(title)}</title><link>{escape(url)}</link><description>原始發稿前言</description><pubDate>{format_datetime(datetime.fromtimestamp(at,timezone.utc))}</pubDate></item>" for title,url,at in items) + "</channel></rss>").encode()
+        cna = rss([
+            ("國際利率政策影響全球ETF", "https://www.cna.com.tw/news/aopl/202610100001.aspx?utm_source=test", NOW-60),
+            ("台股ETF心得", "https://www.cna.com.tw/news/afe/202610100002.aspx", NOW-30),
+            ("假冒來源", "https://evil.example/news/aopl/202610100003.aspx", NOW-20),
+            ("昨日舊聞", "https://www.cna.com.tw/news/aopl/202610090004.aspx", NOW-12*3600),
+            ("未來稿件", "https://www.cna.com.tw/news/aopl/202610100005.aspx", NOW+60),
+            ("路徑跳轉", "https://www.cna.com.tw/news/aopl/%2e%2e/afe/202610100006.aspx", NOW-10),
+            ("無效連接埠", "https://www.cna.com.tw:bad/news/aopl/202610100007.aspx", NOW-10),
+            ("另一則國際消息", "https://www.cna.com.tw/news/aopl/202610100008.aspx", NOW-120),
+        ])
+        ltn = rss([
+            ("歐洲外交會議", "https://news.ltn.com.tw/news/world/breakingnews/100", NOW-180),
+            ("國內證券", "https://news.ltn.com.tw/news/business/breakingnews/101", NOW-10),
+        ])
+        calls=[]
+        def http(url,**kw):
+            calls.append(url)
+            return cna if "feedburner" in url else ltn
+        ai=bot.LocalAI(http=http,clock=lambda:NOW)
+        rows=ai.lookup("今天有哪些國際新聞？請附來源。",news=True)
+        self.assertEqual(len(rows),3)
+        self.assertEqual({r["publisher"] for r in rows},{"中央通訊社","自由時報"})
+        self.assertTrue(all(r["section"]=="國際" and r["published"]<=NOW for r in rows))
+        self.assertTrue(any("全球ETF" in r["title"] for r in rows))
+        self.assertFalse(any("台股ETF" in r["title"] or "昨日" in r["title"] for r in rows))
+        self.assertTrue(all("?" not in r["url"] for r in rows))
+        self.assertEqual(len(calls),2)
+        # One blocked publisher still leaves usable, correctly classified news.
+        def blocked(url,**kw):
+            if "feedburner" in url:raise RuntimeError("blocked")
+            return ltn
+        rows=bot.LocalAI(http=blocked,clock=lambda:NOW).lookup_world_news("今天國際新聞")
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["publisher"],"自由時報")
+
+    def test_news_invalid_citations_do_not_publish_the_model_claim(self):
+        rows=[dict(title="中央通訊社｜某國公布選舉結果",url="https://www.cna.com.tw/news/aopl/202610100001.aspx",snippet="某國公布選舉結果",published=NOW)]
+        ai=bot.LocalAI(clock=lambda:NOW,http=lambda *a,**k: json.dumps(dict(message=dict(content="不在來源內的虛構消息 [9]"))).encode())
+        ai.lookup=lambda *a:rows
+        reply=ai.ask("今天國際新聞")
+        self.assertNotIn("虛構消息",reply[0]["text"])
+        self.assertIn("未能正確標示引用",reply[0]["text"])
+        self.assertIn("某國公布選舉結果 [1]",reply[0]["text"])
+        self.assertTrue(bot.valid_source_citations("第一則[1]，合併[1、2]",2))
+        self.assertFalse(bot.valid_source_citations("來源[0]",2))
+        self.assertFalse(bot.valid_source_citations("沒有引用",2))
 
     def test_wikipedia_query_removes_question_words_without_inserting_answers(self):
         from urllib.parse import parse_qs, urlsplit
@@ -528,11 +581,10 @@ class PythonBotTests(unittest.TestCase):
             return json.dumps(dict(message=dict(content="基本背景"))).encode()
         reply = bot.LocalAI(http=http).ask("今天有什麼新聞")
         self.assertIn("沒有找到足以確認", reply)
-        self.assertEqual(len(calls), 3)
-        self.assertTrue(all("news.google.com/rss/headlines/section/topic/WORLD" in url for url in calls))
+        self.assertEqual(calls, ["https://feeds.feedburner.com/rsscna/intworld", "https://news.ltn.com.tw/rss/world.xml"])
         def no_model(url, **kwargs):
             if url.startswith("https:"):
-                return RSS
+                return RSS.replace(b"https://example.org/new", b"https://www.cna.com.tw/news/aopl/202610090001.aspx")
             raise RuntimeError("offline")
         reply = bot.LocalAI(http=no_model, clock=lambda: NOW).ask("最新：新聞")
         self.assertIn("本機模型暫時無法整理", reply[0]["text"])

@@ -62,3 +62,17 @@
 報告會標示 `complete`、`aborted_reason`、`completed`及`not_run`；退出碼0只表示自動檢查未失敗，仍可能有待人工核對。每題也會保存實際查到的來源摘要，方便人工檢查主張是否由來源支持。
 
 正式服務曾出現公開通道連續檢查失敗、回復備援也未確認，達到三次重建上限後停止。這輪重新啟動時已先恢復自有路由的備援，再建立新通道；最後本機健康檢查、公開HTTPS及LINE endpoint讀回都通過，見 `test-evidence/faq-service-start-check.json`。這只是入口及啟動確認，不是真實手機訊息收發驗證。
+
+## 國際新聞分類修正
+
+人工核對發現舊版國際新聞混入國內 ETF 報導，原始結果保留於 `faq-manual-review.json`。新版改讀中央通訊社與自由時報的國際分類 RSS，核對文章網域、分類路徑與發布日期，移除 URL 追蹤參數並以網址去重；保留原始摘要及國際財經新聞。來源失敗時不以其他分類或過期資料湊數。模型引用編號無效時明確降級為來源標題清單。
+
+來源指南：[中央社 RSS](https://www.cna.com.tw/about/rss.aspx)、[自由時報 RSS](https://service.ltn.com.tw/RSS)。
+
+此輪 79 項 Python 測試通過、22 項本機 HTTP 整合檢查通過；兩種新聞問法的真實 Ollama／RSS 檢查通過，見 `news-classification-live.json`。檢查範圍為分類、日期、引用編號及來源卡片配對，並未逐句獨立驗證新聞真偽或所有摘要主張。不是新一輪手機 LINE 傳輸測試，也不是模型權重訓練。先前 35 題報告屬於上一版，並未冒稱在新版重新跑完。
+
+重跑新聞專項：
+
+```sh
+.venv/bin/python scripts/check-news-quality.py
+```

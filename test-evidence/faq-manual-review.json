@@ -1,0 +1,22 @@
+{
+  "checked_at_utc": "2026-10-15T05:47:26.757788+00:00",
+  "automated_report": "faq-regression-final.json",
+  "reviews": [
+    {
+      "case": "president-current",
+      "verdict": "官方頁支持本次回答：賴清德",
+      "source": "https://www.president.gov.tw/Page/694",
+      "method": "重新讀取總統府總統介紹頁，頁面列出總統姓名與2024-05-20就任日期"
+    },
+    {
+      "case": "news-current",
+      "verdict": "尚未完整通過",
+      "method": "比對本次保存的回答、RSS標題摘要及發布時間；未宣稱已查核新聞全文或事件真相",
+      "rss_publication_dates_match_test_date": true,
+      "test_date": "2026-10-15",
+      "answer_main_claims_match_saved_headlines": true,
+      "source_selection_issue": "附帶來源混入台灣ETF財經文章，不完全符合國際新聞範圍",
+      "requires_user_action": false
+    }
+  ]
+}
