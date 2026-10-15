@@ -436,6 +436,42 @@ class PythonBotTests(unittest.TestCase):
         self.assertNotIn("甲國已批准",reply[0]["text"])
         self.assertIn("[2]",reply[0]["text"])
 
+    def test_domestic_news_followup_keeps_source_guard(self):
+        row = dict(title="甲市據報尚未批准2026年道路計畫", url="https://example.org/local", snippet="計畫仍在審查。", published=NOW)
+        ai = bot.LocalAI(clock=lambda:NOW, http=lambda *a,**k:json.dumps(dict(message=dict(content="甲市已批准2026年道路計畫 [1]"))).encode())
+        calls=[]
+        ai.lookup=lambda *args:calls.append(args) or [row]
+        ai.ask("今天有哪些台灣新聞", "domestic")
+        reply=ai.ask("簡短一點", "domestic")
+        self.assertIn("尚未批准",reply[0]["text"])
+        self.assertNotIn("甲市已批准",reply[0]["text"])
+        self.assertEqual(len(calls),1)
+        self.assertEqual(ai.conversations["domestic"]["evidence"][0]["evidence_type"],"news")
+        self.assertNotIn("evidence_type",row)
+
+    def test_merged_news_sources_survive_memory_reload_and_followup(self):
+        title="甲國據報尚未批准乙國投資方案"
+        rows=[dict(title=name+"｜"+title,publisher=name,url="https://example.org/"+name,snippet="仍在審查。",published=NOW,evidence_type="news") for name in ["a","b"]]
+        groups=bot.cluster_news(rows)
+        ai=bot.LocalAI(clock=lambda:NOW,memory_path=self.path/"memory.json")
+        ai.remember("owner",[],"今天國際新聞",title+" [1]",evidence=groups)
+        def http(*a,**k):
+            return json.dumps(dict(message=dict(content=title+" [1]"))).encode()
+        restored=bot.LocalAI(clock=lambda:NOW,memory_path=self.path/"memory.json",http=http)
+        reply=restored.ask("詳細一點","owner")
+        buttons=reply[1]["contents"]["contents"][0]["footer"]["contents"]
+        self.assertEqual([x["action"]["uri"] for x in buttons],[rows[0]["url"],rows[1]["url"]])
+        self.assertEqual(restored.conversations["owner"]["evidence"][0]["related_sources"][0]["snippet"],"仍在審查。")
+        self.assertNotIn("owner",restored.ask("清除對話","owner"))
+        self.assertNotIn("owner",restored.conversations)
+
+    def test_news_guard_preserves_display_order_and_does_not_silently_drop_events(self):
+        rows=[dict(title="甲國公布外交投資計畫",snippet="",url="https://example.org/1"),dict(title="乙國舉行地方選舉",snippet="",url="https://example.org/2")]
+        complete="甲國公布外交投資計畫 [1]\n乙國舉行地方選舉 [2]"
+        self.assertEqual(bot.grounded_news_answer(complete,rows)[1],"source_extract")
+        for answer in ["乙國舉行地方選舉 [2]\n甲國公布外交投資計畫 [1]","甲國公布外交投資計畫 [1]",complete+"\n甲國公布外交投資計畫 [1]"]:
+            self.assertEqual(bot.grounded_news_answer(answer,rows)[1],"headline_fallback")
+
     def test_news_event_clustering_is_conservative_preserves_originals_and_links(self):
         title = "甲國外交部據報尚未批准乙國投資計畫"
         def row(name, headline=title, at=NOW, snippet="仍在審查。"):
