@@ -1,0 +1,53 @@
+{
+  "time": "2026-10-15T17:29:55.493521+00:00",
+  "code_sha256": "ef1c13498be8b3382921b1226b2a73bf60d484820ea628f7514fe2a1bcdb74e4",
+  "unit_tests": {
+    "passed": 103,
+    "failed": 0
+  },
+  "http_integration": {
+    "passed": 24,
+    "total": 24,
+    "report": "test-evidence/reliability-runs/20261015T172955492436Z-http.json"
+  },
+  "faq": {
+    "report": "test-evidence/faq-runs/20261015T172741Z-ce3fa7.json",
+    "complete": true,
+    "summary": {
+      "selected": 35,
+      "completed": 35,
+      "not_run": 0,
+      "checks_passed": 33,
+      "checks_failed": 1,
+      "manual": 1,
+      "by_status": {
+        "主答案字詞符合，需抽查": 15,
+        "待人工核對": 1,
+        "查不到": 3,
+        "追問": 7,
+        "符合預期": 8,
+        "圖片已產生": 1
+      }
+    },
+    "code_matches_current": true,
+    "expectations_sent_to_bot": false
+  },
+  "service_checks": {
+    "local_health": true,
+    "public_health": true,
+    "automatic_sheet_logging_off": true,
+    "line_endpoint_matches": true,
+    "line_webhook_active": true
+  },
+  "known_faq_failure": {
+    "case": "news-current",
+    "reason": "No current-day items in either configured publisher RSS feed after midnight; refusal retained as a failed source-availability check, not changed to a pass",
+    "source_date_report": "test-evidence/reliability-runs/news-midnight-source-check.json"
+  },
+  "limitations": [
+    "No phone or real LINE reply/loading-animation test; actual API calls are mocked in unit tests",
+    "No new Google writes or changes to existing pending production calendar data",
+    "45-second cooperative work budget includes queue waiting; transport/network failures can still prevent the final reply",
+    "No GitHub push"
+  ]
+}

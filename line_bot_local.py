@@ -27,6 +27,7 @@ import time
 import uuid
 import unicodedata
 import warnings
+from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
@@ -51,17 +52,35 @@ DAY = 86400
 Image.MAX_IMAGE_PIXELS = 20_000_000
 
 
+
+class WorkDeadline(TimeoutError):
+    pass
+
+
+WORK_CONTEXT = threading.local()
+
+
+def work_timeout(seconds):
+    deadline = getattr(WORK_CONTEXT, "deadline", None)
+    if deadline is None:
+        return seconds
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise WorkDeadline("Message processing deadline reached")
+    return min(seconds, remaining)
+
 def clean(value, limit=700):
     return re.sub(r"\s+", " ", BeautifulSoup(str(value or ""), "html.parser").get_text(" ")).strip()[:limit]
 
 
 def read_http(url, *, method="GET", timeout=10, limit=1024 * 1024, redirect_hosts=None, **kwargs):
     """Bounded HTTP. Optional redirects are public GETs to explicitly allowed hosts only."""
+    timeout = work_timeout(timeout)
     if redirect_hosts:
         sensitive = {str(k).lower() for k in kwargs.get("headers", {})} & {"authorization", "cookie", "x-api-key"}
         if method != "GET" or sensitive or kwargs.get("auth") or kwargs.get("cookies"):
             raise ValueError("Public redirects cannot carry credentials")
-    deadline = time.monotonic() + timeout if redirect_hosts else None
+    deadline = time.monotonic() + timeout
     for attempt in range(4):
         remaining = deadline - time.monotonic() if deadline else timeout
         if remaining <= 0:
@@ -69,7 +88,7 @@ def read_http(url, *, method="GET", timeout=10, limit=1024 * 1024, redirect_host
         parsed = urlsplit(url)
         if redirect_hosts and (parsed.scheme != "https" or parsed.hostname not in redirect_hosts or parsed.username or parsed.password or parsed.port not in (None, 443)):
             raise ValueError("Redirect host is not allowed")
-        with requests.request(method, url, timeout=remaining, stream=True,
+        with requests.request(method, url, timeout=(min(3, remaining), remaining), stream=True,
                               allow_redirects=False, **kwargs) as response:
             if response.status_code in (301, 302, 303, 307, 308) and redirect_hosts:
                 location = response.headers.get("Location")
@@ -582,8 +601,14 @@ class LocalAI:
 
     def ask(self, raw, conversation_id=None):
         # Keep one conversation from reading/updating history simultaneously.
-        with self.turn_locks[hash(conversation_id) % len(self.turn_locks)]:
+        turn_lock = self.turn_locks[hash(conversation_id) % len(self.turn_locks)]
+        if not turn_lock.acquire(timeout=work_timeout(45)):
+            raise WorkDeadline("Conversation lock wait expired")
+        try:
+            work_timeout(1)
             return self._ask(raw, conversation_id)
+        finally:
+            turn_lock.release()
 
     def resolve_followup(self, question, previous):
         schema = dict(type="object", required=["question"], properties={"question": dict(type="string")})
@@ -762,8 +787,10 @@ class LocalAI:
             private_json(self.memory_path, self.conversations)
 
     def remember(self, key, previous, question, answer, evidence=None, keep_topic=False):
+        work_timeout(1)
         if key:
             with self.lock:
+                work_timeout(1)
                 if len(self.conversations) >= 200 and key not in self.conversations:
                     self.conversations.pop(next(iter(self.conversations)))
                 pair = [dict(role="user", content=question), dict(role="assistant", content=answer)]
@@ -884,10 +911,11 @@ class GoogleWorkspace:
         self.run, self.clock, self.folder_id = run, clock, None
 
     def call(self, *args, upload=None, cwd=None):
+        timeout = work_timeout(30)
         if not self.executable:
             raise RuntimeError("Google 工具未安裝")
         command = [self.executable, *args] + (["--upload", upload] if upload else [])
-        result = self.run(command, capture_output=True, text=True, encoding="utf-8", timeout=30, cwd=cwd)
+        result = self.run(command, capture_output=True, text=True, encoding="utf-8", timeout=timeout, cwd=cwd)
         if result.returncode:
             # Never send subprocess stderr: it may include tokens or private IDs.
             raise RuntimeError("Google 操作未完成，請檢查本機登入、API 權限及設定")
@@ -951,6 +979,7 @@ class TeacherFeatures:
         self.state = json.loads(self.path.read_text()) if self.path.exists() else dict(operations={}, pending=None)
         self.state.setdefault("operations", {})
         self.state.setdefault("pending", None)
+        self.state.setdefault("replacement", None)
         self.lock = threading.RLock()
 
     def owns(self, event):
@@ -958,6 +987,7 @@ class TeacherFeatures:
         return bool(self.owner_id and source.get("type") == "user" and source.get("userId") == self.owner_id)
 
     def operation(self, key, fn, *args):
+        work_timeout(1)
         operations = self.state["operations"]
         previous = operations.get(key)
         if previous:
@@ -977,6 +1007,7 @@ class TeacherFeatures:
             return None, "操作結果未確認，請檢查本機 Google 登入／權限及 Google 內容。"
 
     def before_text(self, raw, event):
+        work_timeout(1)
         manual = re.fullmatch(r"存試算表\s*[:：]([\s\S]*)", raw)
         if manual:
             if not self.enabled or not self.google or not self.google.sheet_id:
@@ -992,7 +1023,7 @@ class TeacherFeatures:
             with self.lock:
                 _, err = self.operation("manual-sheet:" + key, self.google.write_sheet, row)
             return "試算表紀錄結果未確認。" + err if err else "已將指定內容存進 Google 試算表；一般聊天自動紀錄維持原設定。"
-        relevant = raw in ("確認排程", "取消排程") or event_candidate(raw)
+        relevant = raw in ("確認排程", "取消排程", "取代排程", "保留原排程") or event_candidate(raw)
         if not relevant:
             return None
         if not self.enabled:
@@ -1000,12 +1031,32 @@ class TeacherFeatures:
         if not self.owns(event):
             return "Google 功能只供綁定者在 LINE 個人聊天使用。"
         with self.lock:
+            work_timeout(1)
             pending = self.state.get("pending")
+            if pending and self.clock() - pending["at"] > 1200:
+                self.state["pending"] = pending = None
+                self.state["replacement"] = None
+                private_json(self.path, self.state)
             if raw == "取消排程":
+                self.state["replacement"] = None
                 self.state["pending"] = None
                 private_json(self.path, self.state)
                 return "已取消待確認行程，沒有新增日曆事件。"
+            replacement = self.state.get("replacement")
+            if replacement and (self.clock() - replacement["at"] > 1200 or not pending or replacement.get("base_key") != pending["key"]):
+                self.state["replacement"] = replacement = None
+                private_json(self.path, self.state)
+            if raw in ("取代排程", "保留原排程"):
+                if not pending or self.clock() - pending["at"] > 1200 or not replacement:
+                    return "沒有有效的待取代行程，請重新傳送日期、時間與活動。"
+                if raw == "取代排程":
+                    self.state["pending"] = pending = {k: v for k, v in replacement.items() if k != "base_key"}
+                self.state["replacement"] = None
+                private_json(self.path, self.state)
+                return self.event_preview(pending["event"])
             if raw == "確認排程":
+                if replacement:
+                    return "你有兩個待選行程，尚未新增日曆。請先回覆「取代排程」或「保留原排程」，核對預覽後再確認。"
                 if not pending or self.clock() - pending["at"] > 1200:
                     return "沒有可確認的行程，請重新傳送日期、時間與活動。"
                 value, err = self.operation("calendar:" + pending["key"], self.google.add_calendar, pending["event"], pending["key"])
@@ -1023,12 +1074,31 @@ class TeacherFeatures:
                 return "尚未建立行程。請提供正確的日期、時間和活動，例如「明天下午三點開會」。"
             return self.stage_event(parsed, event)
 
+    @staticmethod
+    def event_preview(parsed):
+        return f"待確認行程：{parsed['title']}\n{parsed['date']} {parsed['time']}（台灣時間）\n回覆「確認排程」才會建立；回覆「取消排程」放棄。"
+
     def stage_event(self, parsed, event):
+        work_timeout(1)
         identity = event.get("webhookEventId") or event["replyToken"]
         key = hashlib.sha256(identity.encode()).hexdigest()
-        self.state["pending"] = dict(at=self.clock(), key=key, event=parsed)
-        private_json(self.path, self.state)
-        return f"待確認行程：{parsed['title']}\n{parsed['date']} {parsed['time']}（台灣時間）\n回覆「確認排程」才會建立；回覆「取消排程」放棄。"
+        with self.lock:
+            work_timeout(1)
+            pending = self.state.get("pending")
+            candidate = dict(at=self.clock(), key=key, event=parsed)
+            if pending and self.clock() - pending["at"] <= 1200 and pending["key"] == key:
+                return ("此行程已有待確認資料。請先回覆「取代排程」或「保留原排程」。" if self.state.get("replacement") else self.event_preview(pending["event"]))
+            if pending and self.clock() - pending["at"] <= 1200 and pending["key"] != key:
+                self.state["replacement"] = dict(candidate, base_key=pending["key"])
+                private_json(self.path, self.state)
+                original = pending["event"]
+                return (f"原行程仍保留：{original['title']}\n{original['date']} {original['time']}（台灣時間）\n"
+                        f"新候選行程：{parsed['title']}\n{parsed['date']} {parsed['time']}（台灣時間）\n"
+                        "尚未新增日曆。回覆「取代排程」或「保留原排程」，核對預覽後再確認；「取消排程」取消全部。")
+            self.state["pending"] = candidate
+            self.state["replacement"] = None
+            private_json(self.path, self.state)
+            return self.event_preview(parsed)
 
     def image(self, event):
         message_id = event["message"]["id"]
@@ -1285,6 +1355,10 @@ def public_ip(address):
 
 
 def get_public(url, max_bytes=3 * 1024 * 1024, deadline=None, redirects=3):
+    work_deadline = getattr(WORK_CONTEXT, "deadline", None)
+    if work_deadline is not None:
+        work_timeout(1)
+        deadline = min(deadline, work_deadline) if deadline is not None else work_deadline
     """Pin validated public DNS addresses for every HTTPS redirect."""
     deadline = time.monotonic() + 25 if deadline is None else deadline
     parsed = urlsplit(url)
@@ -1470,13 +1544,44 @@ def conversation_key(event):
 
 
 class BotRuntime:
-    def __init__(self, secret, token, store, ai, elearn=None, photos=None, sender=None, teacher=None, show_runtime=False):
+    def __init__(self, secret, token, store, ai, elearn=None, photos=None, sender=None, teacher=None, show_runtime=False, work_seconds=45, loading_sender=None):
         self.secret, self.token, self.store, self.ai, self.elearn, self.photos = secret, token, store, ai, elearn, photos
         self.sender = sender or self.send_reply
         self.teacher, self.show_runtime = teacher, show_runtime
+        self.work_seconds = work_seconds
+        self.loading_sender = loading_sender if loading_sender is not None else (self.start_loading if sender is None else None)
+        self.queues = {}
         self.pool = ThreadPoolExecutor(max_workers=4, thread_name_prefix="line-bot")
         self.capacity = threading.BoundedSemaphore(16)
         self.events, self.lock, self.stopping = {}, threading.RLock(), False
+
+    def start_loading(self, event):
+        source = event.get("source", {})
+        if source.get("type") != "user" or not source.get("userId") or not self.token:
+            return
+        try:
+            with requests.post("https://api.line.me/v2/bot/chat/loading/start", timeout=work_timeout(2), allow_redirects=False,
+                    headers={"Authorization": "Bearer " + self.token},
+                    json=dict(chatId=source["userId"], loadingSeconds=60)):
+                pass
+        except Exception:
+            LOG.info("[LINE] 等待動畫未顯示，繼續處理訊息")
+
+    def show_loading(self, event):
+        if self.loading_sender and event.get("source", {}).get("type") == "user":
+            try:
+                self.loading_sender(event)
+            except Exception:
+                LOG.info("[LINE] 等待動畫不可用，繼續處理訊息")
+
+    def drain_conversation(self, conversation):
+        while True:
+            with self.lock:
+                if not self.queues[conversation]:
+                    self.queues.pop(conversation)
+                    return
+                event = self.queues[conversation].popleft()
+            self.process(event)
 
     def deliver(self, event, answer, started, model=None):
         if self.show_runtime and model:
@@ -1491,7 +1596,7 @@ class BotRuntime:
 
     def send_reply(self, event, answer):
         messages = answer[:5] if isinstance(answer, list) else [dict(type="text", text=answer[:4900])]
-        with requests.post("https://api.line.me/v2/bot/message/reply", timeout=10, allow_redirects=False,
+        with requests.post("https://api.line.me/v2/bot/message/reply", timeout=5, allow_redirects=False,
                            headers={"Authorization": "Bearer " + self.token}, json=dict(replyToken=event["replyToken"], messages=messages)) as response:
             LOG.info("[LINE] 回覆狀態：%s", response.status_code)
             if not 200 <= response.status_code < 300:
@@ -1507,28 +1612,40 @@ class BotRuntime:
             if self.stopping or len(self.events) >= 500 or not self.capacity.acquire(blocking=False):
                 return False
             self.events[key] = current
+            conversation = conversation_key(event)
+            fresh = conversation not in self.queues
+            self.queues.setdefault(conversation, deque()).append(dict(event, _received_at=time.monotonic()))
             try:
-                self.pool.submit(self.process, event)
+                if fresh:
+                    self.pool.submit(self.drain_conversation, conversation)
             except RuntimeError:
                 self.capacity.release()
                 self.events.pop(key, None)
+                self.queues.pop(conversation, None)
                 return False
         return True
 
     def process(self, event):
         started, model = time.monotonic(), None
+        WORK_CONTEXT.deadline = event.get("_received_at", started) + self.work_seconds
         try:
+            work_timeout(1)
             if event["message"]["type"] == "image":
+                self.show_loading(event)
                 answer = self.teacher.image(event) if self.teacher else "照片辨識功能尚未設定。"
+                work_timeout(1)
                 self.deliver(event, answer, started, self.teacher.vision_model if self.teacher else None)
                 return
             raw = event["message"]["text"].strip()
             source = event.get("source", {})
             answer = self.elearn.handle(raw, event) if self.elearn else None
             if answer is None and (raw == "查詢" or re.match(r"^[記紀][錄録]\s*[:：]", raw)):
+                work_timeout(1)
                 answer = self.store.reply(raw, source.get("userId"), event.get("webhookEventId"))
             if answer is None:
                 conversation = conversation_key(event)
+                if not re.fullmatch(r"hi|hello|你好|嗨|哈囉|測試|test|清除對話|清除記憶|/clear", raw, re.I):
+                    self.show_loading(event)
                 answer = self.teacher.before_text(raw, event) if self.teacher else None
                 record_kind = "行程" if answer is not None else "文字"
                 if answer is None:
@@ -1537,10 +1654,18 @@ class BotRuntime:
                         model = getattr(self.ai, "model", None)
                 if self.teacher:
                     answer = self.teacher.record(event, answer, kind=record_kind)
+            work_timeout(1)
             self.deliver(event, answer, started, model)
+        except WorkDeadline:
+            WORK_CONTEXT.deadline = None
+            try:
+                self.sender(event, "這題等待或處理時間較長，已停止後續步驟。請稍後重試或縮小問題；若涉及雲端寫入，請先核對結果再重試。")
+            except Exception:
+                LOG.warning("[LINE] 逾時提示未送達，未重複傳送")
         except Exception:
             LOG.warning("[LINE] 處理或回覆失敗（未輸出私人內容）")
         finally:
+            WORK_CONTEXT.deadline = None
             self.capacity.release()
 
     def close(self):

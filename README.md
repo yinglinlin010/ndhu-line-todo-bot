@@ -47,6 +47,8 @@ python scripts/run-bot.py
 
 Windows 或自行管理通道者可用 `python line_bot_local.py`，自行保持cloudflared執行、設定 `PUBLIC_BASE_URL` 並轉送 `/webhook` 到本機3000埠；LINE後台Use webhook需開啟。不要同時啟動兩支bot。GitHub Pages不能執行此服務。
 
+同一段對話以收到順序處理，文字、圖片及行程共用佇列；不同使用者可並行。排隊與後續工作共用45秒處理預算，網路／Google子步驟使用剩餘時間，另預留回覆時間。過期的排隊訊息不再呼叫模型；逾時後不啟動新的雲端寫入。已送出的雲端操作若結果不明仍需核對，不自動重送。這是合作式時間預算，不會強制終止正在執行的任意本機程式，也不保證網路故障時提示能送達。私聊處理時會嘗試顯示等待動畫；動畫失敗不影響處理，不延長LINE回覆token效期。
+
 電腦、Ollama、bot與通道都要保持運作；睡眠或關機時無本機AI。健康入口 `http://127.0.0.1:3000/health` 應回覆 `ok`。
 
 ## 課堂版怎麼用
@@ -76,7 +78,7 @@ Google寫入只接受綁定者個人聊天；其他人與群組不會寫入你�
 ## 測試與驗收界線
 
 ```sh
-python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check
+python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check test_reliability
 python scripts/check-live-quality.py
 python scripts/check-news-followups.py
 python scripts/check-classroom-google.py
@@ -86,7 +88,7 @@ python scripts/check-classroom-google.py
 
 - 既有E4B雲端實測已成功上傳合成圖片、確認私人權限，並建立及讀回Calendar測試行程，見 `test-evidence/e4b-cloud-live-check.json`。
 - 既有真實LINE文字測試包括老師玉山與諾貝爾原題、翻譯、換題及重啟接續，見 `test-evidence/line-quality-live.json`。這些不是最新版功能的手機端到端驗證。
-- 本輪93項自動測試、22項本機HTTP整合，以及真實E4B行程日期／時間解析通過。
+- 最新103項自動測試、24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
 - 最新Google唯讀檢查再次確認既有測試圖片、行程及試算表可讀。經使用者同意，已透過bot流程新增一筆合成Sheets驗收紀錄並讀回，確認只出現一次，見 `test-evidence/classroom-runs/20261015T064615012164Z.json`；自動紀錄仍關閉。未操作手機，不以此冒充手機實測。
 - 題庫、歷次失敗與每輪測試範圍見 [evaluation/README.md](evaluation/README.md)。舊版功能說明與歷次紀錄移至 [README-history.md](README-history.md)，Node.js版見 [README-nodejs.md](README-nodejs.md)。
 

@@ -109,6 +109,31 @@ def main():
                   message=dict(type='image', id='synthetic-quality-image'))
             check('private_image_time_followup', '那幾點開始？', lambda a: bool(re.search(r'15[:：]00|15點|下午\s*[3三]\s*[點时時]|3\s*p\.?m', text(a), re.I)) and not sources(a))
             check('private_image_date_followup', '圖片上的日期是什麼？', lambda a: ('16' in text(a) or '十六' in text(a)) and not sources(a))
+            # Real simultaneous photo/追問 uses a fresh identity and the same signed HTTP path.
+            pair = [dict(type='message', webhookEventId='concurrent-image', replyToken='synthetic-pair-image',
+                         source=dict(type='user', userId='synthetic-photo-pair'), message=dict(type='image', id='synthetic-pair-photo')),
+                    dict(type='message', webhookEventId='concurrent-followup', replyToken='synthetic-pair-followup',
+                         source=dict(type='user', userId='synthetic-photo-pair'), message=dict(type='text', text='圖片上的日期是什麼？')),
+                    dict(type='message', webhookEventId='concurrent-other-user', replyToken='synthetic-other',
+                         source=dict(type='user', userId='synthetic-unrelated'), message=dict(type='text', text='hi'))]
+            accepted = all(post(dict(events=[incoming])).status_code == 200 for incoming in pair)
+            captured, order = {}, []
+            deadline = time.monotonic() + 55
+            while len(captured) < 3 and time.monotonic() < deadline:
+                try:
+                    identity, answer = replies.get(timeout=max(.01, deadline-time.monotonic()))
+                    captured[identity] = answer
+                    order.append(identity)
+                except queue.Empty:
+                    break
+            followup = text(captured.get('concurrent-followup', ''))
+            rows.append(dict(case='concurrent_photo_followup', passed=accepted and
+                'concurrent-image' in captured and 'concurrent-followup' in captured and
+                order.index('concurrent-image') < order.index('concurrent-followup') and
+                ('16' in followup or '十六' in followup) and '請先傳送' not in followup and
+                not sources(captured.get('concurrent-followup', '')),
+                answer=followup, delivery_order=order))
+            rows.append(dict(case='concurrent_other_user', passed='你好' in text(captured.get('concurrent-other-user',''))))
             rows.append(dict(case='no_cloud_write_receipts', passed=not teacher.state['operations']))
         finally:
             server.shutdown()
