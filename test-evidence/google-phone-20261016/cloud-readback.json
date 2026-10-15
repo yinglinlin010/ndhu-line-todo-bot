@@ -1,0 +1,10 @@
+{
+  "method": "Actual LINE phone requests, followed by read-only Google API verification",
+  "checks": {
+    "phone_sheet_exactly_one_row": true,
+    "calendar_exactly_one": true,
+    "calendar_replacement_time_correct": true,
+    "automatic_logging_off": true
+  },
+  "time": "2026-10-15T19:12:56.057377+00:00"
+}
