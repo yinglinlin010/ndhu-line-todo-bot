@@ -1,0 +1,35 @@
+capital-au: 主答案字詞符合，需抽查
+moon-saturn: 主答案字詞符合，需抽查
+trench-pacific: 主答案字詞符合，需抽查
+capital-is: 主答案字詞符合，需抽查
+canal-suez: 主答案字詞符合，需抽查
+president-current: 待人工核對
+news-current: 待人工核對
+weather-no-place: 追問
+pronoun-no-context: 追問
+election-no-year: 追問
+image-missing: 追問
+future-nobel: 查不到
+nonsense-search: 查不到
+greeting: 符合預期
+newton-start: 主答案字詞符合，需抽查
+newton-translate: 主答案字詞符合，需抽查
+newton-short: 符合預期
+newton-reload: 主答案字詞符合，需抽查
+topic-change: 查不到
+topic-change-translate: 未符合參考，需複核
+clear-memory: 符合預期
+photo-after-clear: 符合預期
+todo-add: 符合預期
+todo-query: 符合預期
+todo-isolated: 符合預期
+todo-empty: 符合預期
+public-photo: 圖片未產生
+holdout-capital-ca: 回覆逾時
+Traceback (most recent call last):
+  File "<repo>/scripts/evaluate-faq.py", line 148, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "<repo>/scripts/evaluate-faq.py", line 122, in main
+    raise RuntimeError('Reply identity mismatch')
+RuntimeError: Reply identity mismatch

@@ -220,7 +220,9 @@ class PythonBotTests(unittest.TestCase):
     def test_private_image_followups_stay_local_and_keep_anchor_across_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "memory.json"
+            payloads = []
             def local_http(url, **kwargs):
+                payloads.append(kwargs["json"])
                 self.assertTrue(url.startswith("http://127.0.0.1:11434/"))
                 return json.dumps(dict(message=dict(content="圖片上的行程是15:00開始。"))).encode()
             ai = bot.LocalAI(http=local_http, memory_path=path)
@@ -231,6 +233,7 @@ class PythonBotTests(unittest.TestCase):
             ai = bot.LocalAI(http=local_http, memory_path=path, photos=photos)
             ai.lookup = lambda *a: self.fail("Private OCR must remain local after reload")
             self.assertIn("15:00", ai.ask("圖片上的日期是什麼？", "owner"))
+            self.assertIn("私人的行程2026-10-16 15:00", "\n".join(m["content"] for m in payloads[-1]["messages"]))
             self.assertIn("公開人物", ai.ask("給我他的照片", "owner"))
             lookups = []
             ai.lookup = lambda *a: lookups.append(a) or []
@@ -293,6 +296,61 @@ class PythonBotTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertIn("3952", rows[0]["snippet"])
         self.assertEqual(len(calls), 3)
+
+    def test_public_news_redirects_are_bounded_and_do_not_forward_credentials(self):
+        redirect = ResponseStub(302, {"Location": "https://news.google.com/rss/topics/test"})
+        done = ResponseStub(200)
+        done.iter_content = lambda size: [b"<rss/>"]
+        with patch.object(bot.requests, "request", side_effect=[redirect, done]) as request:
+            self.assertEqual(bot.read_http("https://news.google.com/rss/start", redirect_hosts=("news.google.com",)), b"<rss/>")
+            self.assertEqual(request.call_count, 2)
+            self.assertFalse(request.call_args.kwargs["allow_redirects"])
+        outside = ResponseStub(302, {"Location": "https://evil.example/rss"})
+        with patch.object(bot.requests, "request", return_value=outside) as request:
+            with self.assertRaises(ValueError):
+                bot.read_http("https://news.google.com/rss/start", redirect_hosts=("news.google.com",))
+            self.assertEqual(request.call_count, 1)
+        with patch.object(bot.requests, "request") as request:
+            with self.assertRaises(ValueError):
+                bot.read_http("https://news.google.com/rss/start", headers={"Authorization": "Bearer private"}, redirect_hosts=("news.google.com",))
+            request.assert_not_called()
+        with patch.object(bot.requests, "request", return_value=redirect) as request:
+            with self.assertRaises(RuntimeError):
+                bot.read_http("https://news.google.com/rss/start", redirect_hosts=("news.google.com",))
+            self.assertEqual(request.call_count, 4)
+
+    def test_missing_context_requests_clarification_without_network_or_model(self):
+        ai = bot.LocalAI(http=lambda *a, **k: self.fail("No lookup for missing context"), photos=bot.Photos("https://quality.example"))
+        for question in ["今天天氣如何？", "明天天氣會怎樣？", "今天會下雨嗎？"]:
+            self.assertIn("地點", ai.ask(question, question))
+        for question in ["他幾歲？", "這位今年幾歲？"]:
+            self.assertIn("人物", ai.ask(question, question))
+        for question in ["圖片上的日期是什麼？", "這張圖片寫了什麼？"]:
+            self.assertIn("圖片", ai.ask(question, question))
+            self.assertIn("傳送", ai.ask(question, question))
+        seen = []
+        ai.lookup = lambda *a: seen.append(a) or []
+        ai.ask("台北明天天氣", "named-city")
+        self.assertTrue(seen)
+
+    def test_general_news_uses_dated_topic_feed_and_excludes_yesterday(self):
+        from datetime import datetime, timezone
+        from email.utils import format_datetime
+        now = NOW
+        today = format_datetime(datetime.fromtimestamp(now - 60, timezone.utc))
+        yesterday = format_datetime(datetime.fromtimestamp(now - 12 * 3600, timezone.utc))
+        rss = f'<rss><channel><item><title>Unrelated literal words but topical story</title><link>https://example.org/today</link><pubDate>{today}</pubDate></item><item><title>Yesterday story</title><link>https://example.org/yesterday</link><pubDate>{yesterday}</pubDate></item></channel></rss>'.encode()
+        calls = []
+        def http(url, **kw):
+            calls.append(url)
+            return rss
+        ai = bot.LocalAI(http=http, clock=lambda: now)
+        rows = ai.lookup("今天有哪些國際新聞？請附來源。", news=True)
+        self.assertEqual([r["url"] for r in rows], ["https://example.org/today"])
+        self.assertIn("/topic/WORLD", calls[0])
+        self.assertEqual(bot.broad_news_topic("今天台灣新聞，附上來源"), "NATION")
+        self.assertIsNone(bot.broad_news_topic("台積電今天有什麼新聞？"))
+        self.assertEqual(bot.search_query("加拿大首都？請附來源。"), "加拿大首都")
 
     def test_wikipedia_query_removes_question_words_without_inserting_answers(self):
         from urllib.parse import parse_qs, urlsplit
@@ -470,7 +528,8 @@ class PythonBotTests(unittest.TestCase):
             return json.dumps(dict(message=dict(content="基本背景"))).encode()
         reply = bot.LocalAI(http=http).ask("今天有什麼新聞")
         self.assertIn("沒有找到足以確認", reply)
-        self.assertEqual(len(calls), 5)
+        self.assertEqual(len(calls), 3)
+        self.assertTrue(all("news.google.com/rss/headlines/section/topic/WORLD" in url for url in calls))
         def no_model(url, **kwargs):
             if url.startswith("https:"):
                 return RSS

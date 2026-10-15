@@ -1,0 +1,10 @@
+{
+  "checked_at_utc": "2026-10-15T05:29:25.311299+00:00",
+  "method": "Read-only local/public health checks and LINE webhook endpoint readback; no LINE message sent",
+  "local_health": true,
+  "public_health": true,
+  "model": "gemma4:e4b-it-q4_K_M",
+  "sheet_logging_disabled": true,
+  "line_endpoint_matches_current_local": true,
+  "line_webhook_active": true
+}

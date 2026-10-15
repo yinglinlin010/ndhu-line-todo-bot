@@ -1,0 +1,357 @@
+{
+  "method": "Synthetic LINE event -> real BotRuntime worker -> live Ollama/search -> captured local reply. No LINE transport, Google writes, or weight training.",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "split": "development",
+  "started_at_utc": "20261015T050832Z",
+  "seconds": 53.77,
+  "code_sha256": "dd752825049573dc2719b09888628a2880f10575b34cb4b22966181755941d39",
+  "bank_sha256": "441adc6c942c83d4bcab218cd6dbd1a09266ef959974c3eaca83da0f7a6f073a",
+  "code_unchanged": true,
+  "expectations_sent_to_bot": false,
+  "grading_limit": "Primary reference word matching and behavior checks only. Source presence is not proof of factual support. Manual checks remain ungraded; pretraining contamination cannot be ruled out.",
+  "summary": {
+    "total": 27,
+    "checks_passed": 22,
+    "checks_failed": 4,
+    "manual": 1,
+    "by_status": {
+      "主答案字詞符合，需抽查": 10,
+      "待人工核對": 1,
+      "查不到": 4,
+      "未按預期追問": 2,
+      "追問": 1,
+      "符合預期": 8,
+      "圖片已產生": 1
+    }
+  },
+  "results": [
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "澳洲的首都城市是堪培拉。\n\n雖然搜尋資料中提到了雪梨、墨爾本和布里斯本等熱門旅遊城市，但並未直接提及澳洲的首都。堪培拉是澳洲的政治中心，與旅遊熱點有所不同。\n\n補充資訊：\n1. 雪梨和墨爾本是澳洲最知名的旅遊大都會。\n2. 澳洲的城市景觀非常多元，從現代都市到自然景觀都非常豐富。\n3. 規劃澳洲行程時，可以根據想體驗的風格（城市觀光或自然探險）來決定主要停留的城市。",
+      "sources": [
+        "https://mimigo.tw/australia-trip/",
+        "https://minahaha.com/australia-travel-city/",
+        "https://www.hsinfei.com/knowledge/au-attractions/"
+      ],
+      "id": "capital-au",
+      "category": "general",
+      "question": "澳洲的首都是哪座城市？",
+      "kind": "fact",
+      "seconds": 16.32
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "土星最大的衛星是土衛六，它的正式名稱是泰坦。土衛六不僅是土星最大的衛星，也是太陽系第二大的衛星，並且擁有以氮氣為主的濃密大氣層 [2, 3]。\n\n補充資訊：\n1. 土衛六的體積超越水星，但質量相對較小 [2]。\n2. 卡西尼-惠更斯號任務中的惠更斯號，曾成功在土衛六的阿迪立地區著陸 [1]。\n3. 截至2026年6月，已確認的土星衛星數量已達293顆 [3]。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%8D%A1%E8%A5%BF%E5%B0%BC-%E6%83%A0%E6%9B%B4%E6%96%AF%E5%8F%B7",
+        "https://zh.wikipedia.org/wiki/%E5%9C%9F%E6%98%9F",
+        "https://zh.wikipedia.org/wiki/%E5%9C%9F%E6%98%9F%E7%9A%84%E5%8D%AB%E6%98%9F"
+      ],
+      "id": "moon-saturn",
+      "category": "general",
+      "question": "土星最大的衛星叫什麼？",
+      "kind": "fact",
+      "seconds": 5.37
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "馬里亞納海溝位於西北太平洋。它是目前已知最深的海溝，地處關島和北馬里亞納群島東部，是太平洋板塊俯衝到菲律賓海板塊之下的區域 [2]。\n\n補充資訊：\n1. 海溝的最大深度達海平面以下 11,034 公尺 [2]。\n2. 此海溝是兩板塊輻輳的俯衝帶 [2]。\n3. 該海溝的座標為 11°21′N 142°12′E [2]。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E6%B1%A4%E5%8A%A0%E6%B5%B7%E6%B2%9F",
+        "https://zh.wikipedia.org/wiki/%E9%A9%AC%E9%87%8C%E4%BA%9A%E7%BA%B3%E6%B5%B7%E6%B2%9F"
+      ],
+      "id": "trench-pacific",
+      "category": "general",
+      "question": "馬里亞納海溝位於哪個海洋？",
+      "kind": "fact",
+      "seconds": 3.22
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "雷克雅維克是冰島的首都，也是冰島最大的城市 [1][2]。它被譽為全世界最北邊的首都之一 [1]。\n\n補充資訊：\n1. 冰島的總人口中，約三分之二都集中在雷克雅維克 [1]。\n2. 雷克雅維克是許多遊客規劃冰島環島之旅的起點與終點 [3]。\n3. 該城市雖然不大，但擁有許多獨特且適合打卡的景點，例如溫泉和彩色街道 [2]。",
+      "sources": [
+        "https://foodieteller.com/reykjavikpackage/",
+        "https://kimiyo.tw/reykjavik/",
+        "https://whereamber.com/reykjavik-attractions/"
+      ],
+      "id": "capital-is",
+      "category": "general",
+      "question": "雷克雅維克是哪個國家的首都？",
+      "kind": "fact",
+      "seconds": 2.15
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "蘇伊士運河連接的是地中海和紅海。\n\n這條位於埃及的運河，是連接亞洲和非洲的重要地理節點，能大幅縮短從歐洲到亞洲的航行距離，避免繞道好望角 [1, 2]。\n\n補充資訊：\n1. 運河的地理位置在埃及西奈半島西側 [3]。\n2. 它是世界上少數具備「海平面水道」特性的運河 [3]。\n3. 穿過此運河可使航程距離縮短至少 43% [2]。",
+      "sources": [
+        "https://inf.news/zh-hant/world/73f6e173b070b459a382ab49306cbee3.html",
+        "https://uptogo.com.tw/%e5%9c%8b%e9%9a%9b/%e8%98%87%e4%bc%8a%e5%a3%ab%e9%81%8b%e6%b2%b3/",
+        "https://zh.wikipedia.org/zh-tw/%E8%8B%8F%E4%BC%8A%E5%A3%AB%E8%BF%90%E6%B2%B3"
+      ],
+      "id": "canal-suez",
+      "category": "general",
+      "question": "蘇伊士運河連接哪兩個海？",
+      "kind": "fact",
+      "seconds": 2.33
+    },
+    {
+      "status": "待人工核對",
+      "passed": null,
+      "answer": "台灣（中華民國）的現任總統是賴清德。[1]",
+      "sources": [
+        "https://www.president.gov.tw/Page/694"
+      ],
+      "id": "president-current",
+      "category": "current",
+      "question": "現在台灣總統是誰？",
+      "kind": "manual",
+      "seconds": 1.68
+    },
+    {
+      "status": "查不到",
+      "passed": false,
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "id": "news-current",
+      "category": "current",
+      "question": "今天有哪些國際新聞？請附來源。",
+      "kind": "manual",
+      "seconds": 2.53
+    },
+    {
+      "status": "未按預期追問",
+      "passed": false,
+      "answer": "很抱歉，我無法提供今天的即時天氣資訊，因為您提供的資料是關於個人氣象站的介紹，並沒有包含當天的天氣預報或實際觀測數據。\n\n若您想查詢當地的天氣狀況，建議您使用專業的氣象預報網站或手機應用程式。\n\n補充資訊：\n個人氣象站（PWS）是業餘或業務用途的氣象測量儀器，可以測量溫度、風速、濕度等數據 [1]。\n許多個人氣象站的數據會被公民天氣觀測計畫提交給國家氣象局，用來輔助氣候預測 [1]。\n這些儀器可以收集多樣化的數據，從基礎的溫度濕度到更進階的土壤水分和紫外線指數 [1]。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%80%8B%E4%BA%BA%E6%B0%A3%E8%B1%A1%E7%AB%99"
+      ],
+      "id": "weather-no-place",
+      "category": "clarification",
+      "question": "今天天氣如何？",
+      "kind": "clarification",
+      "seconds": 4.24
+    },
+    {
+      "status": "查不到",
+      "passed": false,
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "id": "pronoun-no-context",
+      "category": "clarification",
+      "question": "他幾歲？",
+      "kind": "clarification",
+      "seconds": 1.41
+    },
+    {
+      "status": "追問",
+      "passed": true,
+      "answer": "你想查哪個國家、哪一年的總統選舉？例如「2024 年台灣總統當選人」。現任總統與某次選舉的候選人／當選人是不同問題。",
+      "sources": [],
+      "id": "election-no-year",
+      "category": "clarification",
+      "question": "總統當選人",
+      "kind": "clarification",
+      "seconds": 0.0
+    },
+    {
+      "status": "未按預期追問",
+      "passed": false,
+      "answer": "你想看誰或什麼的照片？請補上名稱。",
+      "sources": [],
+      "id": "image-missing",
+      "category": "clarification",
+      "question": "圖片上的日期是什麼？",
+      "kind": "clarification",
+      "seconds": 0.0
+    },
+    {
+      "status": "查不到",
+      "passed": true,
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "id": "future-nobel",
+      "category": "unavailable",
+      "question": "2100 年諾貝爾物理獎得主是誰？",
+      "kind": "refusal",
+      "seconds": 0.21
+    },
+    {
+      "status": "查不到",
+      "passed": true,
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "sources": [],
+      "id": "nonsense-search",
+      "category": "unavailable",
+      "question": "搜尋 qzxv847293649不存在的測試獎項得主",
+      "kind": "refusal",
+      "seconds": 1.33
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "你好！我是跑在你電腦上的 LINE 小幫手。可以問我問題、搜尋附來源、傳照片辨識，或輸入「記錄：事項」和「查詢」。",
+      "sources": [],
+      "id": "greeting",
+      "category": "basic",
+      "question": "hi",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "牛頓第二定律描述了力、質量與加速度之間的關係。它指出，作用在物體上的合外力等於該物體的質量乘以其加速度，數學上表示為 F = ma。簡單來說，施加的力越大，物體加速的速度就越快；物體質量越大，要達到相同的加速度就需要更大的力。\n\n補充資訊：\n1. 這是經典力學的基礎定律之一，是理解運動的關鍵。\n2. F 代表合外力（單位：牛頓 N），m 代表質量（單位：公斤 kg），a 代表加速度（單位：米/秒平方 m/s²）。\n3. 這個定律是牛頓三大運動定律中的第二定律。",
+      "sources": [],
+      "id": "newton-start",
+      "category": "conversation",
+      "question": "解釋牛頓第二定律",
+      "kind": "fact",
+      "seconds": 2.74
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "Newton's second law describes the relationship between force, mass, and acceleration. It states that the net external force acting on an object equals the object's mass multiplied by its acceleration, mathematically expressed as F = ma. Simply put, the greater the applied force, the faster the object accelerates; the greater the object's mass, the greater the force required to achieve the same acceleration.\n\nSupplementary information:\n1. This is one of the fundamental laws of classical mechanics and is key to understanding motion.\n2. F represents the net external force (unit: Newton N), m represents mass (unit: kilogram kg), and a represents acceleration (unit: meters per second squared m/s²).\n3. This law is the second of Newton's three laws of motion.",
+      "sources": [],
+      "id": "newton-translate",
+      "category": "conversation",
+      "question": "翻成英文",
+      "kind": "fact",
+      "seconds": 1.93
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "Newton's second law states that force equals mass times acceleration (F=ma).",
+      "sources": [],
+      "id": "newton-short",
+      "category": "conversation",
+      "question": "簡短一點",
+      "kind": "behavior",
+      "seconds": 1.18
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "牛頓第二定律指出，力等於質量乘以加速度（F=ma）。\n\n補充資訊：\n1. 這個定律描述了物體運動狀態的變化。\n2. 它是經典力學中最基礎的定律之一。\n3. 簡單來說，施加的力越大，物體加速的速度就越快。",
+      "sources": [],
+      "id": "newton-reload",
+      "category": "conversation",
+      "question": "用中文說明",
+      "kind": "fact",
+      "seconds": 1.19
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "威靈頓是紐西蘭的首都。它位於紐西蘭北島的南端，自從英國殖民政府將首都從奧克蘭遷至此後，就一直擔任首都的職務 [1, 3]。\n\n補充資訊：\n1. 威靈頓被譽為「世界最酷小型首都」之一 [2]。\n2. 除了是首都外，威靈頓也是紐西蘭的第二大城市 [1]。\n3. 該市因其電影特效產業的發展，也被譽為「威萊塢」 [2]。",
+      "sources": [
+        "https://lillian.tw/wellington/",
+        "https://uptogo.com.tw/%E6%97%85%E9%81%8A/%E7%B4%90%E8%A5%BF%E8%98%AD%E6%97%85%E9%81%8A/%E5%A8%81%E9%9D%88%E9%A0%93/",
+        "https://www.bring-you.info/zh-tw/wellington"
+      ],
+      "id": "topic-change",
+      "category": "conversation",
+      "question": "威靈頓是哪個國家的首都？",
+      "kind": "fact",
+      "seconds": 2.43
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "Wellington is the capital of New Zealand. It is located in the southern end of the North Island of New Zealand and has served as the capital since the British colonial government moved it from Auckland [1, 3].\n\nAdditional information:\n1. Wellington is known as one of the \"coolest small capitals\" in the world [2].\n2. Wellington is the second-largest city in New Zealand [1].\n3. Due to the presence of Weta Workshop, Wellington has earned the nickname \"Weta-ville\" in the global film landscape [2].",
+      "sources": [
+        "https://lillian.tw/wellington/",
+        "https://uptogo.com.tw/%E6%97%85%E9%81%8A/%E7%B4%90%E8%A5%BF%E8%98%AD%E6%97%85%E9%81%8A/%E5%A8%81%E9%9D%88%E9%A0%93/",
+        "https://www.bring-you.info/zh-tw/wellington"
+      ],
+      "id": "topic-change-translate",
+      "category": "conversation",
+      "question": "翻成英文",
+      "kind": "fact",
+      "seconds": 1.77
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "已清除這段對話的記憶。",
+      "sources": [],
+      "id": "clear-memory",
+      "category": "conversation",
+      "question": "清除對話",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "你想看誰或什麼的照片？請補上名稱。",
+      "sources": [],
+      "id": "photo-after-clear",
+      "category": "conversation",
+      "question": "給我他的照片",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "已記錄：測試專用待辦事項。",
+      "sources": [],
+      "id": "todo-add",
+      "category": "todo",
+      "question": "記錄：測試專用待辦事項",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "你的待辦事項（共 1 筆，顯示最新 1 筆）：\n1. 測試專用待辦事項",
+      "sources": [],
+      "id": "todo-query",
+      "category": "todo",
+      "question": "查詢",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "目前沒有待辦事項。\n輸入「記錄：待辦事項」新增一筆。",
+      "sources": [],
+      "id": "todo-isolated",
+      "category": "todo",
+      "question": "查詢",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "符合預期",
+      "passed": true,
+      "answer": "請輸入要記錄的待辦事項。",
+      "sources": [],
+      "id": "todo-empty",
+      "category": "todo",
+      "question": "記錄：",
+      "kind": "behavior",
+      "seconds": 0.0
+    },
+    {
+      "status": "圖片已產生",
+      "passed": true,
+      "answer": "找到與「周星馳」相關的照片。\n來源：周星馳\nhttps://zh.wikipedia.org/wiki/%E5%91%A8%E6%98%9F%E9%A6%B3",
+      "sources": [],
+      "id": "public-photo",
+      "category": "photo",
+      "question": "給我周星馳的照片",
+      "kind": "image",
+      "seconds": 1.72
+    }
+  ]
+}

@@ -1,0 +1,603 @@
+{
+  "version": 1,
+  "purpose": "Evaluation only. Expectations must never be sent to the bot or used as model training data.",
+  "cases": [
+    {
+      "id": "capital-au",
+      "split": "development",
+      "category": "general",
+      "question": "澳洲的首都是哪座城市？",
+      "conversation": "capital-au",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "坎培拉",
+            "堪培拉",
+            "Canberra"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "moon-saturn",
+      "split": "development",
+      "category": "general",
+      "question": "土星最大的衛星叫什麼？",
+      "conversation": "moon-saturn",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "土衛六",
+            "泰坦",
+            "Titan"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "trench-pacific",
+      "split": "development",
+      "category": "general",
+      "question": "馬里亞納海溝位於哪個海洋？",
+      "conversation": "trench-pacific",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "太平洋",
+            "Pacific"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "capital-is",
+      "split": "development",
+      "category": "general",
+      "question": "雷克雅維克是哪個國家的首都？",
+      "conversation": "capital-is",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "冰島",
+            "Iceland"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "canal-suez",
+      "split": "development",
+      "category": "general",
+      "question": "蘇伊士運河連接哪兩個海？",
+      "conversation": "canal-suez",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "地中海",
+            "Mediterranean"
+          ],
+          [
+            "紅海",
+            "Red Sea"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "president-current",
+      "split": "development",
+      "category": "current",
+      "question": "現在台灣總統是誰？",
+      "conversation": "president-current",
+      "user": "A",
+      "check": {
+        "kind": "manual",
+        "source_hosts": [
+          "www.president.gov.tw"
+        ]
+      }
+    },
+    {
+      "id": "news-current",
+      "split": "development",
+      "category": "current",
+      "question": "今天有哪些國際新聞？請附來源。",
+      "conversation": "news-current",
+      "user": "A",
+      "check": {
+        "kind": "manual",
+        "min_sources": 1
+      }
+    },
+    {
+      "id": "weather-no-place",
+      "split": "development",
+      "category": "clarification",
+      "question": "今天天氣如何？",
+      "conversation": "weather-no-place",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "地點|城市|哪裡|哪個地方"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "pronoun-no-context",
+      "split": "development",
+      "category": "clarification",
+      "question": "他幾歲？",
+      "conversation": "pronoun-no-context",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "名稱|名字|誰|哪位"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "election-no-year",
+      "split": "development",
+      "category": "clarification",
+      "question": "總統當選人",
+      "conversation": "election-no-year",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "哪一?年|年份"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "image-missing",
+      "split": "development",
+      "category": "clarification",
+      "question": "圖片上的日期是什麼？",
+      "conversation": "image-missing",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "上傳|傳送|提供.*圖片|先傳"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "future-nobel",
+      "split": "development",
+      "category": "unavailable",
+      "question": "2100 年諾貝爾物理獎得主是誰？",
+      "conversation": "future-nobel",
+      "user": "A",
+      "check": {
+        "kind": "refusal"
+      }
+    },
+    {
+      "id": "nonsense-search",
+      "split": "development",
+      "category": "unavailable",
+      "question": "搜尋 qzxv847293649不存在的測試獎項得主",
+      "conversation": "nonsense-search",
+      "user": "A",
+      "check": {
+        "kind": "refusal"
+      }
+    },
+    {
+      "id": "greeting",
+      "split": "development",
+      "category": "basic",
+      "question": "hi",
+      "conversation": "greeting",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "你好"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "newton-start",
+      "split": "development",
+      "category": "conversation",
+      "question": "解釋牛頓第二定律",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "力",
+            "force"
+          ],
+          [
+            "加速度",
+            "acceleration"
+          ]
+        ],
+        "sources": false
+      }
+    },
+    {
+      "id": "newton-translate",
+      "split": "development",
+      "category": "conversation",
+      "question": "翻成英文",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "force"
+          ],
+          [
+            "acceleration"
+          ]
+        ],
+        "sources": false
+      }
+    },
+    {
+      "id": "newton-short",
+      "split": "development",
+      "category": "conversation",
+      "question": "簡短一點",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "force",
+            "力",
+            "Newton",
+            "牛頓"
+          ]
+        ],
+        "max_chars": 100
+      }
+    },
+    {
+      "id": "newton-reload",
+      "split": "development",
+      "category": "conversation",
+      "question": "用中文說明",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "牛頓",
+            "合力",
+            "作用力"
+          ],
+          [
+            "加速度"
+          ]
+        ],
+        "sources": false
+      },
+      "action": "reload_memory"
+    },
+    {
+      "id": "topic-change",
+      "split": "development",
+      "category": "conversation",
+      "question": "威靈頓是哪個國家的首都？",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "紐西蘭",
+            "新西蘭",
+            "New Zealand"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "topic-change-translate",
+      "split": "development",
+      "category": "conversation",
+      "question": "翻成英文",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "Wellington"
+          ],
+          [
+            "New Zealand"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "clear-memory",
+      "split": "development",
+      "category": "conversation",
+      "question": "清除對話",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "已清除"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "photo-after-clear",
+      "split": "development",
+      "category": "conversation",
+      "question": "給我他的照片",
+      "conversation": "newton-chain",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "補上名稱|提供.*名稱"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "todo-add",
+      "split": "development",
+      "category": "todo",
+      "question": "記錄：測試專用待辦事項",
+      "conversation": "todos",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "已記錄"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "todo-query",
+      "split": "development",
+      "category": "todo",
+      "question": "查詢",
+      "conversation": "todos",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "測試專用待辦事項"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "todo-isolated",
+      "split": "development",
+      "category": "todo",
+      "question": "查詢",
+      "conversation": "todos",
+      "user": "B",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "沒有待辦"
+          ]
+        ],
+        "absent": [
+          "測試專用待辦事項"
+        ]
+      }
+    },
+    {
+      "id": "todo-empty",
+      "split": "development",
+      "category": "todo",
+      "question": "記錄：",
+      "conversation": "todos",
+      "user": "A",
+      "check": {
+        "kind": "behavior",
+        "all_of": [
+          [
+            "請輸入"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "public-photo",
+      "split": "development",
+      "category": "photo",
+      "question": "給我周星馳的照片",
+      "conversation": "public-photo",
+      "user": "A",
+      "check": {
+        "kind": "image"
+      }
+    },
+    {
+      "id": "holdout-capital-ca",
+      "split": "holdout",
+      "category": "general",
+      "question": "加拿大的首都是哪座城市？",
+      "conversation": "holdout-capital-ca",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "渥太華",
+            "Ottawa"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "holdout-capital-it",
+      "split": "holdout",
+      "category": "general",
+      "question": "義大利的首都叫什麼？",
+      "conversation": "holdout-capital-it",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "羅馬",
+            "Rome"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "holdout-ocean",
+      "split": "holdout",
+      "category": "general",
+      "question": "世界上最大的海洋是哪個？",
+      "conversation": "holdout-ocean",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "太平洋",
+            "Pacific"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "holdout-moon-neptune",
+      "split": "holdout",
+      "category": "general",
+      "question": "海王星最大的衛星叫什麼？",
+      "conversation": "holdout-moon-neptune",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "海衛一",
+            "崔頓",
+            "Triton"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "holdout-andes",
+      "split": "holdout",
+      "category": "general",
+      "question": "安地斯山脈位於哪個洲？",
+      "conversation": "holdout-andes",
+      "user": "A",
+      "check": {
+        "kind": "fact",
+        "all_of": [
+          [
+            "南美",
+            "South America"
+          ]
+        ],
+        "sources": true
+      }
+    },
+    {
+      "id": "holdout-weather",
+      "split": "holdout",
+      "category": "clarification",
+      "question": "明天天氣會怎樣？",
+      "conversation": "holdout-weather",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "地點|城市|哪裡|哪個地方"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "holdout-pronoun",
+      "split": "holdout",
+      "category": "clarification",
+      "question": "這位今年幾歲？",
+      "conversation": "holdout-pronoun",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "名稱|名字|誰|哪位"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "holdout-photo-missing",
+      "split": "holdout",
+      "category": "clarification",
+      "question": "這張圖片寫了什麼？",
+      "conversation": "holdout-photo-missing",
+      "user": "A",
+      "check": {
+        "kind": "clarification",
+        "all_of": [
+          [
+            "上傳|傳送|提供.*圖片|先傳"
+          ]
+        ]
+      }
+    }
+  ]
+}

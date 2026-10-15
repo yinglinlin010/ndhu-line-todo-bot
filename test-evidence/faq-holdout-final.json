@@ -1,0 +1,130 @@
+{
+  "method": "Synthetic LINE event -> real BotRuntime worker -> live Ollama/search -> captured local reply. No LINE transport, Google writes, or weight training.",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "split": "holdout",
+  "started_at_utc": "20261015T051448Z",
+  "seconds": 10.77,
+  "code_sha256": "b7962ee620322d59762e42ec2be624b09f6d5016dcc1901bb73085ee421a3635",
+  "bank_sha256": "441adc6c942c83d4bcab218cd6dbd1a09266ef959974c3eaca83da0f7a6f073a",
+  "code_unchanged": true,
+  "expectations_sent_to_bot": false,
+  "grading_limit": "Primary reference word matching and behavior checks only. Source presence is not proof of factual support. Manual checks remain ungraded; pretraining contamination cannot be ruled out.",
+  "summary": {
+    "total": 8,
+    "checks_passed": 8,
+    "checks_failed": 0,
+    "manual": 0,
+    "by_status": {
+      "主答案字詞符合，需抽查": 5,
+      "追問": 3
+    }
+  },
+  "results": [
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "加拿大的首都是渥太華。",
+      "sources": [
+        "https://lillian.tw/canada/",
+        "https://rosaroundtheworld.com/canada/",
+        "https://zh.wikipedia.org/zh-tw/%E5%8A%A0%E6%8B%BF%E5%A4%A7"
+      ],
+      "id": "holdout-capital-ca",
+      "category": "general",
+      "question": "加拿大的首都是哪座城市？",
+      "kind": "fact",
+      "seconds": 1.05
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "義大利的首都叫羅馬。",
+      "sources": [
+        "https://travelpark.tw/italy-attractions/",
+        "https://www.wendyjourney.com/italy-travel-d14/",
+        "https://zh.wikipedia.org/zh-tw/%E6%84%8F%E5%A4%A7%E5%88%A9"
+      ],
+      "id": "holdout-capital-it",
+      "category": "general",
+      "question": "義大利的首都叫什麼？",
+      "kind": "fact",
+      "seconds": 0.91
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "世界上最大的海洋是太平洋。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%85%A7%E9%99%B8%E5%9C%8B%E5%AE%B6",
+        "https://zh.wikipedia.org/wiki/%E5%B3%B6%E5%B6%BC"
+      ],
+      "id": "holdout-ocean",
+      "category": "general",
+      "question": "世界上最大的海洋是哪個？",
+      "kind": "fact",
+      "seconds": 1.68
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "海王星最大的衛星是海衛一（Triton），它也是人類最早觀測到的海王星衛星 [1, 2]。海衛一是太陽系中唯一具有逆行軌道的大型衛星，其組成和結構與冥王星相似 [1]。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E6%B5%B7%E5%8D%AB%E4%B8%80",
+        "https://zh.wikipedia.org/wiki/%E6%B5%B7%E7%8E%8B%E6%98%9F",
+        "https://zh.wikipedia.org/wiki/%E6%B5%B7%E7%8E%8B%E6%98%9F%E7%9A%84%E5%8D%AB%E6%98%9F"
+      ],
+      "id": "holdout-moon-neptune",
+      "category": "general",
+      "question": "海王星最大的衛星叫什麼？",
+      "kind": "fact",
+      "seconds": 3.37
+    },
+    {
+      "status": "主答案字詞符合，需抽查",
+      "passed": true,
+      "answer": "安地斯山脈位於南美洲的西岸 [1]。",
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%8D%97%E7%BE%8E%E6%B4%B2%E5%9C%B0%E7%90%86",
+        "https://zh.wikipedia.org/wiki/%E9%A3%9F%E8%9F%B9%E6%B5%A3%E7%86%8A"
+      ],
+      "id": "holdout-andes",
+      "category": "general",
+      "question": "安地斯山脈位於哪個洲？",
+      "kind": "fact",
+      "seconds": 3.77
+    },
+    {
+      "status": "追問",
+      "passed": true,
+      "answer": "你想查哪個城市或地點的天氣？例如「台北明天天氣」。",
+      "sources": [],
+      "id": "holdout-weather",
+      "category": "clarification",
+      "question": "明天天氣會怎樣？",
+      "kind": "clarification",
+      "seconds": 0.0
+    },
+    {
+      "status": "追問",
+      "passed": true,
+      "answer": "你想問哪位人物？請提供名字或名稱，我才能查證。",
+      "sources": [],
+      "id": "holdout-pronoun",
+      "category": "clarification",
+      "question": "這位今年幾歲？",
+      "kind": "clarification",
+      "seconds": 0.0
+    },
+    {
+      "status": "追問",
+      "passed": true,
+      "answer": "請先傳送或上傳要辨識的圖片，再告訴我想看日期、時間或哪個內容。",
+      "sources": [],
+      "id": "holdout-photo-missing",
+      "category": "clarification",
+      "question": "這張圖片寫了什麼？",
+      "kind": "clarification",
+      "seconds": 0.0
+    }
+  ]
+}

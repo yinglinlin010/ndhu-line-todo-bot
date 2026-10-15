@@ -1,5 +1,7 @@
 # 本機 Ollama LINE Bot — Python 版 v0.5.0
 
+最新常見問法調校與重跑方式見 [evaluation/README.md](evaluation/README.md)。本輪使用原本 E4B 模型，未更新權重；35例回歸中33項符合自動檢查、2項待人工核對，不代表整體問答準確率。
+
 使用跑在自己電腦上的 Ollama 回答 LINE 訊息；資訊查詢自動搜尋網路，再由本機模型整理，附上可點的來源卡片。主要程式是一支 `line_bot_local.py`，從本專案 Node.js 版移植，並參考老師提供的課堂 Python 程式加入照片辨識、Drive、Calendar 和 Sheets 功能。
 
 Repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
@@ -286,3 +288,11 @@ E4B 最新 LINE 手機與同次终端截圖：`test-evidence/gemma4-e4b-line-pho
 通用搜尋關鍵字現在去除「叫什麼」「位於哪個」「哪兩個」等問句詞，沒有加入這兩題的答案。這兩題修後回歸查到來源，見 `general-query-regression.json`，不再算盲測。另留三題新題驗證，巴拿馬運河及木星最大衛星主答案符合參考，澳洲首都仍查不到；見 `holdout-general-live.json`。一般搜尋召回仍有缺漏，不能宣稱完整命中。
 
 諾貝爾及台灣總統身分題有專用官方查核；得主姓名由 API 回傳資料組成，不是寫死，但也不是純本機模型能力的證據。上網搜尋後把實際來源交給模型整理是目前流程。手機傳圖到 Drive、手機確認 Calendar 寫入與多人群組，本輪未重新測試；先前核准的雲端測試仍與手機收發分開標示。
+
+## 常見問法題庫與流程調校
+
+題庫在 `evaluation/faq-cases.json`，評估器為 `scripts/evaluate-faq.py`。使用臨時資料與合成 LINE 事件跑真實本機模型及搜尋，回覆留在本機；參考答案不傳給 bot，不操作手機、不發送真實 LINE 訊息、不新增 Google 資料。`--model` 可換成其他已安裝模型，沿用題庫重新測試。
+
+本輪通用修正：缺少地點的天氣問題先追問城市；無對話的人物代詞先問姓名；未上傳圖的內容問題先請傳圖。搜尋去掉「請附來源」等輸出要求與問句詞；一般新聞使用分類RSS及發布日期，僅允許同一Google新聞網域的有限次公開GET重新導向，帶憑證的請求不使用這個導向機制。回答預設縮短，圖片連續追問保留原始本機辨識描述與最近一輪，不把描述送去公開搜尋。
+
+77項Python回歸、22項HTTP整合檢查通過；最新35例回歸完整執行，33項符合自動檢查、2項待人工核對。完整紀錄見 `test-evidence/faq-regression-final.json`。初輪失敗、整合發現的圖片脈絡問題，以及一次外部來源缺漏／逾時連帶暴露的測試器配對錯誤，都保留於測試資料。詳細界線見 [題庫說明](evaluation/README.md)。
