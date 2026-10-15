@@ -1,0 +1,94 @@
+{
+  "method": "Real local E4B and search; synthetic conversation, not LINE transport",
+  "code_sha256": "5c2cdf8c1e412b28f48884c81b76a797b7a42782e60e4ecea952fd3c2b9a9d18",
+  "results": [
+    {
+      "question": "Taiwan highest mountain height?",
+      "answer": "台灣最高的山是玉山，其最高峰玉山主峰的標高是 3,952 公尺 [2]。雪山主峰的標高為 3,886 公尺 [1]。",
+      "evidence": [
+        {
+          "title": "雪山 (台灣)",
+          "url": "https://zh.wikipedia.org/wiki/%E9%9B%AA%E5%B1%B1_(%E5%8F%B0%E7%81%A3)",
+          "snippet": "雪山（泰雅語：B'bu' Hagay、Mahamayan、Sekoan、Sekuwan）是台灣第二高山，雪山山脈最高峰，其最高峰雪山主峰，標高 3,886 公尺，山頂設有一等三角點，位處台中市和平區平等里與苗栗縣泰安鄉梅園村之間。雪山高度僅次於台灣最高峰玉山山脈的玉山（3,952 公尺），在日治時期因為是大日本帝國第二高峰，因此被稱做次高山。有地形學書籍稱雪山主峰為「雪山南角」，相對於北側約450公尺處稱「雪山北角」的北稜角。雪山即雪霸國家公園中所指的「雪」。在台灣百岳之中，雪山與玉山、秀姑巒山、南湖大山、北大武山合稱「五嶽」，為台灣最具代表性的五座高山。",
+          "published": null
+        },
+        {
+          "title": "玉山",
+          "url": "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1",
+          "snippet": "玉山（鄒語：Patungkuonʉ）是臺灣最高的山，最高峰玉山主峰海拔3,952米（12,966英尺），設有一等三角點。其處於玉山山脈的核心，交界於南投縣信義鄉東埔村、嘉義縣阿里山鄉中山村與高雄市桃源區梅山里。 1985年，為保護玉山及其周邊地區珍貴的自然景觀生態及歷史文化資產，中華民國政府成立玉山國家公園。在臺灣百岳中，玉山被視為百岳之首，並與雪山、秀姑巒山、南湖大山及北大武山譽為臺灣「五嶽」，為臺灣最具代表性的高山地區。在西太平洋沿區域，玉山是堪察加半島之外的最高點。玉山是臺灣原住民布農族與鄒族共同的聖山，也是當代臺灣精神的象徵之一。",
+          "published": null
+        }
+      ],
+      "checks": {
+        "height_answer": false
+      },
+      "seconds": 8.5
+    },
+    {
+      "question": "What about its height in meters?",
+      "answer": "雪山主峰的標高是 3,886 公尺 [1]。",
+      "evidence": [
+        {
+          "title": "雪山 (台灣)",
+          "url": "https://zh.wikipedia.org/wiki/%E9%9B%AA%E5%B1%B1_(%E5%8F%B0%E7%81%A3)",
+          "snippet": "雪山（泰雅語：、、、）是台灣第二高山，雪山山脈最高峰，其最高峰雪山主峰，標高 3,886 公尺，山頂設有一等三角點，位處台中市和平區平等里與苗栗縣泰安鄉梅園村之間。雪山高度僅次於台灣最高峰玉山山脈的玉山（3,952 公尺），在日治時期因為是大日本帝國第二高峰，因此被稱做次高山。有地形學書籍稱雪山主峰為「雪山南角」，相對於北側約450公尺處稱「雪山北角」的北稜角。雪山即雪霸國家公園中所指的「雪」。在台灣百岳之中，雪山與玉山、秀姑巒山、南湖大山、北大武山合稱「」，為台灣最具代表性的五座高山。",
+          "published": null
+        },
+        {
+          "title": "玉山",
+          "url": "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1",
+          "snippet": "玉山（鄒語：Patungkuonʉ）是臺灣最高的山，最高峰玉山主峰海拔3,952米（12,966英尺），設有一等三角點。其處於玉山山脈的核心，交界於南投縣信義鄉東埔村、嘉義縣阿里山鄉中山村與高雄市桃源區梅山里。 1985年，為保護玉山及其周邊地區珍貴的自然景觀生態及歷史文化資產，中華民國政府成立玉山國家公園。在臺灣百岳中，玉山被視為百岳之首，並與雪山、秀姑巒山、南湖大山及北大武山譽為臺灣「五嶽」，為臺灣最具代表性的高山地區。在西太平洋沿區域，玉山是堪察加半島之外的最高點。玉山是臺灣原住民布農族與鄒族共同的聖山，也是當代臺灣精神的象徵之一。",
+          "published": null
+        }
+      ],
+      "checks": {
+        "height_answer": false
+      },
+      "seconds": 2.1
+    },
+    {
+      "question": "Recent international news, cite sources.",
+      "answer": "美國擬直播槍決死刑犯掀反彈聲浪 川普決定喊停 [1]\n沙烏地稱數週前已邀青年運動在阿曼會談 但遭到拒絕 [2]\n組閣難達共識！瑞典社民黨安德森出任總理案 國會壓倒性否決 [3]",
+      "evidence": [
+        {
+          "title": "中央通訊社｜美國擬直播槍決死刑犯掀反彈聲浪 川普決定喊停",
+          "url": "https://www.cna.com.tw/news/aopl/202610150363.aspx",
+          "snippet": "（中央社記者侯姿瑩華盛頓15日專電）五角大廈官員日前宣稱，將在網路直播槍決胡德堡案凶手的過程，引發多方譴責。美國總統川普今天發文指出，這名死刑犯將按計畫被執行槍決，但過程不會直播，受害者家屬若願意，可選擇到場觀看行刑。",
+          "published": 1792079719.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld",
+          "related_sources": [],
+          "evidence_type": "news"
+        },
+        {
+          "title": "中央通訊社｜沙烏地稱數週前已邀青年運動在阿曼會談 但遭到拒絕",
+          "url": "https://www.cna.com.tw/news/aopl/202610150362.aspx",
+          "snippet": "（中央社利雅德15日綜合外電報導）沙烏地阿拉伯今天指控伊朗支援葉門叛軍「青年運動」（Houthi）持續與其對戰，並表示沙烏地早在幾週前已主動接觸青年運動提議在鄰國阿曼進行會談，但遭到對方拒絕。",
+          "published": 1792078517.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld",
+          "related_sources": [],
+          "evidence_type": "news"
+        },
+        {
+          "title": "自由時報｜組閣難達共識！瑞典社民黨安德森出任總理案 國會壓倒性否決",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5607785",
+          "snippet": "瑞典中左翼在野陣營於9月國會大選囊括過半席次後，國會議員今天以壓倒性票數否決社會民主黨領袖安德森出任總理。她日前已告訴議長，難以和其他左翼政黨籌組聯合政府。 法新社報導，瑞典國會以24...…",
+          "published": 1792077033.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml",
+          "related_sources": [],
+          "evidence_type": "news"
+        }
+      ],
+      "checks": {
+        "news_sources": true,
+        "not_dictionary": true
+      },
+      "seconds": 1.91
+    }
+  ]
+}

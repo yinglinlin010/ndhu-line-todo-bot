@@ -1,0 +1,82 @@
+{
+  "method": "Real local E4B and search; synthetic conversation, not LINE transport",
+  "code_sha256": "1ae347d3f1f1c92c1283767095a1650723bfc96402cc63e53d0d2058cea1bb9b",
+  "results": [
+    {
+      "question": "Taiwan highest mountain height?",
+      "answer": "臺灣最高的山是玉山，其主峰海拔為 3,952 米 [1]。",
+      "evidence": [
+        {
+          "title": "玉山",
+          "url": "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1",
+          "snippet": "玉山（鄒語：Patungkuonʉ）是臺灣最高的山，最高峰玉山主峰海拔3,952米（12,966英尺），設有一等三角點。其處於玉山山脈的核心，交界於南投縣信義鄉東埔村、嘉義縣阿里山鄉中山村與高雄市桃源區梅山里。 1985年，為保護玉山及其周邊地區珍貴的自然景觀生態及歷史文化資產，中華民國政府成立玉山國家公園。在臺灣百岳中，玉山被視為百岳之首，並與雪山、秀姑巒山、南湖大山及北大武山譽為臺灣「五嶽」，為臺灣最具代表性的高山地區。在西太平洋沿區域，玉山是堪察加半島之外的最高點。玉山是臺灣原住民布農族與鄒族共同的聖山，也是當代臺灣精神的象徵之一。",
+          "published": null
+        }
+      ],
+      "checks": {
+        "height_answer": true
+      },
+      "seconds": 2.2
+    },
+    {
+      "question": "What about its height in meters?",
+      "answer": "玉山主峰的海拔是 3,952 米 [1]。",
+      "evidence": [
+        {
+          "title": "玉山",
+          "url": "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1",
+          "snippet": "玉山（鄒語：Patungkuonʉ）是臺灣最高的山，最高峰玉山主峰海拔3,952米（12,966英尺），設有一等三角點。其處於玉山山脈的核心，交界於南投縣信義鄉東埔村、嘉義縣阿里山鄉中山村與高雄市桃源區梅山里。 1985年，為保護玉山及其周邊地區珍貴的自然景觀生態及歷史文化資產，中華民國政府成立玉山國家公園。在臺灣百岳中，玉山被視為百岳之首，並與雪山、秀姑巒山、南湖大山及北大武山譽為臺灣「五嶽」，為臺灣最具代表性的高山地區。在西太平洋沿區域，玉山是堪察加半島之外的最高點。玉山是臺灣原住民布農族與鄒族共同的聖山，也是當代臺灣精神的象徵之一。",
+          "published": null
+        }
+      ],
+      "checks": {
+        "height_answer": true
+      },
+      "seconds": 1.61
+    },
+    {
+      "question": "Recent international news, cite sources.",
+      "answer": "美國擬直播槍決死刑犯掀反彈聲浪 川普決定喊停 [1]\n沙烏地稱數週前已邀青年運動在阿曼會談 但遭到拒絕 [2]\n組閣難達共識！瑞典社民黨安德森出任總理案 國會壓倒性否決 [3]",
+      "evidence": [
+        {
+          "title": "中央通訊社｜美國擬直播槍決死刑犯掀反彈聲浪 川普決定喊停",
+          "url": "https://www.cna.com.tw/news/aopl/202610150363.aspx",
+          "snippet": "（中央社記者侯姿瑩華盛頓15日專電）五角大廈官員日前宣稱，將在網路直播槍決胡德堡案凶手的過程，引發多方譴責。美國總統川普今天發文指出，這名死刑犯將按計畫被執行槍決，但過程不會直播，受害者家屬若願意，可選擇到場觀看行刑。",
+          "published": 1792079719.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld",
+          "related_sources": [],
+          "evidence_type": "news"
+        },
+        {
+          "title": "中央通訊社｜沙烏地稱數週前已邀青年運動在阿曼會談 但遭到拒絕",
+          "url": "https://www.cna.com.tw/news/aopl/202610150362.aspx",
+          "snippet": "（中央社利雅德15日綜合外電報導）沙烏地阿拉伯今天指控伊朗支援葉門叛軍「青年運動」（Houthi）持續與其對戰，並表示沙烏地早在幾週前已主動接觸青年運動提議在鄰國阿曼進行會談，但遭到對方拒絕。",
+          "published": 1792078517.0,
+          "publisher": "中央通訊社",
+          "section": "國際",
+          "feed_url": "https://feeds.feedburner.com/rsscna/intworld",
+          "related_sources": [],
+          "evidence_type": "news"
+        },
+        {
+          "title": "自由時報｜組閣難達共識！瑞典社民黨安德森出任總理案 國會壓倒性否決",
+          "url": "https://news.ltn.com.tw/news/world/breakingnews/5607785",
+          "snippet": "瑞典中左翼在野陣營於9月國會大選囊括過半席次後，國會議員今天以壓倒性票數否決社會民主黨領袖安德森出任總理。她日前已告訴議長，難以和其他左翼政黨籌組聯合政府。 法新社報導，瑞典國會以24...…",
+          "published": 1792077033.0,
+          "publisher": "自由時報",
+          "section": "國際",
+          "feed_url": "https://news.ltn.com.tw/rss/world.xml",
+          "related_sources": [],
+          "evidence_type": "news"
+        }
+      ],
+      "checks": {
+        "news_sources": true,
+        "not_dictionary": true
+      },
+      "seconds": 1.98
+    }
+  ]
+}

@@ -71,6 +71,7 @@ Google寫入只接受綁定者個人聊天；其他人與群組不會寫入你�
 - 使用同一E4B本機模型處理文字與照片；保留短期對話、圖片文字追問及跨重啟記憶，私人圖片描述不送公開搜尋。
 - 搜尋使用公開服務、官方頁面及分類RSS；與老師使用Ollama experimental搜尋工具的方式不同。諾貝爾／總統身分題有專用官方查核，並非純模型記憶測驗。
 - 新聞依分類與發布日期篩選；導讀只接受完整來源標題或前言句子，引用錯誤或改動事實時改列原始標題。這是來源文字一致性檢查，不能保證發布者報導為真。
+- 英文新聞與中文共用分類RSS和日期規則；英文最高山高度題先轉換查詢意圖，不在查詢中插入山名或答案。高度來源需有數字單位，最高山來源以首句主題判斷，排除僅在比較段落提到最高山的其他山岳文章。單純「它的高度」等追問保留原題主題描述，不讓模型改成新名字。
 - 同期相同標題採保守去重，保留其他媒體連結；不把僅僅近似的標題任意合併。
 - 老師原版自動排日曆；本版增加使用者確認、日期驗算及持久去重。老師原版可記錄所有問答；本版預設不自動記錄，保留指定內容手動保存及可選的自動紀錄能力。
 - 管理程序提供通道重建與Webhook安全還原；簽章驗證、使用者隔離、下載大小限制與安全日誌均保留。
@@ -78,7 +79,7 @@ Google寫入只接受綁定者個人聊天；其他人與群組不會寫入你�
 ## 測試與驗收界線
 
 ```sh
-python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check test_reliability
+python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check test_reliability test_phone_regressions
 python scripts/check-live-quality.py
 python scripts/check-news-followups.py
 python scripts/check-classroom-google.py
@@ -88,7 +89,7 @@ python scripts/check-classroom-google.py
 
 - 既有E4B雲端實測已成功上傳合成圖片、確認私人權限，並建立及讀回Calendar測試行程，見 `test-evidence/e4b-cloud-live-check.json`。
 - 既有真實LINE文字測試包括老師玉山與諾貝爾原題、翻譯、換題及重啟接續，見 `test-evidence/line-quality-live.json`。這些不是最新版功能的手機端到端驗證。
-- 最新103項自動測試、24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
+- 最新108項自動測試、24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
 - 最新Google唯讀檢查再次確認既有測試圖片、行程及試算表可讀。經使用者同意，已透過bot流程新增一筆合成Sheets驗收紀錄並讀回，確認只出現一次，見 `test-evidence/classroom-runs/20261015T064615012164Z.json`；自動紀錄仍關閉。未操作手機，不以此冒充手機實測。
 - 題庫、歷次失敗與每輪測試範圍見 [evaluation/README.md](evaluation/README.md)。舊版功能說明與歷次紀錄移至 [README-history.md](README-history.md)，Node.js版見 [README-nodejs.md](README-nodejs.md)。
 

@@ -1,0 +1,54 @@
+{
+  "time": "2026-10-15T18:35:21.710902+00:00",
+  "method": "Real iPhone Mirroring -> actual LINE delivery -> local E4B/search -> phone screenshots, same-run terminal reply 200",
+  "code_sha256": "d4ed64e492181260280eedbf11520dfbc909b14d0dfa0dc2bbf579332faef708",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "unit_tests_passed": 108,
+  "http_integration": {
+    "passed": 24,
+    "total": 24,
+    "method": "Synthetic signed local HTTP webhook with real Ollama/search; separate from phone checks"
+  },
+  "phone_checks": [
+    {
+      "question": "Taiwan highest mountain height?",
+      "passed": true,
+      "observation": "玉山 with 3952 metres and matching Wikipedia source; no unrelated mountain answer",
+      "processing_seconds": 2.01,
+      "screenshot": "phone-mountain-pass.png"
+    },
+    {
+      "question": "What about its height in meters?",
+      "passed": true,
+      "observation": "Still 玉山3952 metres, not 雪山",
+      "processing_seconds": 1.93,
+      "screenshot": "phone-followup-pass.png"
+    },
+    {
+      "question": "Recent international news, cite sources.",
+      "passed": true,
+      "observation": "Three publisher news headlines, source cards and publication dates; no dictionary results",
+      "processing_seconds": 2.79,
+      "screenshot": "phone-news-pass.png"
+    },
+    {
+      "question": "Today international news, cite sources.",
+      "passed": true,
+      "criterion": "Refuse to invent current-day news when selected feeds have no eligible current-day rows",
+      "observation": "No source cards appended to the refusal; old October 15 source cards remain only in previous Recent answer",
+      "processing_seconds": 1.31,
+      "screenshot": "phone-today-no-source.png"
+    }
+  ],
+  "loading_endpoint_status": 202,
+  "loading_visual_observation": "Not captured; API acceptance alone is not proof of visible animation",
+  "limitations": [
+    "Known-case regression, not a blind evaluation",
+    "English inputs used because mirror Unicode entry was unreliable; not claimed to be exact Chinese teacher prompts",
+    "News source matching is not independent fact checking of publisher reports",
+    "No new Google writes or model training",
+    "No GitHub push"
+  ],
+  "before_fix_report": "../phone-20261016/results.json",
+  "initial_local_failed_attempt": "local-live-initial-failure.json"
+}
