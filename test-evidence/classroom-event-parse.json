@@ -1,0 +1,18 @@
+{
+  "method": "Real local E4B structured event parsing; no Google write, LINE message or phone UI",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "code_sha256": "d35c3e20375d9de2ba4d7dd1294287f326fa13f9dba707bb62d06eb703a309e7",
+  "checks": {
+    "date_correct": true,
+    "time_correct": true
+  },
+  "seconds": 0.86,
+  "input": "2026-10-16 下午3點到4點 W6 課堂版驗收會議",
+  "parsed": {
+    "title": "W6 課堂版驗收會議",
+    "date": "2026-10-16",
+    "time": "15:00–16:00",
+    "start": "2026-10-16T15:00:00+08:00",
+    "end": "2026-10-16T16:00:00+08:00"
+  }
+}

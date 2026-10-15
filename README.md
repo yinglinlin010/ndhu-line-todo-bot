@@ -1,44 +1,12 @@
-# 本機 Ollama LINE Bot — Python 版 v0.5.0
+# 本機 Ollama LINE Bot — 課堂版
 
-最新常見問法調校與重跑方式見 [evaluation/README.md](evaluation/README.md)。本輪使用原本 E4B 模型，未更新權重；35例回歸中33項符合自動檢查、2項待人工核對，不代表整體問答準確率。
+公開 repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 
-使用跑在自己電腦上的 Ollama 回答 LINE 訊息；資訊查詢自動搜尋網路，再由本機模型整理，附上可點的來源卡片。主要程式是一支 `line_bot_local.py`，從本專案 Node.js 版移植，並參考老師提供的課堂 Python 程式加入照片辨識、Drive、Calendar 和 Sheets 功能。
-
-Repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
-
-## 現行版本：課堂功能與 Gemma4 E4B
-
-文字與圖片模型均使用 `gemma4:e4b-it-q4_K_M`（Q4_K_M、下載約6.6GB），保留 Drive 照片儲存與確認後的 Calendar 排程。Google 已啟用且限綁定者私聊，試算表自動紀錄依使用者設定保持關閉。52 項 Python 與4項 Apps Script 測試通過；E4B 實測文字、搜尋、追問、圖片辨識與行程解析通過。已獲使用者同意，實際上傳一張合成圖片至私人 Drive，並建立、讀回「W6 E4B 功能測試」行程（2026/10/16 15:00–16:00 台灣時間）；未寫入試算表。雲端測試使用 TeacherFeatures 流程與本機合成圖，並非手機傳圖；結果見 `test-evidence/e4b-cloud-live-check.json`。
-
-首次載入加短題約7.9秒，暖機後測試短題約0.5–1.4秒，實際速度依題目而異。下方 E2B 與 Qwen 的測試紀錄為先前版本；本次 E4B 實測另見 `test-evidence/gemma4-e4b-local-check.json`。
-
-老師輕量版指南明列真實 LINE 關卡 B 為加分；沒有明列換大模型或新增 Google 功能的固定加分數。這份專案展示課堂版功能，但不宣稱老師一定給更高分。
-
-## 作業用模擬模式（不需要 LINE 金鑰）
-
-安裝完成後執行：
-
-```sh
-.venv/bin/python line_bot_local.py --simulate --search
-```
-
-依序輸入「你好」、「解釋牛頓第二定律」、「台灣現在的總統是誰」。這個模式和 LINE 共用 `BotRuntime.process`，會顯示回答、實際來源網址、搜尋紀錄、模型名稱和耗時。不讀取 `.env`、不啟動通道、不改 Webhook、不登入 Google；待辦放在臨時目錄，退出即移除。不加 `--search` 時完全不進行網路搜尋，一般知識交給本機模型，時效性或指定搜尋的問題會請你啟用搜尋。輸入 `/quit` 結束。
-
-### 最新改進與驗證範圍
-
-- 補上老師簡單版指南的 `--simulate` 與 `--search`；可用 `--model 名稱` 選另一個已安裝模型。
-- 查不到相關來源時直接說明，不再讓模型編造查詢答案；保留來源篩選、總統府官方查核與來源卡片。
-- 傳送 `清除對話`、`清除記憶` 或 `/clear` 清除自己的聊天記憶；不刪除待辦或雲端資料。
-- 聊天記憶及目前主題保存在 Git 忽略的本機 `data/conversations.json`，檔案權限 600；閒置二十分鐘失效，清除對話同步清除本機保存內容。
-- 圖片成功辨識後保存文字描述，下一題可以接續詢問；只保留描述，不把私人圖片或 Drive 網址送去搜尋。
-- 啟動先检查 Ollama 與模型；終端標明本機 AI、退出後的雲端待辦模式、試算表紀錄開關。現有通道仍需保持執行。
-- 現行文字及圖片模型皆為 `gemma4:e4b-it-q4_K_M`；試算表紀錄關閉。下方舊版本段落保留沿革，現行設定以這一段為準。
-
-已於本次真實 LINE 測試取得手機回答與同一次問答的終端截圖，放在 `test-evidence/gemma4-line-phone.jpg` 與 `test-evidence/gemma4-line-terminal.jpg`；另實測重啟後翻譯追問接續成功。若依老師後來的簡單版指南，模擬模式三題的終端截圖可作 A 路線證據。參考：[老師的簡單版指南](https://cwstedctw.github.io/ndhu-ted-course-hub/weekly/11501-ai-coding/w06/line-bot-lite.html)。
+LINE 文字與照片交由自己電腦上的 **Gemma 4 E4B** 處理；需要時搜尋附來源。支援照片存私人 Google Drive、行程確認後寫 Calendar、指定內容寫 Sheets。文字與圖片使用 `gemma4:e4b-it-q4_K_M`，下載約6.6GB；本機已用 Python 3.12 測試。
 
 ## 怎麼裝
 
-需要 Python **3.11 以上**、Ollama，以及 LINE Messaging API channel。此電腦已用 Python 3.12 安裝並測試。
+需要 Python 3.11以上、Ollama、cloudflared。課堂版的 Google 功能另需 Node.js、Google Workspace CLI（gws），以及你自己的 Google Cloud OAuth 設定與 Drive／Calendar／Sheets API。
 
 ```sh
 git clone https://github.com/yinglinlin010/ndhu-line-todo-bot.git
@@ -47,256 +15,87 @@ python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-lock.txt
 ollama pull gemma4:e4b-it-q4_K_M
+npm install --prefix .tools @googleworkspace/cli@0.22.5
 ```
 
-若使用 Python 3.11，可將 `python3.12` 換成 `python3.11`。Windows 啟用虛擬環境使用 `.venv\Scripts\Activate.ps1`。`requirements-lock.txt` 固定這次測試的版本；`requirements.txt` 保留允許的更新範圍。
+macOS 安裝通道工具：`brew install cloudflared`。Windows 可用官方安裝程式；虛擬環境啟用指令為 `.venv\Scripts\Activate.ps1`。
 
-開啟 Ollama 桌面程式；若未啟動，可另開終端執行 `ollama serve`。`ollama list` 應列出選用模型。
+複製 `.env.example` 成 `.env`，只在本機填入 LINE 通行碼、Channel secret、原 W5 Webhook。已有設定時不要覆蓋。程式與範例檔不能放真實金鑰、試算表ID或私人網址；`data/`、`.env`、OAuth憑證已列入 `.gitignore`。
+
+Google 功能使用隔離的本機 `data/gws` 目錄。將 `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` 設為該目錄的絕對路徑，依 [gws 官方說明](https://github.com/googleworkspace/cli) 設定 Desktop OAuth client、測試使用者與API，再登入：
+
+```sh
+export GOOGLE_WORKSPACE_CLI_CONFIG_DIR="$PWD/data/gws"
+.tools/node_modules/.bin/gws auth login --scopes https://www.googleapis.com/auth/drive.file,https://www.googleapis.com/auth/calendar.events,https://www.googleapis.com/auth/spreadsheets
+python scripts/configure-google.py
+```
+
+上述export需與gws登入在同一個終端執行；`.env`不會自動被gws CLI讀取。Windows PowerShell可用 `$env:GOOGLE_WORKSPACE_CLI_CONFIG_DIR=(Join-Path $PWD "data/gws")` 指定相同目錄。
+
+設定工具以隱藏輸入接收私人ID，啟用僅限綁定者私聊的Google功能；不會直接寫入雲端。課堂版手動Sheets指令需要設定試算表ID；Google帳號必須有該表的編輯權限。
 
 ## 怎麼跑
 
-1. 已有本機 `.env` 的使用者可直接沿用，不需要重新設定 LINE 或 e學苑綁定。
-2. 新安裝時，把 `.env.example` **複製**成 `.env`，只在自己的編輯器內填入設定；不要覆蓋現有 `.env`。
-3. 設定 `LINE_CHANNEL_SECRET`、`LINE_CHANNEL_ACCESS_TOKEN`。未設定時，程式啟動會以隱藏輸入詢問，輸入值只留在記憶體。
-4. 可選設定 `OLLAMA_MODEL`，預設 `gemma4:e4b-it-q4_K_M`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
-5. macOS／Linux 建議使用連線管理程序（先安裝官方 `cloudflared`）：
+先開啟 Ollama。macOS／Linux 建議使用通道管理程序：
 
 ```sh
 source .venv/bin/activate
 python scripts/run-bot.py
 ```
 
-管理程序會建立 HTTPS 通道、同步本機設定、驗證 LINE Webhook，再開始服務。通道或 bot 中斷時先安全停止、回復待辦備援，再重建；每次執行最多三次啟動／恢復循環，持續失敗會停止，避免無限切換。關閉電腦、終端或睡眠期間無法提供本機 AI；此程序不會設定開機自動啟動。
+它會檢查模型、建立通道、驗證本機及公開HTTPS，再接上LINE。需要在本機設定 `W5_WEBHOOK_URL`；可執行 `python scripts/configure-w5.py` 以隱藏輸入保存。發現其他程式接管Webhook時會停止，不覆蓋未知路由。通道故障最多嘗試三輪恢復；持續失敗會停止。
 
-`GET http://127.0.0.1:3000/health` 應回覆 `ok`。正常退出按 Ctrl+C，等待「已恢復 W5 Apps Script」與「已停止」。只會回復屬於本專案的 Webhook；若發現其他程式接管，不覆寫。不要同時執行舊 Node.js bot 或第二個 Python bot。
+Windows 或自行管理通道者可用 `python line_bot_local.py`，自行保持cloudflared執行、設定 `PUBLIC_BASE_URL` 並轉送 `/webhook` 到本機3000埠；LINE後台Use webhook需開啟。不要同時啟動兩支bot。GitHub Pages不能執行此服務。
 
-自行管理通道或使用 Windows 時，仍可執行 `python line_bot_local.py`；須自行維持 HTTPS 通道、更新 `PUBLIC_BASE_URL`，將 `/webhook` 轉送至本機連接埠，並啟用 LINE Use webhook。GitHub Pages 只能放說明，不能執行 bot。
+電腦、Ollama、bot與通道都要保持運作；睡眠或關機時無本機AI。健康入口 `http://127.0.0.1:3000/health` 應回覆 `ok`。
+
+## 課堂版怎麼用
+
+- 問文字問題：需要時公開搜尋、提供來源卡片；查不到可靠相關來源時說明無法確認。
+- 傳照片：本機模型辨識，綁定者私聊的照片存私人Drive；照片有日期時間時先顯示待確認行程。
+- 傳「明天下午三點開會」：解析並核對日期，回覆「確認排程」才建立Calendar事件；「取消排程」放棄，20分鐘後失效，不寄邀請。
+- 傳「存試算表：要保存的內容」：只將指定內容寫一列到現有私人試算表；保留寫入收據，避免同一事件重送。使用RAW，文字不當作公式。
+- 一般聊天、照片及行程的**自動Sheets紀錄維持關閉**（`ENABLE_SHEET_LOGGING=0`），符合使用者不自動保存聊天的設定。手動保存不會改動這個開關。
+- 傳「記錄：事項」「查詢」使用本機私人待辦；不等同於雲端Apps Script待辦。傳「清除對話」清掉自己的短期對話記憶，不刪待辦或Google資料。
+
+Google寫入只接受綁定者個人聊天；其他人與群組不會寫入你的Google帳號。回應不明時不自動重試或宣稱成功，需要核對Google實際內容。
+
+一般AI文字與照片回覆附本機模型設定及本題處理時間；時間包含該次處理中的搜尋／模型／Google操作，不包含工作排隊或LINE送出耗時，也不代表每則固定提示都曾呼叫模型。
 
 ## 你改了什麼
 
-- 將 Node.js 多模組版本改成 Python 單檔；不再需要 Node.js 來執行新版 bot。
-- 保留「記錄：事項」「查詢」、本人最新十筆待辦、空白／長度檢查與事件去重。
-- 保留 Ollama 本機問答、自動搜尋、來源 Flex 卡片及最近三輪追問。不同使用者／群組的對話隔離；閒置二十分鐘失效，本機短期記憶可跨重啟；清除對話可立即清掉自己的記憶。
-- 保留自然語言照片搜尋、來源說明、JPEG 與縮圖快取。只下載公開 HTTPS 位址，逐次重新導向驗證並固定 DNS 位址，限制下載與解碼大小。
-- 新增收到 LINE 照片後的本機辨識，使用另一個支援圖片的 `qwen2.5vl:3b`，不把圖片交給雲端模型。
-- 新增老師版 Google 功能：照片存 Drive、行程寫 Calendar、問答記 Sheets。需要完成 Google 登入並在本機明確啟用；只允許綁定者的個人聊天。
-- 行程先核對日期時間，回覆「確認排程」才建立；Google 寫入結果不明時不自動重複寫入，不冒充成功。Sheets 使用 RAW 避免把使用者文字當公式執行。
-- 保留 e學苑行事曆、私聊綁定、今天／明天／本週篩選、每天上午八點摘要及事件前二十四小時提醒。沿用原本綁定狀態與推播 retry key，避免移植後重發。
-- 加入安全的終端紀錄：搜尋服務、來源筆數、本機模型名稱、回答耗時、LINE 回覆狀態；不輸出金鑰、私人行事曆網址或使用者訊息。
-- 可選設定 `W5_WEBHOOK_URL`，讓正常 Ctrl+C／SIGTERM 退出後恢復 W5 Apps Script。
+以既有Node.js專案移植成Python，並對照老師提供的 `line_bot_local.py` 完成課堂功能；不是逐字複製老師程式。
 
-**沒有自行改寫或覆蓋既有待辦與綁定資料。** Node.js 原始檔與歷史紀錄保留，舊版詳細說明在 [README-nodejs.md](README-nodejs.md)。
+- 使用同一E4B本機模型處理文字與照片；保留短期對話、圖片文字追問及跨重啟記憶，私人圖片描述不送公開搜尋。
+- 搜尋使用公開服務、官方頁面及分類RSS；與老師使用Ollama experimental搜尋工具的方式不同。諾貝爾／總統身分題有專用官方查核，並非純模型記憶測驗。
+- 新聞依分類與發布日期篩選；導讀只接受完整來源標題或前言句子，引用錯誤或改動事實時改列原始標題。這是來源文字一致性檢查，不能保證發布者報導為真。
+- 同期相同標題採保守去重，保留其他媒體連結；不把僅僅近似的標題任意合併。
+- 老師原版自動排日曆；本版增加使用者確認、日期驗算及持久去重。老師原版可記錄所有問答；本版預設不自動記錄，保留指定內容手動保存及可選的自動紀錄能力。
+- 管理程序提供通道重建與Webhook安全還原；簽章驗證、使用者隔離、下載大小限制與安全日誌均保留。
 
-## e學苑設定
-
-登入 e學苑，進入行事曆匯出，取得訂閱網址，僅存入本機 `.env` 的 `ELEARN_CALENDAR_URL`；網址包含私人授權碼。只接受東華官方匯出端點，不儲存學校密碼。
-
-既有綁定可直接沿用 `data/elearn.json`。新綁定先啟動 bot，再另開終端：
+## 測試與驗收界線
 
 ```sh
-source .venv/bin/activate
-python line_bot_local.py --bind-code
+python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check
+python scripts/check-live-quality.py
+python scripts/check-news-followups.py
+python scripts/check-classroom-google.py
 ```
 
-將顯示的「綁定e學苑 綁定碼」傳到 LINE **個人聊天**。綁定碼不要放在作業截圖。可傳「e學苑」「同步e學苑」「我今天有什麼作業」「明天要交什麼」「開啟提醒」「關閉提醒」。其他帳號與群組不能查看私人行事曆。
+最後一個指令預設僅讀取現有測試資料，不寫入Google。`--write-test-row` 是另行批准後才使用的一筆合成Sheets驗收；不會新增照片或行程、不開啟自動紀錄。驗收結果只包含安全布林值，不公開私人ID、網址或表格原內容。
 
-提醒需要電腦、bot 與通道持續運作；LINE 推播受帳號額度限制。離線不會補發八點摘要。行事曆不等於繳交狀態；未列入行事曆的作業無法取得，重複性事件目前不支援。
+- 既有E4B雲端實測已成功上傳合成圖片、確認私人權限，並建立及讀回Calendar測試行程，見 `test-evidence/e4b-cloud-live-check.json`。
+- 既有真實LINE文字測試包括老師玉山與諾貝爾原題、翻譯、換題及重啟接續，見 `test-evidence/line-quality-live.json`。這些不是最新版功能的手機端到端驗證。
+- 本輪93項自動測試、22項本機HTTP整合，以及真實E4B行程日期／時間解析通過。
+- 最新Google唯讀檢查再次確認既有測試圖片、行程及試算表可讀。新版Sheets與回覆資訊需以新驗收記錄為準；未操作手機，不以模擬冒充手機實測。
+- 題庫、歷次失敗與每輪測試範圍見 [evaluation/README.md](evaluation/README.md)。舊版功能說明與歷次紀錄移至 [README-history.md](README-history.md)，Node.js版見 [README-nodejs.md](README-nodejs.md)。
 
-## 停止與恢復 W5
+老師三題：`hi`、`台灣最高的山是哪一座？多高？`、`2026 年諾貝爾物理獎得主是誰？`。可用 `python line_bot_local.py --simulate --search` 跑共用處理流程；不讀 `.env`、不改Webhook、不寫Google。參考答案僅用於評估，不傳給bot。
 
-如果這次會把 Webhook 從 W5 切到本機，先把原本的 Apps Script `/exec` 網址存入本機 `.env` 的 `W5_WEBHOOK_URL`。**設定此值表示要求程式在退出時呼叫 LINE API 恢復該網址。** 網址不會印到終端。
+## 停止與交件
 
-也可以用隱藏輸入設定，避免網址出現在終端畫面或命令歷史：
+按Ctrl+C，等待「已恢復 W5 Apps Script」及「已停止」。之後應以手機實測雲端待辦；強制關機或斷網不保證還原。備援Apps Script僅提供待辦，不提供本機模型問答。
 
-```sh
-python scripts/configure-w5.py
-```
+依原作業採較完整的交件材料：第一行公開repo連結、手機上需要查證且附來源的回答截圖、同次終端可見模型與搜尋的截圖，以及一句模型／硬體／耗時／改動與卡點。截圖不得露出金鑰、憑證內容或Apps Script私人網址。repo名稱不含姓名學號。
 
-設定後需重新啟動 bot。這支設定程式只寫本機 `.env`，不修改 LINE Webhook。
-
-按 Ctrl+C 後，程式停止收新事件，等已接收的訊息完成，再恢復 W5；看到「已恢復 W5 Apps Script」才算成功。如果未設定或恢復失敗，請到 LINE Console 手動恢復，並實測 W5 待辦。強制關機、kill -9 或網路中斷無法保證自動恢復。
-
-本機實測已將 LINE Webhook 接上 Python bot 的公開通道；已新增並部署基本待辦 Apps Script 備援（不是找回原 W5），並在本機設定 `W5_WEBHOOK_URL`；正常停止與重新啟動時的雙向切換均已讀回確認。
-
-## 測試與作業截圖
-
-```sh
-python -m unittest -v test_line_bot_local.py test_teacher_features.py
-```
-
-41 項測試通過。測試使用暫存資料與 LINE／Google API 替代函式，不會發送真實訊息或寫入 Google。涵蓋驗簽、立即確認與背景回覆、事件去重、待辦資料隔離、來源附加、搜尋／模型失敗、私聊綁定、時區、同步更新、重試 key、圖片轉檔與路徑限制、W5 恢復後讀回確認、真實本機 HTTP 啟停，以及照片訊息、視覺能力檢查、行程確認／取消、跨帳號隔離、Google 寫入去重、失敗訊息遮蔽與試算表 RAW 寫入。
-
-另已實際呼叫網路搜尋與本機 `qwen2.5:3b`，取得三筆來源並成功生成來源卡片；公開 HTTPS DNS 固定下載也成功。這些本機驗證不等同於手機 LINE 實測。
-
-新增功能另已實測：本機照片模型讀出測試卡的日期與時間；文字模型正確解析「明天下午三點開會」；gws 0.22.5 的 Drive、Calendar、Sheets 指令預演均成功。已完成 Google OAuth 登入，Drive／Calendar API 真實讀取成功；私人紀錄表已建立，透過 bot 的 Sheets 寫入函式追加一列設定驗證並讀回一致。2026-10-12 18:59 的 LINE 照片實測已完成：照片存 Drive、本機視覺模型生成、寫入 Sheets，LINE 回覆 200；確認行程寫 Calendar 的完整 LINE 流程仍待實測。
-
-Python 版已完成 LINE 問答實測；繳交仍須附同次手機與終端截圖，以前 Node.js 的截圖不能當作 Python 版實測。啟動新版後，在手機問「東華大學最近有什麼新聞？」或一題需要即時查證的問題，拍下回答與來源；同時拍終端的 `[Search]`、`[Ollama] ... 回答完成` 及 `[LINE] 回覆狀態：200`。只提供來源但顯示「模型無法整理」不代表本機模型已成功回答。
-
-繳交順序：第一行 repo 連結、兩張真實截圖、最後一句模型／修改／卡關說明。不要宣稱尚未完成的實測。
-
-## 隱私與已知限制
-
-`.env`、`data/`、虛擬環境、client secret 與 credentials 檔案均被 Git 忽略。上傳前仍須檢查程式和 Git 暫存區；截圖不能顯示金鑰、私人授權碼、client_secret.json 內容或 `/exec` 網址。
-
-搜尋問題會送到公開搜尋服務；模型生成在本機 Ollama 進行。一般搜尋使用 DuckDuckGo Lite／Bing RSS；新聞優先使用 Google News RSS，依序查七天、三十天，再改查一般網頁。只取得標題與摘要，不讀全文；未取得可靠來源時不把模型記憶當作最新消息。來源卡片是搜尋結果，不保證模型每項推論都正確。
-
-此版是課堂低流量單機原型：四個背景工作執行緒，最多十六筆待處理事件；滿載回 503。LINE reply token 有效時間有限，模型或排隊太慢可能回覆失敗。單檔 JSONL 不適合多執行個體，待辦尚無刪除／完成狀態，照片快取滿時需自行整理。私聊與群組對話暫存在記憶體；群組回覆會被其他群組成員看到。
-
-老師原版會自動開通道並記住啟動前的 Webhook；本專案沿用既有背景通道，退出時恢復明確設定的 `W5_WEBHOOK_URL`。未設定時不會自動找回 W5，不能把目前本機通道誤當成原本 Apps Script。已設定備援與公開通道時，啟動會切回本機；目前 endpoint 既不是設定的備援也不是本機通道時，啟動不覆蓋未知設定。老師原版自動排日曆；本版要求確認，避免辨識或模型解析錯誤直接建立事件。
-
-這次實測使用 `ENABLE_REMINDERS=0 python line_bot_local.py` 暫停定時推播，私人行事曆查詢仍可用，原本提醒設定不會被覆寫。未指定此變數時照既有綁定設定發提醒。
-
-## 本次實測證據
-
-2026-10-12 台灣時間 13:40:40 收到 LINE 文字事件，Google News 搜尋取得三筆來源，`qwen2.5:3b` 於 13:40:43 完成生成，LINE 回覆 API 返回 200。安全終端紀錄在 [test-evidence/python-line-live-log.txt](test-evidence/python-line-live-log.txt)。這能證明程式執行與 API 回覆成功；手機畫面中的問題、回答與來源仍需以同次實測截圖核對。
-
-## 老師版照片與 Google 功能
-
-目前文字與照片都使用老師推薦的 Gemma 4 E2B，選用較省資源的 Q4_K_M 版本 `gemma4:e2b-it-q4_K_M`。照片使用 `OLLAMA_VISION_MODEL`，預設同一型號，只需下載一次：
-
-```sh
-ollama pull gemma4:e2b-it-q4_K_M
-```
-
-Google 功能使用 [Google Workspace CLI](https://github.com/googleworkspace/cli)，可安裝在被 Git 忽略的本機工具目錄：
-
-```sh
-npm install --prefix .tools @googleworkspace/cli@0.22.5
-```
-
-依 CLI 官方說明準備 Google Cloud 專案和 Desktop OAuth client，在本機 `.env` 設定 `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` 為 `data/gws` 的絕對路徑，再把下載的 client 設定存於該目錄的 `client_secret.json`。該目錄被 Git 忽略，**不要上傳或貼出內容**。需要 Drive、Calendar、Sheets API；Google 帳號需加入測試使用者。完成 OAuth 設定後登入這三項服務：
-
-```sh
-.tools/node_modules/.bin/gws auth login --scopes https://www.googleapis.com/auth/drive.file,https://www.googleapis.com/auth/calendar.events,https://www.googleapis.com/auth/spreadsheets
-python scripts/configure-google.py
-```
-
-設定工具隱藏輸入試算表 ID，沿用現有 e學苑綁定者；沒有既有綁定時再詢問 LINE 私聊 userId。輸入 ENABLE 才會寫入本機設定並啟用。需重新啟動 bot。`GOOGLE_ENABLED=0` 預設不寫雲端，但本機照片辨識仍可使用。
-
-- 傳照片：下載 LINE 圖片、移除 metadata 並轉 JPEG，交本機模型描述。Google 啟用後，綁定者照片另存 Drive 的「LINE待辦照片」，不變更分享權限。其他人與群組的照片只在本機處理。
-- 傳「明天下午三點開會」：模型解析並核對日期，顯示待確認行程；傳「確認排程」才寫進主日曆，預設三十分鐘，不邀請其他人。傳「取消排程」取消。待確認內容二十分鐘失效。
-- 照片出現行程：同樣先顯示辨識結果，確認後才建立。請仔細核對模型讀出的文字。
-- 設定 `SHEET_ID` 後：一般問答、行程流程與照片記錄寫入指定試算表，每列為時間、類型、使用者文字、回答摘要、照片連結、日曆結果。打招呼不記錄。原有待辦、e學苑查詢仍走既有私人資料流程，不額外上傳到 Sheets。
-
-Google 寫入先執行再回覆結果。成功才說「已儲存／已記錄」；回應不明時保留本機操作紀錄，避免重送後再次寫入，需自行到 Google 核對。Google 功能只接受綁定者私聊，單個待確認行程和操作紀錄保存在被忽略的 `data/google-actions.json`。
-
-Google 登入狀態、試算表 ID、LINE userId 和 OAuth 憑證都只能保留本機；不得出現在程式、README 或作業截圖。照片暫存上傳後會刪除；Drive 中的照片需由你自行管理。
-
-### 試算表紀錄優先級
-
-優先保留已確認並成功建立的行程、照片處理結果，以及有內容的問答。招呼、感謝、短句回應、測試、行程預覽／取消／逾期確認與程式錯誤提示不寫入試算表；待辦及 e學苑指令也不寫入。照片已存 Drive 時即使辨識失敗，仍保留照片紀錄供核對。篩選僅影響新紀錄，不刪除既有列。
-
-台灣現任總統的簡短查詢優先讀取總統府目前的總統介紹頁，動態取得頁面標題並附官方來源；未指定國家的簡短「現在的總統是誰」預設為台灣。官方頁無法確認時才改搜，排除不含總統的時鐘等結果。
-
-搜尋先去除口語查詢前綴，最多取得 20 筆候選，再以主題重疊篩選及排序，最後附最多三筆來源。非字義查詢排除國語字典；沒有相關結果時不使用無關網站補足三筆。此方法是關鍵字相關性檢查，仍可能漏掉同義詞或跨語言來源。
-
-### 目前試算表設定
-
-`ENABLE_SHEET_LOGGING=0` 預設關閉自動試算表紀錄；一般問答、照片與行程都不新增紀錄列。Drive 照片與需確認的 Calendar 行程仍可使用。既有列保留，只有明確要求才清除。前面的試算表測試與紀錄優先級說明，是啟用紀錄時的行為。
-
-即時搜尋不再引用先前模型回答作為背景；台灣現任總統的簡短回答另由即時官方頁面標題校正，避免模型用舊對話推翻來源。總統候選人／當選人若未提供選舉年份，會先詢問。
-
-## Apps Script 基本待辦備援
-
-雲端程式與操作說明在 [apps-script/README.md](apps-script/README.md)，支援綁定者私聊新增待辦與查詢最新十筆。已完成 Apps Script 授權與公開部署；匿名 GET／空事件 POST 都執行到程式、LINE 官方入口驗證 success=true。正常 Ctrl+C 退出已切到備援，重新啟動 Python 已切回本機通道，兩次均透過 LINE API 讀回一致。完整的手機新增待辦／查詢流程仍待實測。獨立隨機 key 保護的網址只保存於本機與 LINE。
-
-## 2026-10-15 改用老師推薦的 Gemma 4
-
-目前文字與照片模型均為 `gemma4:e2b-it-q4_K_M`，即 Gemma 4 E2B 的 4.6 GB Q4 版本，避免 Apple Silicon 預設標籤選到 7.5 GB MLX 版。原有 Qwen 測試紀錄是歷史證據，不代表目前仍使用 Qwen。
-
-在 Apple M5 Pro、24 GB 統一記憶體的電腦，4,096-token 設定實測：首次載入並回答玉山問題 4.42 秒，載入後同題 0.20 秒（重複提示可受快取影響）；照片辨識 0.77 秒，正確讀出測試卡日期與時間。macOS 模型程序 RSS 約 4.4 GiB，為當時常駐用量，不是峰值或整台電腦用量，圖片／長對話／併發請求可能增加。Ollama API 的 size 欄在此版本回報較小的估計，不能把它當成程序總占用。安全測試紀錄見 [Gemma 4 實測](test-evidence/gemma4-local-check.json)。
-
-## 接續對話
-
-保留最近三輪、二十分鐘的私人／群組對話脈絡，重啟程式後會清空。翻譯、舉例、簡短或詳細說明等追問沿用上一段內容；「他、這個、那裡」等需查證的追問，先由本機模型釐清為完整問題，再搜尋。新查證不把舊助理回答當來源，但保留先前問題與最新回答供後續接續。無法確定指涉時請使用者補名稱，不拿代名詞直接亂搜。同一對話的模型處理有鎖，避免同時讀寫記憶。實測 Gemma 4 可接續總統問答的英文翻譯，並將「他出生在哪裡」解析為具體人名問題。
-
-## 圖片搜尋備援
-
-人物／地點照片優先查找名稱吻合的維基百科介紹頁圖片；找不到可下載的照片時，再用 DuckDuckGo 與 Bing 備援。拒絕只有部分姓名相似的介紹頁，並保留來源連結。圖片下載仍限制公開 HTTPS IP、大小、格式與像素，轉 JPEG 後由本機通道提供 LINE 原圖及預覽。實測「瀨戶環奈的照片」取得圖片，兩個公開圖片網址均回 200／image/jpeg。不是每個人物都有介紹頁或可傳送照片，來源全部不可用時仍會如實提示。
-
-## E2B 階段測試結果（升級前）
-
-43 項 Python 測試、4 項 Apps Script 測試通過；真實手機查詢台灣現任總統，回覆附總統府官方來源，終端顯示搜尋、Gemma4 推論約 1.1 秒及 LINE 回覆 200。重啟後追問翻譯仍接續上一題。`--simulate --search` 三題與清除對話的真實執行紀錄在 `test-evidence/simulation-live.txt`。已檢查本次新增檔案未含本機金鑰設定；紀錄試算表保持關閉。Google Calendar 新行程與雲端待辦手機操作尚未於本次測試，不能將單元測試當成雲端端對端實測。
-
-## 對照老師提供的輕量版程式本體
-
-參考程式：[line_bot_lite.py](https://cwstedctw.github.io/ndhu-ted-course-hub/weekly/11501-ai-coding/w06/starter/line_bot_lite.py)。本專案為先前 Node.js bot 的 Python 移植與擴充，並非原檔不修改直接使用。
-
-老師版只做文字問答、模擬模式與可選搜尋；搜尋由模型呼叫 Ollama 的 experimental web_search。本專案共用模擬及 LINE 的訊息處理路徑，搜尋採公開搜尋服務與官方來源查核，另外保留待辦、短期對話記憶、圖片及 Google 功能。老師原檔只需 Python 內建套件；本專案需先安裝 requirements-lock.txt。老師版會自動建立通道；本專案沿用已啟動通道。兩版的 Webhook 路徑分別是 /callback 與 /webhook，設定不能混用。
-
-### 本次五項修正
-
-- 只有不帶新主題的翻譯、補充、簡化指令才接續上一則；指定新人物時重新查詢。新主題即使查不到來源，也更新對話脈絡，後續不跳回舊題。
-- 英文台灣總統的官方姓名查核限定詢問身分的問法；年齡、政策與歷任問題保留原查詢。
-- 照片代詞追問使用保存的主題與近期對話釐清人名，並移除「提供」等前綴；短中文主題的備援照片來源需包含完整名稱。
-- 來源網址移除片段及結尾斜線後去重，同一中文 Wikipedia 條目的地區顯示網址亦合併。
-- Webhook 接管失敗即停止，不啟動提醒，也不覆寫未知 Webhook；已嘗試切換但無法確認時，嘗試回復先前確認過的備援。
-
-驗證：51 項 Python 測試通過，含以上反例及啟動失敗／回復情境；4 項 Apps Script 測試通過。Gemma4 實際跑過「牛頓定律 → 詳細介紹周星馳 → 翻成英文 → 給我他的照片」，最後圖片來源為周星馳 Wikipedia 條目，記錄在 test-evidence/review-five-live.json。模型翻譯仍可能用詞不準；測試確認的是主題接續與來源處理，不保證每句生成內容正確。
-
-E4B 最新 LINE 手機與同次终端截圖：`test-evidence/gemma4-e4b-line-phone.jpg`、`test-evidence/gemma4-e4b-line-terminal.jpg`，本次模型生成約1.5秒；三題模擬模式紀錄見 `test-evidence/e4b-simulation-live.txt`。
-
-## 老師指定三題補測
-
-依老師輕量版指南 2-2 的原題測試：`hi`、`台灣最高的山是哪一座？多高？`、`2026 年諾貝爾物理獎得主是誰？`。先前的總統查詢是另出題，不冒充諾貝爾原題。
-
-- hi 現在直接回使用說明，不呼叫模型。
-- 玉山題曾答對3952公尺，也曾在一輪純本機測試誤答3009公尺；完整保留 `test-evidence/teacher-three-offline.txt` 的失敗紀錄，不能宣稱模型每次都正確。
-- 本年度資訊在未開搜尋時要求查證；開搜尋後這次未取得可靠的諾貝爾來源，明確拒絕猜得主，不把連假網頁附作獎項來源。這題尚未驗證出正確得主。
-- 本次修正僅年份命中就放行的來源篩選，並排除以金融／泛旅遊頁充當最高山高度來源的情況。53項Python回歸測試通過；這不代表所有模型生成事實都正確。
-
-搜尋模式紀錄：`test-evidence/teacher-three-search.txt`；可見終端補測截圖：`test-evidence/teacher-three-terminal.jpg`（另一輪純本機實測，玉山答3952公尺）。關卡B的手機總統查詢截圖仍是獨立的另出題證據。
-
-## 搜尋修正版：老師原題的官方查核
-
-修正前的搜尋失敗與模型幻覺紀錄保留於上一節，不當作成功。修正版實測記錄見 `test-evidence/teacher-official-live.json`：三題按原文送入共用問答流程，玉山題取得內文證據並答3952公尺；2026年物理獎題由諾貝爾官方API按年份與獎項查詢，再與官方得獎頁交叉比對。
-
-- 諾貝爾得主姓名不寫死於程式；須符合原問題年份、獎項及非空得主清單。錯年份／錯獎項不採用。得主欄位直接依已驗證API輸出，避免模型自行換名字。
-- 修正網站拒絕預設Python請求標頭的問題；公開官方來源使用一般瀏覽器User-Agent讀取。得獎網頁暫時不可讀時仍可保留已驗證API，不把網頁讀取失敗解釋成尚未公布。
-- 一般搜尋兩個服務都無結果時，改查Wikipedia的內文摘要；搜尋用短關鍵字並核對來源網址，不再只憑年份附上無關假期頁。
-- 56項Python測試通過，包含官方API錯年份、錯獎項、空姓名、得獎網頁暫時不可用及一般搜尋備援。
-
-官方來源：[諾貝爾官方API](https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy)、[2026物理獎官方頁](https://www.nobelprize.org/prizes/physics/2026/summary/)。實際手機截圖另列於完成後的交件材料；不能以本機模擬紀錄冒充手機收發。
-
-## 連線與接續對話修正（2026-10-15）
-
-- 新增 `scripts/run-bot.py`，防止重複啟動；通道健康檢查、有限次重建、退出順序均有測試。新通道遇到本機 DNS 尚未更新時，只對 trycloudflare.com 使用 HTTPS DNS 備援，保留 TLS 憑證及主機名稱驗證，拒絕私人 IP。
-- 翻譯及修改追問保留上一題的查證摘要與來源，不再只依靠先前模型生成內容。「簡短一點」要求一句精簡回答，移除額外補充段落；新題目更換原有來源。
-- 67 項 Python 回歸測試通過。真實中斷本專案通道後，33.5 秒內換新通道並驗證本機、公開 HTTPS 及 LINE endpoint，記錄見 `test-evidence/service-recovery-live.json`。
-- E4B 實際跑過「老師諾貝爾原題 → 翻成英文 → 玉山原題 → 簡短一點」，保留來源且最後答3952公尺，記錄見 `test-evidence/followup-sources-live.json`。這是共用問答流程測試；本輪手機鏡像控制失敗，沒有冒充新增的手機收發證據。
-
-有來源仍不保證模型每一句補充都正確；無搜尋模式仍有純模型幻覺風險。歷史失敗紀錄繼續保留，試算表自動紀錄維持關閉。
-
-## 擴充測試與未解問題（2026-10-15）
-
-本次手機鏡像恢復鍵盤控制後，真實 LINE 已驗證招呼、老師玉山與諾貝爾原題、連續翻譯、換成牛頓新題、精簡、服務重啟後接續翻譯、查無未來獎項時拒絕猜測。逐項方法與手機證據列在 `test-evidence/line-quality-live.json`，不再使用模擬結果代替這些手機收發。正常退出回復待辦備援及重新啟動也通過。
-
-目前 69 項 Python 回歸測試、4 項 Apps Script 測試通過。新增可重跑的 HTTP 整合檢查：
-
-```sh
-.venv/bin/python scripts/check-live-quality.py
-```
-
-此檢查不讀取正式 LINE 金鑰，使用臨時資料、真實 HTTP 簽章入口、背景工作、實際 Ollama／搜尋／圖片下載，回覆截取在本機；自動產生一張合成圖片，測辨識與接續日期時間，不會上傳 Google。22 項通過，見 `test-evidence/http-live-quality.json`。最初時間檢查漏認「下午 3 點」這個正確格式，造成一項測試誤判；保留 `http-live-quality-initial.json`，修正驗證器後重跑通過。這是測試程式的誤判，不作模型答錯計算。
-
-修正了年份2100被誤當今年、研究貢獻問題被替換成得主姓名，以及圖片追問分流到公開搜尋的問題。私人圖片的日期／時間追問保持本機處理，記憶重載後同樣有效；另搜人物照片時需要明確公開名稱，不從私人圖片描述取名外搜。雲端只讀取先前已核准的一張測試照片與一筆行程，確認照片仍為私人、行程日期時間符合，見 `cloud-readback-quality.json`。
-
-### 不以老師原題當成整體準確率
-
-六題新的一般問題在固定程式版本下執行，使用獨立對話；驗證端的參考字詞沒有傳給模型。初輪四題主答案符合參考且有來源，土星最大衛星及馬里亞納海溝所在海洋兩題查不到，完整保留 `unseen-general-live.json` 與事先保存的 `unseen-questions-plan.json`。這只核對主答案和來源存在，不宣稱每項補充敘述都已驗證，也無法證明模型訓練時從未看過這些事實。
-
-通用搜尋關鍵字現在去除「叫什麼」「位於哪個」「哪兩個」等問句詞，沒有加入這兩題的答案。這兩題修後回歸查到來源，見 `general-query-regression.json`，不再算盲測。另留三題新題驗證，巴拿馬運河及木星最大衛星主答案符合參考，澳洲首都仍查不到；見 `holdout-general-live.json`。一般搜尋召回仍有缺漏，不能宣稱完整命中。
-
-諾貝爾及台灣總統身分題有專用官方查核；得主姓名由 API 回傳資料組成，不是寫死，但也不是純本機模型能力的證據。上網搜尋後把實際來源交給模型整理是目前流程。手機傳圖到 Drive、手機確認 Calendar 寫入與多人群組，本輪未重新測試；先前核准的雲端測試仍與手機收發分開標示。
-
-## 常見問法題庫與流程調校
-
-題庫在 `evaluation/faq-cases.json`，評估器為 `scripts/evaluate-faq.py`。使用臨時資料與合成 LINE 事件跑真實本機模型及搜尋，回覆留在本機；參考答案不傳給 bot，不操作手機、不發送真實 LINE 訊息、不新增 Google 資料。`--model` 可換成其他已安裝模型，沿用題庫重新測試。
-
-本輪通用修正：缺少地點的天氣問題先追問城市；無對話的人物代詞先問姓名；未上傳圖的內容問題先請傳圖。搜尋去掉「請附來源」等輸出要求與問句詞；一般新聞使用分類RSS及發布日期，僅允許同一Google新聞網域的有限次公開GET重新導向，帶憑證的請求不使用這個導向機制。回答預設縮短，圖片連續追問保留原始本機辨識描述與最近一輪，不把描述送去公開搜尋。
-
-77項Python回歸、22項HTTP整合檢查通過；最新35例回歸完整執行，33項符合自動檢查、2項待人工核對。完整紀錄見 `test-evidence/faq-regression-final.json`。初輪失敗、整合發現的圖片脈絡問題，以及一次外部來源缺漏／逾時連帶暴露的測試器配對錯誤，都保留於測試資料。詳細界線見 [題庫說明](evaluation/README.md)。
-
-### 新聞來源一致性與去重更新
-
-新聞導讀會逐句對照完整來源標題或前言，改動人名、日期、數字或不確定語氣時，明示改用原始標題。相同標題的同期報導會保守合併並保留其他媒體連結；不同事件與無法確認的近似標題分開顯示。這是來源文字一致性檢查，不能保證原新聞本身為真。測試與限制見 [評估說明](evaluation/README.md#來源逐句對照與保守事件去重)。
+換更大模型、加Google功能沒有固定加分保證；真實LINE關卡B與課堂Google功能分開列證據。是否已上傳最新版本、手機端到端是否實測，都必須按實際狀態說明。

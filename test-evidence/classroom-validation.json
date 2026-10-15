@@ -1,0 +1,13 @@
+{
+  "time": "2026-10-15T06:43:24.195647+00:00",
+  "reference": "Teacher-provided line_bot_local.py from user Downloads",
+  "code_sha256": "d35c3e20375d9de2ba4d7dd1294287f326fa13f9dba707bb62d06eb703a309e7",
+  "unit_passed": 93,
+  "http_integration_passed": 22,
+  "google_read_only_report": "classroom-runs/20261015T064008693107Z.json",
+  "event_parse_report": "classroom-event-parse.json",
+  "sheets_live_write": "awaiting_user_approval",
+  "automatic_sheets_logging": "unchanged_off",
+  "new_phone_or_line_transport_test": false,
+  "github_pushed": false
+}

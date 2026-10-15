@@ -977,6 +977,21 @@ class TeacherFeatures:
             return None, "操作結果未確認，請檢查本機 Google 登入／權限及 Google 內容。"
 
     def before_text(self, raw, event):
+        manual = re.fullmatch(r"存試算表\s*[:：]([\s\S]*)", raw)
+        if manual:
+            if not self.enabled or not self.google or not self.google.sheet_id:
+                return "Google 試算表尚未設定，請先完成本機 Google 登入與試算表設定。"
+            if not self.owns(event):
+                return "Google 功能只供綁定者在 LINE 個人聊天使用。"
+            content = manual[1].strip()
+            if not content or len(content) > 2000:
+                return "請輸入「存試算表：要保存的內容」，內容限1至2000字；一般聊天不會因此開啟自動紀錄。"
+            key = hashlib.sha256((event.get("webhookEventId") or event["replyToken"]).encode()).hexdigest()
+            row = [datetime.fromtimestamp(self.clock(), TAIPEI).strftime("%Y-%m-%d %H:%M:%S"),
+                   "手動紀錄", content, "使用者明確指定保存", "", ""]
+            with self.lock:
+                _, err = self.operation("manual-sheet:" + key, self.google.write_sheet, row)
+            return "試算表紀錄結果未確認。" + err if err else "已將指定內容存進 Google 試算表；一般聊天自動紀錄維持原設定。"
         relevant = raw in ("確認排程", "取消排程") or event_candidate(raw)
         if not relevant:
             return None
@@ -1064,6 +1079,8 @@ class TeacherFeatures:
         if not self.sheet_logging or not self.enabled or not self.owns(event) or not self.google.sheet_id:
             return answer
         raw = event["message"].get("text", "")
+        if re.match(r"^存試算表\s*[:：]", raw):
+            return answer
         text = answer[0].get("text", "") if isinstance(answer, list) else answer
         # Keep durable results; conversation acknowledgements and setup prompts
         # belong in LINE rather than the user's activity spreadsheet.
@@ -1453,13 +1470,24 @@ def conversation_key(event):
 
 
 class BotRuntime:
-    def __init__(self, secret, token, store, ai, elearn=None, photos=None, sender=None, teacher=None):
+    def __init__(self, secret, token, store, ai, elearn=None, photos=None, sender=None, teacher=None, show_runtime=False):
         self.secret, self.token, self.store, self.ai, self.elearn, self.photos = secret, token, store, ai, elearn, photos
         self.sender = sender or self.send_reply
-        self.teacher = teacher
+        self.teacher, self.show_runtime = teacher, show_runtime
         self.pool = ThreadPoolExecutor(max_workers=4, thread_name_prefix="line-bot")
         self.capacity = threading.BoundedSemaphore(16)
         self.events, self.lock, self.stopping = {}, threading.RLock(), False
+
+    def deliver(self, event, answer, started, model=None):
+        if self.show_runtime and model:
+            note = f"（本機模型設定 {model}｜本題處理 {time.monotonic() - started:.2f} 秒）"
+            if isinstance(answer, list):
+                answer = [dict(message) for message in answer]
+                if answer and answer[0].get("type") == "text":
+                    answer[0]["text"] = answer[0]["text"][:4500] + "\n\n" + note
+            elif isinstance(answer, str):
+                answer = answer[:4500] + "\n\n" + note
+        self.sender(event, answer)
 
     def send_reply(self, event, answer):
         messages = answer[:5] if isinstance(answer, list) else [dict(type="text", text=answer[:4900])]
@@ -1488,10 +1516,11 @@ class BotRuntime:
         return True
 
     def process(self, event):
+        started, model = time.monotonic(), None
         try:
             if event["message"]["type"] == "image":
                 answer = self.teacher.image(event) if self.teacher else "照片辨識功能尚未設定。"
-                self.sender(event, answer)
+                self.deliver(event, answer, started, self.teacher.vision_model if self.teacher else None)
                 return
             raw = event["message"]["text"].strip()
             source = event.get("source", {})
@@ -1504,9 +1533,11 @@ class BotRuntime:
                 record_kind = "行程" if answer is not None else "文字"
                 if answer is None:
                     answer = self.ai.ask(raw, conversation)
+                    if not re.fullmatch(r"hi|hello|你好|嗨|哈囉|測試|test|清除對話|清除記憶|/clear", raw, re.I):
+                        model = getattr(self.ai, "model", None)
                 if self.teacher:
                     answer = self.teacher.record(event, answer, kind=record_kind)
-            self.sender(event, answer)
+            self.deliver(event, answer, started, model)
         except Exception:
             LOG.warning("[LINE] 處理或回覆失敗（未輸出私人內容）")
         finally:
@@ -1691,7 +1722,7 @@ def main():
         owner_id=os.getenv("GOOGLE_OWNER_ID") or elearn.state.get("ownerId"),
         vision_model=os.getenv("OLLAMA_VISION_MODEL", "gemma4:e4b-it-q4_K_M"), token=token,
         state_file=os.getenv("GOOGLE_STATE_FILE", "./data/google-actions.json"))
-    runtime = BotRuntime(secret, token, TodoStore(os.getenv("TODO_FILE", "./data/todos.jsonl")), ai, elearn, photos, teacher=teacher)
+    runtime = BotRuntime(secret, token, TodoStore(os.getenv("TODO_FILE", "./data/todos.jsonl")), ai, elearn, photos, teacher=teacher, show_runtime=True)
     stop = threading.Event()
     port = int(os.getenv("PORT", "3000"))
     server = make_server("127.0.0.1", port, create_app(runtime), threaded=True)

@@ -76,6 +76,77 @@ class TeacherFeatureTests(unittest.TestCase):
                         http=lambda *a, **k: self.image, state_file=self.path / "google.json", clock=lambda: NOW)
         return bot.TeacherFeatures(**(defaults | kwargs))
 
+    def test_manual_sheet_save_works_without_automatic_logging_and_deduplicates(self):
+        teacher=self.teacher(sheet_logging=False)
+        incoming=event("存試算表：W6 課堂版驗收：手動保存功能", "manual-sheet")
+        result=teacher.before_text(incoming["message"]["text"],incoming)
+        self.assertIn("已將指定內容",result)
+        self.assertFalse(teacher.sheet_logging)
+        self.assertEqual([call[0] for call in self.google.calls],["sheet"])
+        self.assertEqual(self.google.calls[0][1][1:4],["手動紀錄","W6 課堂版驗收：手動保存功能","使用者明確指定保存"])
+        reopened=self.teacher(sheet_logging=False)
+        reopened.before_text(incoming["message"]["text"],incoming)
+        self.assertEqual(len(self.google.calls),1)
+        self.assertEqual(reopened.record(event("今天新聞"),"回答"),"回答")
+
+    def test_manual_sheet_validation_owner_group_and_no_duplicate_auto_row(self):
+        teacher=self.teacher()
+        for i,raw in enumerate(["存試算表：", "存試算表："+"a"*2001]):
+            self.assertIn("2000字",teacher.before_text(raw,event(raw,str(i))))
+        for source in [dict(type="user",userId="bob"),dict(type="group",userId="alice",groupId="g")]:
+            incoming=event("存試算表：不能保存") | dict(source=source)
+            self.assertIn("綁定者",teacher.before_text(incoming["message"]["text"],incoming))
+        self.assertEqual(self.google.calls,[])
+        self.assertIn("尚未設定",self.teacher(enabled=False).before_text("存試算表：測試",event()))
+        incoming=event("存試算表：=1+1","raw-value")
+        result=teacher.before_text(incoming["message"]["text"],incoming)
+        teacher.record(incoming,result,kind="行程")
+        self.assertEqual(len(self.google.calls),1)
+        self.assertEqual(self.google.calls[0][1][2],"=1+1")
+
+    def test_manual_sheet_failure_does_not_claim_success_or_retry_after_reload(self):
+        def fail(row):
+            self.google.calls.append(("sheet",row))
+            raise RuntimeError("private credential")
+        self.google.write_sheet=fail
+        incoming=event("存試算表：驗收","uncertain-sheet")
+        first=self.teacher(sheet_logging=False).before_text(incoming["message"]["text"],incoming)
+        second=self.teacher(sheet_logging=False).before_text(incoming["message"]["text"],incoming)
+        self.assertNotIn("private credential",first)
+        self.assertIn("未確認",first)
+        self.assertNotIn("已將指定內容",second)
+        self.assertEqual(len(self.google.calls),1)
+
+    def test_runtime_routes_manual_save_without_model_or_automatic_sheet_row(self):
+        replies=[]
+        teacher=self.teacher(sheet_logging=False)
+        runtime=bot.BotRuntime("s","t",bot.TodoStore(self.path/"todos"),self.ai,teacher=teacher,
+            sender=lambda e,a:replies.append(a),show_runtime=True)
+        try:
+            runtime.capacity.acquire()
+            runtime.process(event("存試算表：課堂驗收","runtime-save"))
+            self.assertEqual(len(replies),1)
+            self.assertIn("已將指定內容",replies[0])
+            self.assertNotIn("本機模型設定",replies[0])
+            self.assertEqual(self.ai.calls,[])
+            self.assertEqual([call[0] for call in self.google.calls],["sheet"])
+        finally:runtime.close()
+
+    def test_runtime_footer_preserves_cards_and_does_not_mutate_answer(self):
+        replies=[]
+        runtime=bot.BotRuntime("s","t",bot.TodoStore(self.path/"todos"),self.ai,
+            sender=lambda e,a:replies.append(a),show_runtime=True)
+        try:
+            answer=[dict(type="text",text="回答 [1]"),dict(type="flex",contents=dict(example="unchanged"))]
+            runtime.deliver(event(),answer,bot.time.monotonic(),"test-local-model")
+            self.assertIn("test-local-model",replies[0][0]["text"])
+            self.assertIn("本題處理",replies[0][0]["text"])
+            self.assertEqual(replies[0][1],answer[1])
+            self.assertEqual(answer[0]["text"],"回答 [1]")
+            runtime.deliver(event(),"已記錄待辦",bot.time.monotonic())
+            self.assertEqual(replies[1],"已記錄待辦")
+        finally:runtime.close()
+
     def test_calendar_model_time_spacing_is_normalized(self):
         parsed = bot.validate_event("2026-10-11 下午3點到4點模型測試",
             dict(isEvent=True, title="模型測試", date="2026-10-11", time="15:00 - 16:00"), NOW)

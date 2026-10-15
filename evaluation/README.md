@@ -92,3 +92,11 @@
 85項 Python 測試通過，新增台灣新聞縮寫保護、合併來源儲存／重載／追問及清除記憶、事件順序與完整性測試。真實 RSS 與 Ollama 三輪「今日國際新聞→簡短一點→詳細一點」通過來源保留、引用及連結檢查，只有第一輪搜尋；見 `test-evidence/news-runs/20261015T062408337111Z-followups.json`。本輪未重新跑前版22項完整HTTP測試，前版紀錄仍保留；亦未發送真實LINE訊息或操作手機。
 
 重跑接續測試：`.venv/bin/python scripts/check-news-followups.py`。此檢查不代表獨立核實發布者報導內容。
+
+## 課堂版功能補齊
+
+對照使用者提供的老師原始 `line_bot_local.py`：文字搜尋／來源、本機圖片辨識、Drive保存、Calendar解析與建立、Sheets紀錄、通道及退出還原均有實作。保留使用者要求的差異：Calendar確認後才寫、一般問答不自動記Sheets；新增「存試算表：內容」讓綁定者可明確保存一筆，不改自動紀錄開關。
+
+本輪93項自動測試、22項本機HTTP整合通過，真實E4B日期／時間解析通過，見 `test-evidence/classroom-event-parse.json`。Google唯讀檢查確認試算表可讀、先前核准測試照片仍私人、既有測試行程日期時間正確，見 `test-evidence/classroom-runs/20261015T064008693107Z.json`。Sheets合成測試列須另獲同意；程式預設只讀，參數明確啟用後也只寫同一驗收列並讀回，重跑不新增第二筆。實際雲端結果以各輪JSON為準，不把mock測試當作真寫入。
+
+一般AI文字及照片回覆新增模型設定與處理耗時。標示的是本機設定和本題處理時間，不把等待、搜尋或Google耗時冒稱模型推論時間。此輪沒有手機操作、新LINE收發截圖、新Drive上傳或新Calendar事件；沒有推送GitHub或提交作業。
