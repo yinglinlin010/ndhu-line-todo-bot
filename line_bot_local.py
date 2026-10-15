@@ -873,6 +873,8 @@ class LocalAI:
 def event_candidate(raw):
     if re.search(r"[？?]|誰|什麼|如何|怎麼|新聞|評價", raw):
         return False
+    if re.search(r"\b(?:schedule|add to calendar|create event)\b", raw, re.I) and re.search(r"\d{4}-\d{2}-\d{2}", raw) and re.search(r"\d{1,2}:\d{2}", raw):
+        return True
     return bool(re.search(r"排日曆|排行程|加入日曆|建立行程", raw) or (
         re.search(r"今天|今日|明天|後天|下週|下星期|星期|週[一二三四五六日天]|\d{1,2}\s*月|\d{1,2}[/.-]\d{1,2}", raw)
         and re.search(r"開會|會議|上課|活動|講座|聚餐|約會|考試|繳費|截止|報告|演講|面試|看醫生|看診|點|:\d{2}", raw)))
@@ -1000,6 +1002,14 @@ class GoogleWorkspace:
         return True
 
 
+def teacher_command(raw):
+    aliases = {"confirm schedule": "確認排程", "cancel schedule": "取消排程",
+               "replace schedule": "取代排程", "keep original schedule": "保留原排程"}
+    stripped = raw.strip()
+    manual = re.fullmatch(r"save to sheet\s*:\s*([\s\S]*)", stripped, re.I)
+    return "存試算表：" + manual[1] if manual else aliases.get(stripped.lower(), raw)
+
+
 class TeacherFeatures:
     """Teacher workflows, private-chat ownership and persistent write receipts."""
     def __init__(self, ai, google=None, enabled=False, owner_id=None, vision_model="gemma4:e4b-it-q4_K_M",
@@ -1040,6 +1050,7 @@ class TeacherFeatures:
 
     def before_text(self, raw, event):
         work_timeout(1)
+        raw = teacher_command(raw)
         manual = re.fullmatch(r"存試算表\s*[:：]([\s\S]*)", raw)
         if manual:
             if not self.enabled or not self.google or not self.google.sheet_id:
@@ -1180,7 +1191,7 @@ class TeacherFeatures:
     def record(self, event, answer, kind="文字", said=None, link=""):
         if not self.sheet_logging or not self.enabled or not self.owns(event) or not self.google.sheet_id:
             return answer
-        raw = event["message"].get("text", "")
+        raw = teacher_command(event["message"].get("text", ""))
         if re.match(r"^存試算表\s*[:：]", raw):
             return answer
         text = answer[0].get("text", "") if isinstance(answer, list) else answer

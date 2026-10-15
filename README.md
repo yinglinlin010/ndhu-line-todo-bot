@@ -57,6 +57,7 @@ Windows 或自行管理通道者可用 `python line_bot_local.py`，自行保持
 - 傳照片：本機模型辨識，綁定者私聊的照片存私人Drive；照片有日期時間時先顯示待確認行程。
 - 傳「明天下午三點開會」：解析並核對日期，回覆「確認排程」才建立Calendar事件；「取消排程」放棄，20分鐘後失效，不寄邀請。
 - 傳「存試算表：要保存的內容」：只將指定內容寫一列到現有私人試算表；保留寫入收據，避免同一事件重送。使用RAW，文字不當作公式。
+- 也可使用英文：`save to sheet: content`、`confirm schedule`、`cancel schedule`、`replace schedule`、`keep original schedule`。英文建立行程需明確日期時間，例如 `Schedule W6 phone test on 2026-10-17 at 15:00`；仍只預覽，確認後才寫入，綁定者限制相同。
 - 一般聊天、照片及行程的**自動Sheets紀錄維持關閉**（`ENABLE_SHEET_LOGGING=0`），符合使用者不自動保存聊天的設定。手動保存不會改動這個開關。
 - 傳「記錄：事項」「查詢」使用本機私人待辦；不等同於雲端Apps Script待辦。傳「清除對話」清掉自己的短期對話記憶，不刪待辦或Google資料。
 
@@ -89,7 +90,7 @@ python scripts/check-classroom-google.py
 
 - 既有E4B雲端實測已成功上傳合成圖片、確認私人權限，並建立及讀回Calendar測試行程，見 `test-evidence/e4b-cloud-live-check.json`。
 - 既有真實LINE文字測試包括老師玉山與諾貝爾原題、翻譯、換題及重啟接續，見 `test-evidence/line-quality-live.json`。這些不是最新版功能的手機端到端驗證。
-- 最新108項自動測試、24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
+- 最新109項自動測試通過，包含英文Google指令的綁定者與確認限制。此前24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
 - 最新Google唯讀檢查再次確認既有測試圖片、行程及試算表可讀。經使用者同意，已透過bot流程新增一筆合成Sheets驗收紀錄並讀回，確認只出現一次，見 `test-evidence/classroom-runs/20261015T064615012164Z.json`；自動紀錄仍關閉。未操作手機，不以此冒充手機實測。
 - 題庫、歷次失敗與每輪測試範圍見 [evaluation/README.md](evaluation/README.md)。舊版功能說明與歷次紀錄移至 [README-history.md](README-history.md)，Node.js版見 [README-nodejs.md](README-nodejs.md)。
 

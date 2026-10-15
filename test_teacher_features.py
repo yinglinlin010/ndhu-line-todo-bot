@@ -59,6 +59,17 @@ class FakeGoogle:
 
 
 class TeacherFeatureTests(unittest.TestCase):
+    def test_english_commands_keep_owner_and_confirmation_boundaries(self):
+        teacher = self.teacher(sheet_logging=False)
+        self.assertTrue(bot.event_candidate('Schedule W6 phone test on 2026-10-17 at 15:00'))
+        self.assertFalse(bot.event_candidate('Who scheduled 2026-10-17 15:00?'))
+        self.assertIn('沒有可確認', teacher.before_text('confirm schedule', event()))
+        teacher.before_text('save to sheet: W6 phone test', event(identifier='english-sheet'))
+        self.assertEqual(self.google.calls[0][1][2], 'W6 phone test')
+        incoming = event() | dict(source=dict(type='user', userId='bob'))
+        self.assertIn('綁定者', teacher.before_text('save to sheet: private', incoming))
+        self.assertEqual(len(self.google.calls), 1)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.path = Path(self.temp.name)
