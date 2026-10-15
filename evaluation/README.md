@@ -100,3 +100,5 @@
 本輪93項自動測試、22項本機HTTP整合通過，真實E4B日期／時間解析通過，見 `test-evidence/classroom-event-parse.json`。Google唯讀檢查確認試算表可讀、先前核准測試照片仍私人、既有測試行程日期時間正確，見 `test-evidence/classroom-runs/20261015T064008693107Z.json`。Sheets合成測試列須另獲同意；程式預設只讀，參數明確啟用後也只寫同一驗收列並讀回，重跑不新增第二筆。實際雲端結果以各輪JSON為準，不把mock測試當作真寫入。
 
 一般AI文字及照片回覆新增模型設定與處理耗時。標示的是本機設定和本題處理時間，不把等待、搜尋或Google耗時冒稱模型推論時間。此輪沒有手機操作、新LINE收發截圖、新Drive上傳或新Calendar事件；沒有推送GitHub或提交作業。
+
+使用者另行同意後，已執行一次 `check-classroom-google.py --write-test-row`，透過TeacherFeatures新增一筆合成Sheets驗收紀錄，讀回確認內容只出現一次。Drive私人狀態、既有Calendar日期時間及Sheets讀取仍通過；自動聊天紀錄保持關閉。報告：`test-evidence/classroom-runs/20261015T064615012164Z.json`。此為真實Google寫入，入口為本機合成事件，不是LINE手機端到端測試。

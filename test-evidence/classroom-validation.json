@@ -6,8 +6,9 @@
   "http_integration_passed": 22,
   "google_read_only_report": "classroom-runs/20261015T064008693107Z.json",
   "event_parse_report": "classroom-event-parse.json",
-  "sheets_live_write": "awaiting_user_approval",
+  "sheets_live_write": "approved_single_synthetic_row_written_and_read_back_once",
   "automatic_sheets_logging": "unchanged_off",
   "new_phone_or_line_transport_test": false,
-  "github_pushed": false
+  "github_pushed": false,
+  "sheets_live_report": "classroom-runs/20261015T064615012164Z.json"
 }
