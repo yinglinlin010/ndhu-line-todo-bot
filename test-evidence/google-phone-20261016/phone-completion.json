@@ -1,0 +1,26 @@
+{
+  "time": "2026-10-15T19:49:38.141628+00:00",
+  "method": "Observed actual iPhone LINE UI plus bot terminal and read-only Google API verification",
+  "checks": {
+    "phone_image_download": true,
+    "local_vision_dates_and_times": true,
+    "private_drive_readback": true,
+    "photo_preview_cancelled": true,
+    "w5_route_restored": true,
+    "w5_phone_add_success": true,
+    "w5_phone_query_same_single_item": true,
+    "english_image_time_after_cancel": true,
+    "english_image_date_followup": true,
+    "english_image_label_followup": true,
+    "no_public_search_for_three_image_followups": true
+  },
+  "model": "gemma4:e4b-it-q4_K_M",
+  "unit_tests": 110,
+  "local_http_checks": 24,
+  "limitations": [
+    "Synthetic non-private invitation used, before/after fixes: two actual phone uploads",
+    "Title answer cited visible text but qualified whether it was an event title",
+    "Directed regression cases, not a blind general accuracy benchmark",
+    "No private IDs, credentials, or Google links in this report"
+  ]
+}

@@ -680,7 +680,10 @@ class LocalAI:
         image_topic = bool(topic and topic[0].get("content", "").startswith("使用者上傳了一張圖片"))
         if not image_topic and re.fullmatch(r"(?:這張|那張)?(?:圖片|照片)(?:上|裡|中)?的?(?:(?:日期|時間)(?:是什麼|是多少|是何時)?|寫了什麼|內容是什麼)", short_question):
             return "請先傳送或上傳要辨識的圖片，再告訴我想看日期、時間或哪個內容。"
-        image_reference = bool(re.match(r"^(?:請)?(?:這張|那張|圖片|照片|圖中|圖上|上面|只告訴我圖片)", question))
+        image_reference = bool(re.match(r"^(?:請)?(?:這張|那張|圖片|照片|圖中|圖上|上面|只告訴我圖片)", question) or
+                               re.search(r"\b(?:this|that|the|my)\s+(?:uploaded\s+)?(?:image|photo|picture)\b", question, re.I))
+        if image_reference and not image_topic and re.search(r"\b(?:time|date|say|show|written|content)\b", question, re.I):
+            return "請先傳送或上傳要辨識的圖片，再告訴我想看日期、時間或哪個內容。"
         if self.photos and not (image_topic and image_reference):
             previous_topic = next((m["content"] for m in reversed(previous) if m["role"] == "user"), "")
             photo_raw = raw

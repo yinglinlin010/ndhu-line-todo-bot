@@ -9,6 +9,22 @@ from test_line_bot_local import NOW
 
 
 class PhoneRegressionTests(unittest.TestCase):
+    def test_english_private_image_followup_never_searches(self):
+        requests = []
+        def http(url, **kwargs):
+            requests.append((url, kwargs))
+            self.assertTrue(url.endswith('/api/chat'))
+            return json.dumps({'message': {'content': '15:00–16:00'}}).encode()
+        for question in ['What time is on the image?', 'What date is in this photo?', 'What does my uploaded picture say?']:
+            ai = bot.LocalAI(http=http, clock=lambda: NOW)
+            ai.remember('private', [], '使用者上傳了一張圖片，請依圖片辨識內容接續回答。', 'PRIVATE_MARKER 活動時間15:00–16:00。')
+            ai.lookup = Mock(side_effect=AssertionError('Private image must remain local'))
+            self.assertIn('15:00', ai.ask(question, 'private'))
+            ai.lookup.assert_not_called()
+            self.assertIn('PRIVATE_MARKER', str(requests[-1][1]['json']['messages']))
+        empty = bot.LocalAI(http=http, clock=lambda: NOW)
+        self.assertIn('請先傳送', empty.ask('What time is on the image?', 'empty'))
+
     def test_english_news_routes_and_date_filter_without_catching_specific_topics(self):
         for question in ["Recent international news, cite sources.", "What are today's international news headlines? Please cite sources.", "Latest world news, provide sources."]:
             self.assertEqual(bot.broad_news_topic(question), "WORLD")

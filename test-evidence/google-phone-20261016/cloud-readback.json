@@ -1,10 +1,18 @@
 {
+  "time": "2026-10-15T19:45:38.167385+00:00",
   "method": "Actual LINE phone requests, followed by read-only Google API verification",
   "checks": {
     "phone_sheet_exactly_one_row": true,
+    "sheet_only_one_new_row": true,
     "calendar_exactly_one": true,
     "calendar_replacement_time_correct": true,
-    "automatic_logging_off": true
+    "automatic_logging_off": true,
+    "phone_drive_two_test_uploads": true,
+    "phone_drive_images_private": true,
+    "photo_calendar_pending_cancelled": true
   },
-  "time": "2026-10-15T19:12:56.057377+00:00"
+  "notes": [
+    "Two phone photo submissions: before and after English followup fix; both private; no additional Calendar confirmation",
+    "No private identifiers or URLs are included"
+  ]
 }

@@ -35,4 +35,4 @@ node --test apps-script/basic.test.mjs
 
 ## 本次部署驗證
 
-2026-10-12 已完成學校帳號部署、匿名 GET／空事件 POST 執行確認、LINE 官方 Webhook 驗證。19:40 正常停止 Python 時，LINE endpoint 已恢復到私密備援；重啟後已切回本機通道，皆讀回一致。雲端新增待辦與查詢仍須手機實測。
+2026-10-12 已完成學校帳號部署、匿名 GET／空事件 POST 執行確認、LINE 官方 Webhook 驗證。19:40 正常停止 Python 時，LINE endpoint 已恢復到私密備援；重啟後已切回本機通道，皆讀回一致。2026-10-16 03:29 停止Python並確認還原後，03:32手機傳送「記錄: W6 PHONE FALLBACK TEST」，收到成功回覆；03:40傳送「查詢」，讀回同一筆雲端待辦，共1筆。本輪未修改部署或權限，證據見 `../test-evidence/google-phone-20261016/w5-add-query-success.png`。

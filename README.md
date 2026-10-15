@@ -90,9 +90,10 @@ python scripts/check-classroom-google.py
 
 - 既有E4B雲端實測已成功上傳合成圖片、確認私人權限，並建立及讀回Calendar測試行程，見 `test-evidence/e4b-cloud-live-check.json`。
 - 既有真實LINE文字測試包括老師玉山與諾貝爾原題、翻譯、換題及重啟接續，見 `test-evidence/line-quality-live.json`。這些不是最新版功能的手機端到端驗證。
-- 最新109項自動測試通過，包含英文Google指令的綁定者與確認限制。此前24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
+- 最新110項自動測試通過，包含英文Google指令的綁定者與確認限制。此前24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
 - 最新Google唯讀檢查再次確認既有測試圖片、行程及試算表可讀。經使用者同意，已透過bot流程新增一筆合成Sheets驗收紀錄並讀回，確認只出現一次，見 `test-evidence/classroom-runs/20261015T064615012164Z.json`；自動紀錄仍關閉。未操作手機，不以此冒充手機實測。
-- 2026-10-16 03:11–03:14 新增真實手機驗收：手動Sheets寫入後讀回只有一列；Calendar經預覽、兩候選阻擋確認、選擇取代及再次確認後，讀回只有一筆 `W6 PHONE GOOGLE TEST`，時間為2026-10-17 15:30–16:00（台灣時間）。本輪109項單元與24項本機HTTP整合均通過。安全證據見 [手機Google驗收](test-evidence/google-phone-20261016/README.md)。照片手機→Drive與W5新增／查詢仍待核對；W5還原後手機收到基本模式回覆已驗證。
+- 2026-10-16 03:11–03:14 新增真實手機驗收：手動Sheets寫入後讀回只有一列；Calendar經預覽、兩候選阻擋確認、選擇取代及再次確認後，讀回只有一筆 `W6 PHONE GOOGLE TEST`，時間為2026-10-17 15:30–16:00（台灣時間）。本輪109項單元與24項本機HTTP整合均通過。安全證據見 [手機Google驗收](test-evidence/google-phone-20261016/README.md)。該時段尚未驗收照片手機→Drive與W5新增／查詢；後續完成結果如下。
+- 2026-10-16 03:27–03:48 補完真實手機照片與W5驗收：合成圖從手機LINE傳送、下載、本機E4B辨識並存私人Drive，修正前後各一張；照片行程只預覽並取消。修正英文圖片追問後，同一張圖的時間、日期與文字標題可連續詢問，終端沒有公開搜尋。停止Python後，手機W5新增測試待辦並查詢讀回1筆，未修改Apps Script部署。110項單元與24項本機HTTP整合通過。這是指定案例回歸驗收，不代表所有圖片與問法均正確。
 - 題庫、歷次失敗與每輪測試範圍見 [evaluation/README.md](evaluation/README.md)。舊版功能說明與歷次紀錄移至 [README-history.md](README-history.md)，Node.js版見 [README-nodejs.md](README-nodejs.md)。
 
 老師三題：`hi`、`台灣最高的山是哪一座？多高？`、`2026 年諾貝爾物理獎得主是誰？`。可用 `python line_bot_local.py --simulate --search` 跑共用處理流程；不讀 `.env`、不改Webhook、不寫Google。參考答案僅用於評估，不傳給bot。
