@@ -196,6 +196,82 @@ class PythonBotTests(unittest.TestCase):
         ai.lookup=lambda *a: self.fail('Must not search an unresolved pronoun')
         self.assertIn('請補上名稱',ai.ask('他幾歲','owner'))
 
+    def test_continuation_keeps_source_evidence_and_does_not_force_chinese_identity(self):
+        payloads = []
+        def http(url, **kwargs):
+            payloads.append(kwargs["json"])
+            return json.dumps(dict(message=dict(content="The winner is Test Winner."))).encode()
+        ai = bot.LocalAI(http=http, clock=lambda: NOW)
+        evidence = [dict(title="官方資料", snippet="Test Winner; verified research details", url="https://api.nobelprize.org/2.1/nobelPrizes?test=1", published=None,
+                         verified_answer="2026 年得主是 Test Winner。[1]")]
+        ai.remember("owner", [], "2026 年諾貝爾物理獎得主是誰", "2026 年得主是 Test Winner。[1]", evidence=evidence)
+        reply = ai.ask("翻成英文", "owner")
+        self.assertEqual(reply[0]["text"], "The winner is Test Winner.")
+        self.assertIn("verified research details", payloads[-1]["messages"][-1]["content"])
+        self.assertEqual(reply[1]["type"], "flex")
+        ai.ask("清除對話", "owner")
+        self.assertNotIn("owner", ai.conversations)
+
+    def test_concise_followup_removes_extra_sections(self):
+        ai = bot.LocalAI(http=lambda *a, **k: json.dumps(dict(message=dict(content="玉山3952公尺。\n\n補充：其他資料"))).encode(), clock=lambda: NOW)
+        ai.remember("owner", [], "玉山多高", "玉山3952公尺。")
+        self.assertEqual(ai.ask("簡短一點", "owner"), "玉山3952公尺。")
+
+    def test_shutdown_restore_preserves_another_applications_route(self):
+        local = "https://tunnel.example.org"
+        backup = "https://script.google.com/macros/s/test/exec"
+        with patch.object(bot, "read_http", return_value=b'{"endpoint":"https://other.example.org/webhook"}'), patch.object(bot, "restore_webhook") as restore:
+            self.assertFalse(bot.release_local_webhook("test-token", local, backup))
+            restore.assert_not_called()
+        with patch.object(bot, "read_http", return_value=json.dumps(dict(endpoint=local+"/webhook")).encode()), patch.object(bot, "restore_webhook") as restore:
+            self.assertTrue(bot.release_local_webhook("test-token", local, backup))
+            restore.assert_called_once_with("test-token", backup)
+
+    def test_nobel_official_lookup_validates_year_category_and_names(self):
+        def prize(year="2026", category="Physics", laureates=None):
+            return dict(nobelPrizes=[dict(awardYear=year, category=dict(en=category), laureates=laureates if laureates is not None else [dict(knownName=dict(en="Test Winner"))])])
+        calls = []
+        def http(url, **kwargs):
+            calls.append(url)
+            if "api.nobelprize.org" in url:
+                self.assertEqual(kwargs["headers"]["User-Agent"], "Mozilla/5.0")
+                return json.dumps(prize()).encode()
+            if "nobelprize.org" in url:
+                return b'<title>Nobel Prize in Physics 2026 - NobelPrize.org</title><main>Test Winner</main>'
+            return json.dumps(dict(message=dict(content="Wrong invented answer"))).encode()
+        ai = bot.LocalAI(http=http, clock=lambda: NOW)
+        reply = ai.ask("2026 年諾貝爾物理獎得主是誰？", "owner")
+        self.assertEqual(reply[0]["text"], "2026 年諾貝爾物理學獎得主是 Test Winner。[1]")
+        self.assertEqual(len(reply[1]["contents"]["contents"]), 2)
+        self.assertIn("nobelPrizeYear=2026", calls[0])
+        for bad in [prize("2025"), prize(category="Chemistry"), prize(laureates=[]), prize(laureates=[dict(knownName=dict(en=""))])]:
+            ai = bot.LocalAI(http=lambda *a, **k: json.dumps(bad).encode(), clock=lambda: NOW)
+            self.assertEqual(ai.lookup("2026 年諾貝爾物理獎得主是誰？"), [])
+        self.assertEqual(ai.nobel_spec("去年諾貝爾化學獎得主是誰"), (2025, "che", "化學獎"))
+        self.assertIsNone(ai.nobel_spec("2026 年諾貝爾物理獎得主幾歲"))
+
+    def test_nobel_api_still_usable_when_human_page_is_blocked(self):
+        def http(url, **kwargs):
+            if "api.nobelprize.org" in url:
+                return json.dumps(dict(nobelPrizes=[dict(awardYear="2026", category=dict(en="Physics"), laureates=[dict(knownName=dict(en="Test Winner"))])])).encode()
+            raise RuntimeError("website unavailable")
+        rows = bot.LocalAI(http=http).lookup("2026 年諾貝爾物理獎得主是誰？")
+        self.assertEqual(len(rows), 1)
+        self.assertIn("Test Winner", rows[0]["snippet"])
+
+    def test_general_search_uses_wikipedia_text_after_both_providers_fail(self):
+        calls = []
+        def http(url, **kwargs):
+            calls.append(url)
+            if "w/api.php" in url:
+                return json.dumps(dict(query=dict(pages={"1":dict(title="玉山", fullurl="https://zh.wikipedia.org/wiki/玉山", extract="玉山是台灣最高山峰，海拔3952公尺。"),
+                    "2":dict(title="玉山", fullurl="https://evil.example.org", extract="玉山台灣最高山峰海拔") })),ensure_ascii=False).encode()
+            raise RuntimeError("provider unavailable")
+        rows = bot.LocalAI(http=http).lookup("台灣最高的山是哪一座？多高？")
+        self.assertEqual(len(rows), 1)
+        self.assertIn("3952", rows[0]["snippet"])
+        self.assertEqual(len(calls), 3)
+
     def test_teacher_questions_greeting_offline_year_and_search_topic(self):
         ai = bot.LocalAI(http=lambda *a, **k: self.fail("No model or search call expected"), clock=lambda: NOW)
         self.assertIn("小幫手", ai.ask("hi"))
@@ -357,7 +433,7 @@ class PythonBotTests(unittest.TestCase):
             return json.dumps(dict(message=dict(content="基本背景"))).encode()
         reply = bot.LocalAI(http=http).ask("今天有什麼新聞")
         self.assertIn("沒有找到足以確認", reply)
-        self.assertEqual(len(calls), 3)
+        self.assertEqual(len(calls), 5)
         def no_model(url, **kwargs):
             if url.startswith("https:"):
                 return RSS

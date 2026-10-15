@@ -1,0 +1,8 @@
+{
+  "test": "controlled managed tunnel interruption",
+  "local_health": true,
+  "public_health": true,
+  "tunnel_replaced": true,
+  "line_endpoint_verified": true,
+  "seconds": 33.5
+}

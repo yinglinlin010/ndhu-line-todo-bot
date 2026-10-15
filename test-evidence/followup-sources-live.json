@@ -1,0 +1,568 @@
+[
+  {
+    "question": "2026 年諾貝爾物理獎得主是誰？",
+    "response": [
+      {
+        "type": "text",
+        "text": "2026 年諾貝爾物理學獎得主是 Francis Halzen。[1]"
+      },
+      {
+        "type": "flex",
+        "altText": "搜尋結果：諾貝爾獎官方資料庫：2026 年物理學獎、Nobel Prize in Physics 2026 - NobelPrize.org",
+        "contents": {
+          "type": "carousel",
+          "contents": [
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[1] 諾貝爾獎官方資料庫：2026 年物理學獎",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "api.nobelprize.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "官方回傳年份：2026；得主：Francis Halzen",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[2] Nobel Prize in Physics 2026 - NobelPrize.org",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "www.nobelprize.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "官方得獎頁與 API 的得主姓名相符：Francis Halzen",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://www.nobelprize.org/prizes/physics/2026/summary/"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "seconds": 1.53
+  },
+  {
+    "question": "翻成英文",
+    "response": [
+      {
+        "type": "text",
+        "text": "The winner of the 2026 Nobel Prize in Physics is Francis Halzen. [1, 2]"
+      },
+      {
+        "type": "flex",
+        "altText": "搜尋結果：諾貝爾獎官方資料庫：2026 年物理學獎、Nobel Prize in Physics 2026 - NobelPrize.org",
+        "contents": {
+          "type": "carousel",
+          "contents": [
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[1] 諾貝爾獎官方資料庫：2026 年物理學獎",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "api.nobelprize.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "官方回傳年份：2026；得主：Francis Halzen",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[2] Nobel Prize in Physics 2026 - NobelPrize.org",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "www.nobelprize.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "官方得獎頁與 API 的得主姓名相符：Francis Halzen",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://www.nobelprize.org/prizes/physics/2026/summary/"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "seconds": 0.52
+  },
+  {
+    "question": "台灣最高的山是哪一座？多高？",
+    "response": [
+      {
+        "type": "text",
+        "text": "台灣最高的山是玉山，其最高峰玉山主峰的標高為 3,952 公尺 [2, 3]。玉山不僅是台灣最高的山峰，也被視為台灣百岳之首 [3]。\n\n補充資訊：\n玉山山脈位於南投縣、嘉義縣與高雄市的交界處 [3]。\n台灣擁有許多高山，是全球高山密度最高的島嶼之一 [2]。\n玉山與雪山、秀姑巒山、南湖大山、北大武山合稱台灣的「五嶽」 [1, 3]。"
+      },
+      {
+        "type": "flex",
+        "altText": "搜尋結果：雪山 (台灣)、台灣山峰列表、玉山",
+        "contents": {
+          "type": "carousel",
+          "contents": [
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[1] 雪山 (台灣)",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "zh.wikipedia.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "雪山（泰雅語：B'bu' Hagay、Mahamayan、Sekoan、Sekuwan）是台灣第二高山，雪山山脈最高峰，其最高峰雪山主峰，標高 3,886 公尺，山頂設有一等三角點，位處台中市和平區平",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://zh.wikipedia.org/wiki/%E9%9B%AA%E5%B1%B1_(%E5%8F%B0%E7%81%A3)"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[2] 台灣山峰列表",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "zh.wikipedia.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "台灣是一個多山的島嶼，在3.6萬平方公里的面積上，分佈284座海拔3,000米（9,800英尺）以上高峰，是全世界高山密度最高的島嶼之一。其中最高的玉山主峰，海拔3,952米（13,000英尺）。 台",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3%E5%B1%B1%E5%B3%B0%E5%88%97%E8%A1%A8"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[3] 玉山",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "zh.wikipedia.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "玉山（鄒語：Patungkuonʉ）是臺灣最高的山，最高峰玉山主峰海拔3,952米（12,966英尺），設有一等三角點。其處於玉山山脈的核心，交界於南投縣信義鄉東埔村、嘉義縣阿里山鄉中山村與高雄市桃源",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "seconds": 2.94
+  },
+  {
+    "question": "簡短一點",
+    "response": [
+      {
+        "type": "text",
+        "text": "台灣最高的山是玉山，最高峰玉山主峰海拔為 3,952 公尺 [3]。"
+      },
+      {
+        "type": "flex",
+        "altText": "搜尋結果：雪山 (台灣)、台灣山峰列表、玉山",
+        "contents": {
+          "type": "carousel",
+          "contents": [
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[1] 雪山 (台灣)",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "zh.wikipedia.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "雪山（泰雅語：B'bu' Hagay、Mahamayan、Sekoan、Sekuwan）是台灣第二高山，雪山山脈最高峰，其最高峰雪山主峰，標高 3,886 公尺，山頂設有一等三角點，位處台中市和平區平",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://zh.wikipedia.org/wiki/%E9%9B%AA%E5%B1%B1_(%E5%8F%B0%E7%81%A3)"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[2] 台灣山峰列表",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "zh.wikipedia.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "台灣是一個多山的島嶼，在3.6萬平方公里的面積上，分佈284座海拔3,000米（9,800英尺）以上高峰，是全世界高山密度最高的島嶼之一。其中最高的玉山主峰，海拔3,952米（13,000英尺）。 台",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3%E5%B1%B1%E5%B3%B0%E5%88%97%E8%A1%A8"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "size": "kilo",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "[3] 玉山",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": true,
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "text",
+                    "text": "zh.wikipedia.org",
+                    "size": "xs",
+                    "color": "#777777",
+                    "wrap": true
+                  },
+                  {
+                    "type": "text",
+                    "text": "玉山（鄒語：Patungkuonʉ）是臺灣最高的山，最高峰玉山主峰海拔3,952米（12,966英尺），設有一等三角點。其處於玉山山脈的核心，交界於南投縣信義鄉東埔村、嘉義縣阿里山鄉中山村與高雄市桃源",
+                    "size": "xs",
+                    "wrap": true,
+                    "maxLines": 3
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                      "type": "uri",
+                      "label": "查看來源",
+                      "uri": "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "seconds": 1.7
+  }
+]

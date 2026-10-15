@@ -1,0 +1,27 @@
+[
+  {
+    "question": "hi",
+    "answer": "你好！我是跑在你電腦上的 LINE 小幫手。可以問我問題、搜尋附來源、傳照片辨識，或輸入「記錄：事項」和「查詢」。",
+    "seconds": 0.0,
+    "sources": []
+  },
+  {
+    "question": "台灣最高的山是哪一座？多高？",
+    "answer": "台灣最高的山是玉山，其最高峰玉山主峰的標高為 3,952 公尺 [2, 3]。玉山不僅是台灣最高的山峰，也是台灣原住民的聖山，被視為台灣百岳之首 [3]。\n\n補充資訊：\n1. 雪山是台灣第二高山，其最高峰雪山主峰標高為 3,886 公尺 [1]。\n2. 台灣擁有高山密度的特點，在 3.6 萬平方公里的面積上分佈了 284 座海拔 3,000 米以上的山峰 [2]。\n3. 玉山、雪山、秀姑巒山、南湖大山和北大武山合稱為台灣的「五嶽」[1, 3]。",
+    "seconds": 4.24,
+    "sources": [
+      "https://zh.wikipedia.org/wiki/%E9%9B%AA%E5%B1%B1_(%E5%8F%B0%E7%81%A3)",
+      "https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3%E5%B1%B1%E5%B3%B0%E5%88%97%E8%A1%A8",
+      "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1"
+    ]
+  },
+  {
+    "question": "2026 年諾貝爾物理獎得主是誰？",
+    "answer": "2026 年諾貝爾物理學獎得主是 Francis Halzen。[1]",
+    "seconds": 1.9,
+    "sources": [
+      "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
+      "https://www.nobelprize.org/prizes/physics/2026/summary/"
+    ]
+  }
+]

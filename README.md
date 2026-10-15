@@ -57,18 +57,18 @@ ollama pull gemma4:e4b-it-q4_K_M
 2. 新安裝時，把 `.env.example` **複製**成 `.env`，只在自己的編輯器內填入設定；不要覆蓋現有 `.env`。
 3. 設定 `LINE_CHANNEL_SECRET`、`LINE_CHANNEL_ACCESS_TOKEN`。未設定時，程式啟動會以隱藏輸入詢問，輸入值只留在記憶體。
 4. 可選設定 `OLLAMA_MODEL`，預設 `gemma4:e4b-it-q4_K_M`；`PORT` 預設 3000。`OLLAMA_BASE_URL` 只接受本機位址。
-5. 使用以下指令啟動：
+5. macOS／Linux 建議使用連線管理程序（先安裝官方 `cloudflared`）：
 
 ```sh
 source .venv/bin/activate
-python line_bot_local.py
+python scripts/run-bot.py
 ```
 
-`GET http://127.0.0.1:3000/health` 應回覆 `ok`。程式綁定 `127.0.0.1`；需沿用現有 HTTPS 通道，將 `/webhook` 轉送至此連接埠。LINE Webhook 設定須指向通道的 `/webhook`，並啟用 Use webhook。GitHub Pages 只能放說明網頁，不能執行這支 bot。
+管理程序會建立 HTTPS 通道、同步本機設定、驗證 LINE Webhook，再開始服務。通道或 bot 中斷時先安全停止、回復待辦備援，再重建；每次執行最多三次啟動／恢復循環，持續失敗會停止，避免無限切換。關閉電腦、終端或睡眠期間無法提供本機 AI；此程序不會設定開機自動啟動。
 
-**切換前先停止 Node.js bot**，不要讓兩版搶同一連接埠或同時寫資料／發提醒。Python 版沿用相同連接埠和通道時，無須更改 LINE Webhook。
+`GET http://127.0.0.1:3000/health` 應回覆 `ok`。正常退出按 Ctrl+C，等待「已恢復 W5 Apps Script」與「已停止」。只會回復屬於本專案的 Webhook；若發現其他程式接管，不覆寫。不要同時執行舊 Node.js bot 或第二個 Python bot。
 
-照片功能需要 `.env` 的 `PUBLIC_BASE_URL` 為 LINE 可存取的 HTTPS 通道根網址，通道換網址時要更新並重新啟動。
+自行管理通道或使用 Windows 時，仍可執行 `python line_bot_local.py`；須自行維持 HTTPS 通道、更新 `PUBLIC_BASE_URL`，將 `/webhook` 轉送至本機連接埠，並啟用 LINE Use webhook。GitHub Pages 只能放說明，不能執行 bot。
 
 ## 你改了什麼
 
@@ -244,3 +244,23 @@ E4B 最新 LINE 手機與同次终端截圖：`test-evidence/gemma4-e4b-line-pho
 - 本次修正僅年份命中就放行的來源篩選，並排除以金融／泛旅遊頁充當最高山高度來源的情況。53項Python回歸測試通過；這不代表所有模型生成事實都正確。
 
 搜尋模式紀錄：`test-evidence/teacher-three-search.txt`；可見終端補測截圖：`test-evidence/teacher-three-terminal.jpg`（另一輪純本機實測，玉山答3952公尺）。關卡B的手機總統查詢截圖仍是獨立的另出題證據。
+
+## 搜尋修正版：老師原題的官方查核
+
+修正前的搜尋失敗與模型幻覺紀錄保留於上一節，不當作成功。修正版實測記錄見 `test-evidence/teacher-official-live.json`：三題按原文送入共用問答流程，玉山題取得內文證據並答3952公尺；2026年物理獎題由諾貝爾官方API按年份與獎項查詢，再與官方得獎頁交叉比對。
+
+- 諾貝爾得主姓名不寫死於程式；須符合原問題年份、獎項及非空得主清單。錯年份／錯獎項不採用。得主欄位直接依已驗證API輸出，避免模型自行換名字。
+- 修正網站拒絕預設Python請求標頭的問題；公開官方來源使用一般瀏覽器User-Agent讀取。得獎網頁暫時不可讀時仍可保留已驗證API，不把網頁讀取失敗解釋成尚未公布。
+- 一般搜尋兩個服務都無結果時，改查Wikipedia的內文摘要；搜尋用短關鍵字並核對來源網址，不再只憑年份附上無關假期頁。
+- 56項Python測試通過，包含官方API錯年份、錯獎項、空姓名、得獎網頁暫時不可用及一般搜尋備援。
+
+官方來源：[諾貝爾官方API](https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy)、[2026物理獎官方頁](https://www.nobelprize.org/prizes/physics/2026/summary/)。實際手機截圖另列於完成後的交件材料；不能以本機模擬紀錄冒充手機收發。
+
+## 連線與接續對話修正（2026-10-15）
+
+- 新增 `scripts/run-bot.py`，防止重複啟動；通道健康檢查、有限次重建、退出順序均有測試。新通道遇到本機 DNS 尚未更新時，只對 trycloudflare.com 使用 HTTPS DNS 備援，保留 TLS 憑證及主機名稱驗證，拒絕私人 IP。
+- 翻譯及修改追問保留上一題的查證摘要與來源，不再只依靠先前模型生成內容。「簡短一點」要求一句精簡回答，移除額外補充段落；新題目更換原有來源。
+- 67 項 Python 回歸測試通過。真實中斷本專案通道後，33.5 秒內換新通道並驗證本機、公開 HTTPS 及 LINE endpoint，記錄見 `test-evidence/service-recovery-live.json`。
+- E4B 實際跑過「老師諾貝爾原題 → 翻成英文 → 玉山原題 → 簡短一點」，保留來源且最後答3952公尺，記錄見 `test-evidence/followup-sources-live.json`。這是共用問答流程測試；本輪手機鏡像控制失敗，沒有冒充新增的手機收發證據。
+
+有來源仍不保證模型每一句補充都正確；無搜尋模式仍有純模型幻覺風險。歷史失敗紀錄繼續保留，試算表自動紀錄維持關閉。
