@@ -97,10 +97,3 @@ python scripts/check-classroom-google.py
 
 老師三題：`hi`、`台灣最高的山是哪一座？多高？`、`2026 年諾貝爾物理獎得主是誰？`。可用 `python line_bot_local.py --simulate --search` 跑共用處理流程；不讀 `.env`、不改Webhook、不寫Google。參考答案僅用於評估，不傳給bot。
 
-## 停止與交件
-
-按Ctrl+C，等待「已恢復 W5 Apps Script」及「已停止」。之後應以手機實測雲端待辦；強制關機或斷網不保證還原。備援Apps Script僅提供待辦，不提供本機模型問答。
-
-依原作業採較完整的交件材料：第一行公開repo連結、手機上需要查證且附來源的回答截圖、同次終端可見模型與搜尋的截圖，以及一句模型／硬體／耗時／改動與卡點。截圖不得露出金鑰、憑證內容或Apps Script私人網址。repo名稱不含姓名學號。
-
-換更大模型、加Google功能沒有固定加分保證；真實LINE關卡B與課堂Google功能分開列證據。是否已上傳最新版本、手機端到端是否實測，都必須按實際狀態說明。
