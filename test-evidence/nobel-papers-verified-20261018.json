@@ -1,0 +1,117 @@
+{
+  "method": "Real local model, official Nobel PDF extraction and strict Crossref metadata check; no LINE delivery or Google writes",
+  "answer": [
+    {
+      "type": "text",
+      "text": "已查官方背景PDF參考文獻，並向Crossref核對書目與DOI。相關研究論文節選（不代表唯一得獎論文）：\n1. Evidence for High-Energy Extraterrestrial Neutrinos at the IceCube Detector；IceCube Collaboration*；2013；Science。DOI：10.1126/science.1242856 [2]\n這些論文的期刊、年份、卷與頁／文章編號已對照官方文獻[1]；本次未逐篇閱讀全文。"
+    },
+    {
+      "type": "flex",
+      "altText": "搜尋結果：2026 諾貝爾物理學獎官方科學背景與參考文獻、Evidence for High-Energy Extraterrestrial Neutrinos at the IceCube Detector",
+      "contents": {
+        "type": "carousel",
+        "contents": [
+          {
+            "type": "bubble",
+            "size": "kilo",
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "[1] 2026 諾貝爾物理學獎官方科學背景與參考文獻",
+                  "weight": "bold",
+                  "size": "sm",
+                  "wrap": true,
+                  "maxLines": 3
+                },
+                {
+                  "type": "text",
+                  "text": "www.nobelprize.org",
+                  "size": "xs",
+                  "color": "#777777",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "官方背景PDF已讀取；以下是參考文獻原文節選，不能視為唯一得獎論文；DOI與原文全文尚未逐篇核對。\n文獻1：e.g., the review article “Cosmic Rays” in: P.A",
+                  "size": "xs",
+                  "wrap": true,
+                  "maxLines": 3
+                }
+              ]
+            },
+            "footer": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "button",
+                  "style": "link",
+                  "height": "sm",
+                  "action": {
+                    "type": "uri",
+                    "label": "查看來源",
+                    "uri": "https://www.nobelprize.org/uploads/2026/10/advanced-physicsprize2026-1.pdf"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "bubble",
+            "size": "kilo",
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "[2] Evidence for High-Energy Extraterrestrial Neutrinos at the IceCube Detector",
+                  "weight": "bold",
+                  "size": "sm",
+                  "wrap": true,
+                  "maxLines": 3
+                },
+                {
+                  "type": "text",
+                  "text": "api.crossref.org",
+                  "size": "xs",
+                  "color": "#777777",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "Crossref書目核對：IceCube Collaboration*；2013；Science；DOI：10.1126/science.1242856。與官方PDF文獻25的期刊、年份、卷、頁／文章",
+                  "size": "xs",
+                  "wrap": true,
+                  "maxLines": 3
+                }
+              ]
+            },
+            "footer": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "button",
+                  "style": "link",
+                  "height": "sm",
+                  "action": {
+                    "type": "uri",
+                    "label": "查看來源",
+                    "uri": "https://api.crossref.org/works?query.bibliographic=IceCube+Collaboration%2C+Science+342+%282013%29+1242856.&rows=3&select=DOI%2Ctitle%2Cauthor%2Cpublished%2Ccontainer-title%2Cvolume%2Cpage%2Carticle-number%2Ctype"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "verified_papers": 1
+}

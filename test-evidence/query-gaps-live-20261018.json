@@ -1,0 +1,239 @@
+{
+  "method": "Real local model and public official sources; no LINE delivery or Google writes",
+  "results": [
+    {
+      "question": "這次諾貝爾物理學獎的論文是什麼",
+      "seconds": 10.56,
+      "answer": [
+        {
+          "type": "text",
+          "text": "已讀取當年度官方科學背景PDF。諾貝爾獎不一定對應單篇論文；官方列出的相關文獻節選如下（不是唯一得獎論文）：\n1. e.g., the review article “Cosmic Rays” in: P.A. Zyla et al. (Particle Data Group), Progress in Theoretical and Experimental Physics (2020) 083C01. [1]\n2. F. Halzen and J. Learned, “High-energy neutrino detection in deep polar ice”. University of Wisconsin Madison preprint MAD/PH/428. University of Hawaii preprint UH-511-659-88. June 1988. [1]\n3. F. Halzen, “Antarctic Dreams”. The Sciences 39 2 (1999) 19. [1]\n以上是官方參考文獻著錄；尚未逐篇讀原文或核對DOI，不補造缺少的題名。"
+        },
+        {
+          "type": "flex",
+          "altText": "搜尋結果：2026 諾貝爾物理學獎官方科學背景與參考文獻、Nobel Prize in Physics 2026 - Popular information - NobelPrize.org、Nobel Prize in Physics 2026 - Scientific background - NobelPrize.org",
+          "contents": {
+            "type": "carousel",
+            "contents": [
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[1] 2026 諾貝爾物理學獎官方科學背景與參考文獻",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "www.nobelprize.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "官方背景PDF已讀取；以下是參考文獻原文節選，不能視為唯一得獎論文；DOI與原文全文尚未逐篇核對。\n文獻1：e.g., the review article “Cosmic Rays” in: P.A",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://www.nobelprize.org/uploads/2026/10/advanced-physicsprize2026-1.pdf"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[2] Nobel Prize in Physics 2026 - Popular information - NobelPrize.org",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "www.nobelprize.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "Enhanced Page Navigation Nobel Prize in Physics 2026 - Popular information Nobel Prize in Physics 20",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://www.nobelprize.org/prizes/physics/2026/popular-information/"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[3] Nobel Prize in Physics 2026 - Scientific background - NobelPrize.org",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "www.nobelprize.org",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "Enhanced Page Navigation Nobel Prize in Physics 2026 - Scientific background Nobel Prize in Physics ",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://www.nobelprize.org/prizes/physics/2026/advanced-information/"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "question": "解釋 ChatGPT 價格的計算公式",
+      "seconds": 2.83,
+      "answer": [
+        {
+          "type": "text",
+          "text": "已查官方API計價文件。你問的是ChatGPT訂閱月費，還是API用量計費？兩者不能混算。若指API，基本費用＝輸入tokens÷100萬×輸入單價＋輸出tokens÷100萬×輸出單價；快取、處理模式與工具費另依官方表計算。請提供模型與用量，才可估算；這份來源不代表ChatGPT訂閱價格。[1]"
+        },
+        {
+          "type": "flex",
+          "altText": "搜尋結果：OpenAI API 官方計價（不是ChatGPT訂閱價格）",
+          "contents": {
+            "type": "carousel",
+            "contents": [
+              {
+                "type": "bubble",
+                "size": "kilo",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "[1] OpenAI API 官方計價（不是ChatGPT訂閱價格）",
+                      "weight": "bold",
+                      "size": "sm",
+                      "wrap": true,
+                      "maxLines": 3
+                    },
+                    {
+                      "type": "text",
+                      "text": "developers.openai.com",
+                      "size": "xs",
+                      "color": "#777777",
+                      "wrap": true
+                    },
+                    {
+                      "type": "text",
+                      "text": "Copy Page Flagship models Our latest models Prices per 1M tokens. Standard Batch Flex Fast Ultrafast",
+                      "size": "xs",
+                      "wrap": true,
+                      "maxLines": 3
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "style": "link",
+                      "height": "sm",
+                      "action": {
+                        "type": "uri",
+                        "label": "查看來源",
+                        "uri": "https://developers.openai.com/api/docs/pricing/"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

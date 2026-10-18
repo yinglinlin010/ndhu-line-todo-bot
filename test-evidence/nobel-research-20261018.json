@@ -1,0 +1,134 @@
+{
+  "time": "2026-10-18T06:52:39.894029+00:00",
+  "method": "Actual local model and official web fetch through LocalAI; no LINE message or Google write",
+  "question": "這次諾貝爾物理學獎的論文是什麼",
+  "code_sha256": "4a9db4487471b9f752f6e4c35fa4bb46fd4e36fb0133ae31b291857bd558a76c",
+  "logs": [
+    "[Search] 已切換網路查證：2026 年諾貝爾物理學獎研究／論文官方資料",
+    "[Search] 找到 2 筆來源",
+    "[Ollama] 本機模型 gemma4:e4b-it-q4_K_M 生成中",
+    "[Ollama] gemma4:e4b-it-q4_K_M 回答完成（1.4 秒）"
+  ],
+  "reply": [
+    {
+      "type": "text",
+      "text": "已上網查證，諾貝爾物理學獎的得獎研究與官方背景文件皆提及了 Francis Halzen 的工作，該研究是利用南極冰川捕捉來自宇宙的中微子，從而探測宇宙中的極端粒子加速器 [1, 2]。官方背景文件提供了相關的科學背景資訊，但未提供具體的原始論文題名、作者或DOI [1, 2]。"
+    },
+    {
+      "type": "flex",
+      "altText": "搜尋結果：Nobel Prize in Physics 2026 - Popular information - NobelPrize.org、Nobel Prize in Physics 2026 - Scientific background - NobelPrize.org",
+      "contents": {
+        "type": "carousel",
+        "contents": [
+          {
+            "type": "bubble",
+            "size": "kilo",
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "[1] Nobel Prize in Physics 2026 - Popular information - NobelPrize.org",
+                  "weight": "bold",
+                  "size": "sm",
+                  "wrap": true,
+                  "maxLines": 3
+                },
+                {
+                  "type": "text",
+                  "text": "www.nobelprize.org",
+                  "size": "xs",
+                  "color": "#777777",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "Enhanced Page Navigation Nobel Prize in Physics 2026 - Popular information Nobel Prize in Physics 20",
+                  "size": "xs",
+                  "wrap": true,
+                  "maxLines": 3
+                }
+              ]
+            },
+            "footer": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "button",
+                  "style": "link",
+                  "height": "sm",
+                  "action": {
+                    "type": "uri",
+                    "label": "查看來源",
+                    "uri": "https://www.nobelprize.org/prizes/physics/2026/popular-information/"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "bubble",
+            "size": "kilo",
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "[2] Nobel Prize in Physics 2026 - Scientific background - NobelPrize.org",
+                  "weight": "bold",
+                  "size": "sm",
+                  "wrap": true,
+                  "maxLines": 3
+                },
+                {
+                  "type": "text",
+                  "text": "www.nobelprize.org",
+                  "size": "xs",
+                  "color": "#777777",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "Enhanced Page Navigation Nobel Prize in Physics 2026 - Scientific background Nobel Prize in Physics ",
+                  "size": "xs",
+                  "wrap": true,
+                  "maxLines": 3
+                }
+              ]
+            },
+            "footer": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "button",
+                  "style": "link",
+                  "height": "sm",
+                  "action": {
+                    "type": "uri",
+                    "label": "查看來源",
+                    "uri": "https://www.nobelprize.org/prizes/physics/2026/advanced-information/"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "explicit_web_status": true,
+    "official_research_route": true,
+    "no_generic_search": true
+  },
+  "limitations": [
+    "Official HTML fetched; PDF reference list and original paper names/DOIs not extracted",
+    "Not a phone end-to-end test"
+  ]
+}

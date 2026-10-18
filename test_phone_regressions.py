@@ -9,6 +9,85 @@ from test_line_bot_local import NOW
 
 
 class PhoneRegressionTests(unittest.TestCase):
+    def test_public_photo_provenance_is_not_model_knowledge(self):
+        ai = bot.LocalAI(photos=Mock())
+        ai.photos.handle.return_value = [dict(type='text', text='圖片來源'), dict(type='image', originalContentUrl='https://example.com/test.jpg', previewImageUrl='https://example.com/test.jpg')]
+        result = ai.ask('給我玉山的照片', 'public-photo')
+        self.assertEqual(result[1]['type'], 'image')
+        self.assertEqual(bot.WORK_CONTEXT.route, '網路圖片來源')
+
+    def test_private_recency_and_classifier_failure_never_publish(self):
+        ai = bot.LocalAI()
+        ai.lookup = Mock(side_effect=AssertionError('Private query escaped to web'))
+        ai.classify_source = Mock(side_effect=TimeoutError('unavailable'))
+        for q in ['我今天跟客戶有哪些會議？', '我今天存的紀錄有哪些？', '我的銀行帳號目前記在哪裡', '幫我找昨天存的那筆', '查一下今天存在表裡的客戶電話']:
+            answer = ai.ask(q, q)
+            self.assertIn('私人', answer)
+        ai.lookup.assert_not_called()
+        ai.classify_source = Mock(side_effect=TimeoutError('unavailable'))
+        self.assertIn('無法確定', ai.ask('某個不明主題', 'uncertain'))
+        ai.lookup.assert_not_called()
+
+    def test_price_formula_keeps_web_and_continuation_keeps_provenance(self):
+        ai = bot.LocalAI(http=lambda *a, **k: json.dumps({'message': {'content': '費率來源 [1]'}}).encode())
+        ai.lookup = Mock(return_value=[dict(title='費率', url='https://example.com/pricing', snippet='價格說明', published=None)])
+        ai.ask('解釋 ChatGPT 價格的計算公式', 'price')
+        ai.lookup.assert_called_once()
+        self.assertEqual(bot.WORK_CONTEXT.route, '網路查證')
+        ai.ask('再簡短一點', 'price')
+        ai.lookup.assert_called_once()
+        self.assertEqual(bot.WORK_CONTEXT.route, '沿用先前網路來源')
+
+    def test_semantic_source_selection_overrides_keywords_without_private_search(self):
+        def http(url, **kwargs):
+            self.assertTrue(url.endswith('/api/chat'))
+            return json.dumps({'message': {'content': '回答'}}).encode()
+        ai = bot.LocalAI(http=http, clock=lambda: NOW)
+        ai.classify_source = Mock(return_value='model')
+        ai.lookup = Mock(side_effect=AssertionError('Concept should not search'))
+        self.assertEqual(ai.ask('什麼是牛頓第二定律', 'concept'), '回答')
+        ai.lookup.assert_not_called()
+        ai.classify_source = Mock(return_value='web')
+        ai.lookup = Mock(return_value=[dict(title='官方招生說明', url='https://example.edu/admissions', snippet='招生規定', published=None)])
+        self.assertIsInstance(ai.ask('解釋某研究所的招生規定', 'fact'), list)
+        ai.lookup.assert_called_once()
+        ai.classify_source = Mock(return_value='private')
+        ai.lookup.reset_mock()
+        self.assertIn('私人紀錄', ai.ask('幫我找昨天存的那筆', 'private'))
+        ai.lookup.assert_not_called()
+        self.assertIn('不能用網路代替', ai.ask('我的試算表有哪些資料', 'sheet'))
+        self.assertIn('不會把', ai.ask('我上次記了什麼', 'unclear'))
+        ai.lookup.assert_not_called()
+        ai.classify_source = Mock(return_value='model')
+        ai.lookup = Mock(side_effect=AssertionError('Weather mechanism is a concept, not a forecast'))
+        self.assertEqual(ai.ask('解釋天氣預報的原理', 'weather-concept'), '回答')
+        ai.lookup.assert_not_called()
+
+    def test_private_store_intent_does_not_confuse_tool_tutorial_with_user_records(self):
+        for question, expected in [('我的待辦有哪些', 'todo'), ('查試算表', 'sheet'), ('我的試算表記了什麼', 'sheet'), ('我明天有什麼行程', 'calendar'), ('show my calendar', 'calendar')]:
+            self.assertEqual(bot.private_store_intent(question), expected)
+        for question in ['Google試算表是什麼', '教我用Google日曆', '建立行程：明天15:00開會']:
+            self.assertIsNone(bot.private_store_intent(question))
+        self.assertIsNone(bot.private_store_intent('我的e學苑待辦有哪些'))
+
+    def test_nobel_paper_question_forces_current_year_official_web_lookup(self):
+        calls = []
+        def http(url, **kwargs):
+            calls.append(url)
+            if url.endswith('/api/chat'):
+                return json.dumps({'message': {'content': '研究主題見官方說明；原始論文題名尚未核對。[1]'}}).encode()
+            self.assertTrue(url.startswith('https://www.nobelprize.org/prizes/physics/2026/'))
+            return b'<title>Nobel Prize in Physics 2026 - Scientific background</title><main>Verified current research description <a href="/uploads/2026/10/research.pdf">Scientific background PDF</a></main>'
+        for question in ['這次諾貝爾物理學獎的論文是什麼', '解釋今年諾貝爾物理獎的研究主題', 'What papers underlie the 2026 Nobel physics prize?']:
+            ai = bot.LocalAI(http=http, clock=lambda: NOW)
+            result = ai.ask(question, question)
+            self.assertTrue(result[0]['text'].startswith('已上網查證'))
+            self.assertEqual(ai.nobel_spec(question, research=True), (2026, 'phy', '物理學獎'))
+        self.assertTrue(any('/advanced-information/' in url for url in calls))
+        self.assertFalse(any('bing' in url or 'duckduckgo' in url for url in calls))
+        stale = bot.LocalAI(http=lambda *a, **k: b'<title>Nobel Prize in Physics 2025</title><main>Ig Nobel wrong year</main>', clock=lambda: NOW)
+        self.assertIn('已嘗試上網查證', stale.ask('這次諾貝爾物理學獎的論文是什麼', 'stale'))
+
     def test_english_private_image_followup_never_searches(self):
         requests = []
         def http(url, **kwargs):

@@ -1,0 +1,8 @@
+{
+  "method": "115 unit tests; 24 real local HTTP integration checks (captured sender, no LINE delivery or Google writes); directed routing regression 10/10; actual Google read-only checks. No new phone end-to-end verification.",
+  "code_sha256": "9aca2213c5ab65b06f3304b6783119837c768d8587e00cf1874c5b15b271f7ae",
+  "unit_passed": 115,
+  "http_passed": 24,
+  "http_total": 24,
+  "private_configuration_scan_passed": true
+}

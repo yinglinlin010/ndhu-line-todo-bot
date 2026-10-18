@@ -59,6 +59,112 @@ class FakeGoogle:
 
 
 class TeacherFeatureTests(unittest.TestCase):
+    def test_explicit_sheet_save_treats_question_as_literal_content(self):
+        from unittest.mock import Mock
+        self.google.read_sheet = Mock(side_effect=AssertionError('Save must not read'))
+        teacher = self.teacher(sheet_logging=False)
+        raw = '存試算表：我今天有哪些行程？'
+        self.assertIn('已將指定內容', teacher.before_text(raw, event(raw)))
+        self.assertEqual(self.google.calls[0][1][2], '我今天有哪些行程？')
+        self.google.read_sheet.assert_not_called()
+
+    def test_english_calendar_read_preserves_day(self):
+        from unittest.mock import Mock
+        self.google.read_calendar = Mock(return_value=[])
+        teacher = self.teacher(sheet_logging=False)
+        for text, day in [('show my calendar tomorrow', 1), ('show my calendar today', 0), ('查我的日曆今日有什麼', 0)]:
+            teacher.before_text(text, event(text))
+            actual = self.google.read_calendar.call_args.args[0]
+            self.assertEqual(actual.start.day, 10 + day)
+            self.assertEqual((actual.end - actual.start).days, 1)
+
+    def test_literal_commands_do_not_execute_embedded_school_queries(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        school = Mock(side_effect=AssertionError('Literal command must not query school'))
+        replies=[]
+        runtime = bot.BotRuntime('s','',bot.TodoStore(self.path/'todos'), self.ai,
+            teacher=self.teacher(sheet_logging=False), elearn=SimpleNamespace(handle=school),
+            sender=lambda e,a:replies.append(a))
+        runtime.submit(event('記錄：我的e學苑待辦有哪些', 'literal-todo'))
+        runtime.submit(event('存試算表：我的e學苑待辦有哪些', 'literal-sheet'))
+        runtime.close()
+        self.assertIn('已記錄', replies[0])
+        self.assertIn('已將指定內容', replies[1])
+        school.assert_not_called()
+        self.assertEqual(self.google.calls[0][1][2], '我的e學苑待辦有哪些')
+
+    def test_explicit_school_personal_query_reaches_school(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        school = Mock(return_value='SCHOOL_RESULT')
+        replies=[]
+        runtime = bot.BotRuntime('s','',bot.TodoStore(self.path/'todos'), self.ai,
+            teacher=self.teacher(sheet_logging=False), elearn=SimpleNamespace(handle=school),
+            sender=lambda e,a:replies.append(a))
+        runtime.submit(event('我的e學苑待辦有哪些', 'explicit-school'))
+        runtime.close()
+        school.assert_called_once()
+        self.assertEqual(replies, ['SCHOOL_RESULT'])
+
+    def test_ambiguous_invalid_calendar_period_requires_clarification_without_read(self):
+        from unittest.mock import Mock
+        self.google.read_calendar = Mock(side_effect=AssertionError('Ambiguous period must not read'))
+        teacher = self.teacher(sheet_logging=False)
+        for q in ['查日曆2026-02-30', '查日曆今天和明天', '查日曆下個月']:
+            self.assertNotIn('暫時讀取失敗', teacher.before_text(q, event()))
+        self.google.read_calendar.assert_not_called()
+
+    def test_explicit_calendar_date_week_and_relative_period_are_read_exactly(self):
+        from unittest.mock import Mock
+        self.google.read_calendar = Mock(return_value=[])
+        teacher = self.teacher(sheet_logging=False)
+        for q, start, end in [('查日曆2026年10月25日','2026-10-25','2026-10-26'),
+            ('我的下週行程有哪些','2026-10-12','2026-10-19'),
+            ('查日曆大後天','2026-10-13','2026-10-14'),
+            ('show my calendar in 3 days','2026-10-13','2026-10-14')]:
+            answer = teacher.before_text(q,event(q))
+            period = self.google.read_calendar.call_args.args[0]
+            self.assertEqual(period.start.date().isoformat(),start)
+            self.assertEqual(period.end.date().isoformat(),end)
+            self.assertIn('唯讀',answer)
+
+    def test_runtime_personal_reads_do_not_get_intercepted_by_school_calendar(self):
+        from types import SimpleNamespace
+        def unexpected(*args):
+            raise AssertionError('Personal store must not route to school calendar')
+        self.google.read_sheet = lambda: [['時間', '類型', '內容'], ['2026-10-18', '紀錄', 'PRIVATE_ROW']]
+        replies = []
+        runtime = bot.BotRuntime('secret', 'token', bot.TodoStore(self.path/'todos'), self.ai,
+            teacher=self.teacher(sheet_logging=False), elearn=SimpleNamespace(handle=unexpected),
+            sender=lambda e,a: replies.append(a), show_runtime=True)
+        runtime.submit(event('我的待辦有哪些', 'route-todo'))
+        runtime.submit(event('我的試算表有哪些資料', 'route-sheet'))
+        runtime.close()
+        self.assertEqual(len(replies), 2)
+        self.assertIn('私人本機待辦', replies[0])
+        self.assertIn('PRIVATE_ROW', replies[1])
+        self.assertIn('私人試算表', replies[1])
+        self.assertEqual(self.ai.calls, [])
+
+    def test_private_reads_are_owner_only_and_never_write_or_call_model(self):
+        self.google.read_sheet = lambda: [['時間', '類型', '內容'], ['2026-10-18', '手動紀錄', 'PRIVATE_ROW']]
+        days = []
+        self.google.read_calendar = lambda day: days.append(day) or [dict(summary='PRIVATE_EVENT', start=dict(dateTime='2026-10-19T15:00:00+08:00'))]
+        teacher = self.teacher(sheet_logging=False)
+        self.assertIn('PRIVATE_ROW', teacher.before_text('我的試算表有哪些資料', event()))
+        self.assertIn('PRIVATE_EVENT', teacher.before_text('我明天有什麼行程', event()))
+        self.assertEqual(days[0].label, "明天")
+        self.assertEqual(days[0].start.day, 11)
+        for source in [dict(type='user', userId='bob'), dict(type='group', userId='alice', groupId='g')]:
+            self.assertIn('綁定者', teacher.before_text('查試算表', event() | dict(source=source)))
+        self.assertEqual(self.google.calls, [])
+        self.assertEqual(self.ai.calls, [])
+        self.google.read_sheet = lambda: (_ for _ in ()).throw(RuntimeError('private token'))
+        answer = teacher.before_text('查試算表', event())
+        self.assertIn('暫時讀取失敗', answer)
+        self.assertNotIn('private token', answer)
+
     def test_english_commands_keep_owner_and_confirmation_boundaries(self):
         teacher = self.teacher(sheet_logging=False)
         self.assertTrue(bot.event_candidate('Schedule W6 phone test on 2026-10-17 at 15:00'))

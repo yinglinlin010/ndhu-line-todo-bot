@@ -14,7 +14,7 @@
       "case": "greeting",
       "question": "hi",
       "passed": true,
-      "ack_seconds": 0.001,
+      "ack_seconds": 0.002,
       "total_seconds": 0.0,
       "answer": "你好！我是跑在你電腦上的 LINE 小幫手。可以問我問題、搜尋附來源、傳照片辨識，或輸入「記錄：事項」和「查詢」。",
       "sources": []
@@ -54,9 +54,9 @@
       "case": "teacher_mountain",
       "question": "台灣最高的山是哪一座？多高？",
       "passed": true,
-      "ack_seconds": 0.004,
-      "total_seconds": 6.68,
-      "answer": "台灣最高的山是玉山，其最高峰玉山主峰的海拔是 3,952 米 [1]。",
+      "ack_seconds": 0.003,
+      "total_seconds": 3.17,
+      "answer": "台灣最高的山是玉山，其最高峰玉山主峰海拔是3,952米 [1]。",
       "sources": [
         "https://zh.wikipedia.org/wiki/%E7%8E%89%E5%B1%B1"
       ]
@@ -66,7 +66,7 @@
       "question": "2026 年諾貝爾物理獎得主是誰？",
       "passed": true,
       "ack_seconds": 0.004,
-      "total_seconds": 1.29,
+      "total_seconds": 1.07,
       "answer": "2026 年諾貝爾物理學獎得主是 Francis Halzen。[1]",
       "sources": [
         "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
@@ -78,8 +78,8 @@
       "question": "翻成英文",
       "passed": true,
       "ack_seconds": 0.003,
-      "total_seconds": 0.59,
-      "answer": "The winner of the 2026 Nobel Prize in Physics is Francis Halzen.",
+      "total_seconds": 0.48,
+      "answer": "Francis Halzen is the recipient of the 2026 Nobel Prize in Physics.",
       "sources": [
         "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2026&nobelPrizeCategory=phy",
         "https://www.nobelprize.org/prizes/physics/2026/summary/"
@@ -89,18 +89,18 @@
       "case": "new_topic",
       "question": "解釋牛頓第二定律",
       "passed": true,
-      "ack_seconds": 0.003,
-      "total_seconds": 1.55,
-      "answer": "牛頓第二定律描述了物體運動的變化與作用在物體上的力之間的關係。它指出，物體所受的合外力等於物體的質量乘以其加速度，用公式 F=ma 表示。簡單來說，施加的力越大，物體加速得越快。",
+      "ack_seconds": 0.004,
+      "total_seconds": 1.28,
+      "answer": "牛頓第二定律描述了物體受到的加速度與作用在物體上的合外力成正比，且與物體的質量成反比。簡單來說，合外力等於質量乘以加速度，用公式 F=ma 表示。",
       "sources": []
     },
     {
       "case": "concise",
       "question": "簡短一點",
       "passed": true,
-      "ack_seconds": 0.004,
-      "total_seconds": 0.58,
-      "answer": "牛頓第二定律是 F=ma，表示物體受到的合外力等於其質量乘以加速度。",
+      "ack_seconds": 0.003,
+      "total_seconds": 0.6,
+      "answer": "合外力等於質量乘以加速度，用公式 F=ma 表示，描述了物體受力與加速度的關係。",
       "sources": []
     },
     {
@@ -108,15 +108,15 @@
       "question": "翻成英文",
       "passed": true,
       "ack_seconds": 0.004,
-      "total_seconds": 0.58,
-      "answer": "Newton's second law is F=ma, which states that the net external force on an object equals its mass times its acceleration.",
+      "total_seconds": 0.6,
+      "answer": "Net force equals mass times acceleration, expressed by the formula F=ma, describing the relationship between the force acting on an object and its acceleration.",
       "sources": []
     },
     {
       "case": "clear",
       "question": "清除對話",
       "passed": true,
-      "ack_seconds": 0.002,
+      "ack_seconds": 0.003,
       "total_seconds": 0.0,
       "answer": "已清除這段對話的記憶。",
       "sources": []
@@ -125,7 +125,7 @@
       "case": "pronoun_after_clear",
       "question": "給我他的照片",
       "passed": true,
-      "ack_seconds": 0.003,
+      "ack_seconds": 0.004,
       "total_seconds": 0.0,
       "answer": "你想看誰或什麼的照片？請補上名稱。",
       "sources": []
@@ -134,8 +134,8 @@
       "case": "unknown_factual_search",
       "question": "搜尋 qzxv847293649不存在的測試獎項得主",
       "passed": true,
-      "ack_seconds": 0.002,
-      "total_seconds": 1.15,
+      "ack_seconds": 0.003,
+      "total_seconds": 0.98,
       "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
       "sources": []
     },
@@ -143,8 +143,8 @@
       "case": "public_photo",
       "question": "給我周星馳的照片",
       "passed": true,
-      "ack_seconds": 0.004,
-      "total_seconds": 1.54,
+      "ack_seconds": 0.003,
+      "total_seconds": 1.36,
       "answer": "找到與「周星馳」相關的照片。\n來源：周星馳\nhttps://zh.wikipedia.org/wiki/%E5%91%A8%E6%98%9F%E9%A6%B3",
       "sources": []
     },
@@ -165,24 +165,24 @@
       "case": "private_image_time_followup",
       "question": "那幾點開始？",
       "passed": true,
-      "ack_seconds": 0.003,
-      "total_seconds": 0.53,
-      "answer": "會議是從 15:00 開始。",
+      "ack_seconds": 0.005,
+      "total_seconds": 0.56,
+      "answer": "會議時間是 15:00-16:00。",
       "sources": []
     },
     {
       "case": "private_image_date_followup",
       "question": "圖片上的日期是什麼？",
       "passed": true,
-      "ack_seconds": 0.003,
-      "total_seconds": 0.52,
+      "ack_seconds": 0.002,
+      "total_seconds": 0.51,
       "answer": "圖片上的日期是 2026-10-16。",
       "sources": []
     },
     {
       "case": "concurrent_photo_followup",
       "passed": true,
-      "answer": "圖片上顯示的日期是 2026-10-16。",
+      "answer": "圖片上顯示的會議日期是 2026-10-16。",
       "delivery_order": [
         "concurrent-other-user",
         "concurrent-image",

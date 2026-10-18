@@ -1,0 +1,8 @@
+https://github.com/yinglinlin010/ndhu-line-todo-bot
+
+關卡 B：實際接上 LINE，使用手機對話。
+
+手機對話截圖：
+https://github.com/yinglinlin010/ndhu-line-todo-bot/blob/main/test-evidence/submission-20261018/phone.png
+
+我使用 Gemma 4 E4B（gemma4:e4b-it-q4_K_M），在 Apple M5 Pro 內建GPU／24 GB 統一記憶體的 Mac 上透過 Ollama 執行，手機實測諾貝爾論文題約6.4秒；改成Python並加入來源分流、接續對話、官方查證與Google功能，目前部分模糊問法和搜尋仍可能需要釐清。

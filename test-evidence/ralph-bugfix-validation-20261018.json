@@ -1,0 +1,12 @@
+{
+  "unit_passed": 122,
+  "http_passed": 24,
+  "http_total": 24,
+  "four_original_reproductions_remaining": 0,
+  "code_sha256": "daeb8d9187a75e622dd770de1e20e43ebcc7722fa7d1b7ad6344ff3a7f9f2eb3",
+  "real_line_delivery": false,
+  "google_writes": false,
+  "runtime_restarted": false,
+  "iteration_limit": 10,
+  "all_ten_iterations_completed": false
+}

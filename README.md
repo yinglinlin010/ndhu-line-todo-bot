@@ -2,6 +2,8 @@
 
 公開 repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 
+本次版本已完成實際接 LINE 的關卡 B。[手機對話截圖](test-evidence/submission-20261018/phone.png)與[交件文字](test-evidence/submission-20261018/SUBMISSION.txt)均附於 repo；測試範圍與限制見下方。
+
 LINE 文字與照片交由自己電腦上的 **Gemma 4 E4B** 處理；需要時搜尋附來源。支援照片存私人 Google Drive、行程確認後寫 Calendar、指定內容寫 Sheets。文字與圖片使用 `gemma4:e4b-it-q4_K_M`，下載約6.6GB；本機已用 Python 3.12 測試。
 
 ## 怎麼裝
@@ -53,7 +55,10 @@ Windows 或自行管理通道者可用 `python line_bot_local.py`，自行保持
 
 ## 課堂版怎麼用
 
-- 問文字問題：需要時公開搜尋、提供來源卡片；查不到可靠相關來源時說明無法確認。
+- 問文字問題：概念、推導、翻譯使用本機模型知識；現任人物、最新獎項、新聞與研究論文走網路查證，提供來源。明確規則優先，其餘由本機模型判斷意圖；資訊不足時先釐清。回覆尾端標示實際資料來源；接續改寫會標示沿用先前網路來源。意圖分類失敗時先釐清，不退回公開搜尋。
+- 查私人資料：「我的待辦有哪些」讀本機待辦；「查試算表」讀設定的表格，最多檢查前1000筆並顯示最後10筆；「我明天有什麼行程」讀當天Calendar，「查日曆」讀未來14天最多10筆。Google查詢限綁定者私聊，不做公開搜尋，不新增紀錄。支援「查日曆2026-10-25」「我的下週行程有哪些」、本週／上週、中文月日與幾天後；日期以台灣時區解析、結束時間不包含在區間內。不存在或混合多個日期時先釐清，不改查其他期間。未指定資源的「我上次存了什麼」先詢問要查哪裡。
+- 「Google試算表是什麼」屬工具知識，不會讀私人表格。諾貝爾研究題使用指定年份官方研究頁面，背景PDF由有大小、頁數與執行時間限制的獨立程序擷取參考文獻；可核對的期刊文獻再向Crossref比對期刊、年份、卷與頁／文章編號，吻合才列題名和DOI。文獻節選不代表唯一得獎論文，也不代表已逐篇閱讀全文。
+- ChatGPT／OpenAI價格問題使用官方API計價文件，先區分ChatGPT訂閱與API用量計費，不把兩者的費率混用；模型與用量不明時先釐清，不猜價格。
 - 傳照片：本機模型辨識，綁定者私聊的照片存私人Drive；照片有日期時間時先顯示待確認行程。
 - 傳「明天下午三點開會」：解析並核對日期，回覆「確認排程」才建立Calendar事件；「取消排程」放棄，20分鐘後失效，不寄邀請。
 - 傳「存試算表：要保存的內容」：只將指定內容寫一列到現有私人試算表；保留寫入收據，避免同一事件重送。使用RAW，文字不當作公式。
@@ -80,7 +85,7 @@ Google寫入只接受綁定者個人聊天；其他人與群組不會寫入你�
 ## 測試與驗收界線
 
 ```sh
-python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check test_reliability test_phone_regressions
+python -m unittest test_line_bot_local test_teacher_features test_service test_evaluate_faq test_classroom_check test_reliability test_phone_regressions test_query_sources
 python scripts/check-live-quality.py
 python scripts/check-news-followups.py
 python scripts/check-classroom-google.py
@@ -90,10 +95,15 @@ python scripts/check-classroom-google.py
 
 - 既有E4B雲端實測已成功上傳合成圖片、確認私人權限，並建立及讀回Calendar測試行程，見 `test-evidence/e4b-cloud-live-check.json`。
 - 既有真實LINE文字測試包括老師玉山與諾貝爾原題、翻譯、換題及重啟接續，見 `test-evidence/line-quality-live.json`。這些不是最新版功能的手機端到端驗證。
-- 最新110項自動測試通過，包含英文Google指令的綁定者與確認限制。此前24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
+- 最新130項自動測試通過，包含英文Google指令的綁定者與確認限制。此前24項本機HTTP整合通過，包含連續傳圖追問、跨使用者處理、排隊逾時、逾時禁止後續寫入及行程取代保護。此前真實E4B行程日期／時間解析紀錄仍保留。
 - 最新Google唯讀檢查再次確認既有測試圖片、行程及試算表可讀。經使用者同意，已透過bot流程新增一筆合成Sheets驗收紀錄並讀回，確認只出現一次，見 `test-evidence/classroom-runs/20261015T064615012164Z.json`；自動紀錄仍關閉。未操作手機，不以此冒充手機實測。
 - 2026-10-16 03:11–03:14 新增真實手機驗收：手動Sheets寫入後讀回只有一列；Calendar經預覽、兩候選阻擋確認、選擇取代及再次確認後，讀回只有一筆 `W6 PHONE GOOGLE TEST`，時間為2026-10-17 15:30–16:00（台灣時間）。本輪109項單元與24項本機HTTP整合均通過。安全證據見 [手機Google驗收](test-evidence/google-phone-20261016/README.md)。該時段尚未驗收照片手機→Drive與W5新增／查詢；後續完成結果如下。
 - 2026-10-16 03:27–03:48 補完真實手機照片與W5驗收：合成圖從手機LINE傳送、下載、本機E4B辨識並存私人Drive，修正前後各一張；照片行程只預覽並取消。修正英文圖片追問後，同一張圖的時間、日期與文字標題可連續詢問，終端沒有公開搜尋。停止Python後，手機W5新增測試待辦並查詢讀回1筆，未修改Apps Script部署。110項單元與24項本機HTTP整合通過。這是指定案例回歸驗收，不代表所有圖片與問法均正確。
+- 2026-10-18 來源分流：首次純模型分類8/10；加入私人讀取與穩定知識規則後，針對相同10題重新測試通過。這是調整後定向回歸，不是盲測準確率或模型權重訓練。Google試算表與日曆唯讀API均通過；本輪24項本機HTTP整合亦通過（實際模型與搜尋、攔截送出回覆，無LINE傳送或Google寫入）；這輪尚未宣稱真實手機端到端測試。見 `test-evidence/source-routing-20261018.json` 與 `test-evidence/private-reads-20261018.json`。
 - 題庫、歷次失敗與每輪測試範圍見 [evaluation/README.md](evaluation/README.md)。舊版功能說明與歷次紀錄移至 [README-history.md](README-history.md)，Node.js版見 [README-nodejs.md](README-nodejs.md)。
 
 老師三題：`hi`、`台灣最高的山是哪一座？多高？`、`2026 年諾貝爾物理獎得主是誰？`。可用 `python line_bot_local.py --simulate --search` 跑共用處理流程；不讀 `.env`、不改Webhook、不寫Google。參考答案僅用於評估，不傳給bot。
+
+2026-10-18 15:28–15:39 中文手機實測16個案例及1次圖片複測，見 `test-evidence/submission-20261018/validation.json`。已驗證模型／網路／私人資料分流與接續；圖片來源標示錯誤已修正後重測。價格查證未命中、原始論文題名與DOI未核對，均保留限制，不宣稱全功能通過。本輪沒有重做Google寫入或W5手機驗收。
+
+2026-10-18 追加補強：日期／週範圍已接上真正Google唯讀查詢，指定10/17讀回既有測試行程，下週正確使用10/19–10/26。官方PDF參考文獻已擷取，相關原始論文書目與DOI已向Crossref核對，見 `test-evidence/nobel-papers-verified-20261018.json`。計價題已取得官方API文件並區分訂閱，見 `test-evidence/query-gaps-live-20261018.json`。此追加版130單元與24本機HTTP整合通過；20:39–20:41再以中文手機完成指定日期、下週、計價公式、論文與DOI四項複測，見 `test-evidence/submission-20261018/validation.json`，保留先前失敗紀錄。

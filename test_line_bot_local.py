@@ -155,6 +155,8 @@ class PythonBotTests(unittest.TestCase):
         calls, clock = [], [NOW]
         def http(url, **kwargs):
             self.assertTrue(url.startswith("http://127.0.0.1"))
+            if kwargs["json"].get("format", {}).get("properties", {}).get("source"):
+                return json.dumps(dict(message=dict(content=json.dumps(dict(source="model"))))).encode()
             calls.append(kwargs["json"])
             return b'{"message":{"content":"F=ma"}}'
         ai = bot.LocalAI(http=http, clock=lambda: clock[0])
@@ -223,6 +225,8 @@ class PythonBotTests(unittest.TestCase):
             payloads = []
             def local_http(url, **kwargs):
                 payloads.append(kwargs["json"])
+                if kwargs["json"].get("format"):
+                    return json.dumps(dict(message=dict(content='{"source":"web"}'))).encode()
                 self.assertTrue(url.startswith("http://127.0.0.1:11434/"))
                 return json.dumps(dict(message=dict(content="圖片上的行程是15:00開始。"))).encode()
             ai = bot.LocalAI(http=local_http, memory_path=path)
@@ -521,6 +525,8 @@ class PythonBotTests(unittest.TestCase):
         calls, searches = [], []
         def http(url, **kwargs):
             calls.append(kwargs["json"])
+            if kwargs["json"].get("format"):
+                return json.dumps(dict(message=dict(content='{"source":"web"}'))).encode()
             return json.dumps(dict(message=dict(content="新主題回答 [1]"))).encode()
         ai = bot.LocalAI(http=http, clock=lambda: NOW)
         ai.remember("owner", [], "解釋牛頓定律", "F=ma")
@@ -571,6 +577,8 @@ class PythonBotTests(unittest.TestCase):
         bodies = []
         def http(url, **kwargs):
             bodies.append(kwargs["json"])
+            if kwargs["json"].get("format"):
+                return json.dumps(dict(message=dict(content='{"source":"web"}'))).encode()
             return json.dumps(dict(message=dict(content="Translated latest refusal"))).encode()
         ai = bot.LocalAI(http=http, clock=lambda: NOW)
         ai.remember("owner", [], "牛頓定律", "F=ma")

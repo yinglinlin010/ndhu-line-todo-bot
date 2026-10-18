@@ -1,0 +1,7 @@
+{
+  "method": "Actual read-only configured Google API calls; no rows/events/files written; no cell contents or private IDs reported",
+  "checks": {
+    "sheets_readonly_query": true,
+    "calendar_readonly_query": true
+  }
+}

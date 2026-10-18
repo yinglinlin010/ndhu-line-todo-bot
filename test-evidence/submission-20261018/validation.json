@@ -1,0 +1,48 @@
+{
+  "method": "Actual Chinese iPhone LINE messages, visible drafts and replies inspected, live service terminal checked. Google reads only; no new Google artifacts.",
+  "time_range_taipei": "2026-10-18 20:39–20:41",
+  "code_sha256": {
+    "line_bot_local.py": "05ca7a03e999fe916638f262e65aa6f09a32108f93478d1b72875b0d1adbcd21",
+    "calendar_queries.py": "680a38c4eff30f2b4024274ad0971d1b9e86f344b919873ec96ff1557978087b",
+    "research_documents.py": "17c0af169a48d714ab2ab19543c29dc247e02617060885bf954b9e3d19d4a8b0",
+    "reference_metadata.py": "7764430757b1d8346c6dcea74ef91c54a25c1239e4b4852d06bb8bc2803a9fb8",
+    "test_query_sources.py": "e585f80f1a22b38b1e060be42cd9e937131692f8f9482a2811eb9c7e8414a5b7",
+    "requirements.txt": "b21493deff996127505c037d50baa7f02359001595487c3053074ed0968e7d91",
+    "requirements-lock.txt": "6a77ba49b6d1299bebdd8f8db1848e82be0e23bec687cc2d552ea14b2486956a"
+  },
+  "cases": [
+    {
+      "question": "查日曆2026年10月17日",
+      "passed": true,
+      "observation": "Read back the existing W6 test event on the exact date"
+    },
+    {
+      "question": "我的下週行程有哪些",
+      "passed": true,
+      "observation": "Queried next week, returned no events; actual Google API interval verified separately"
+    },
+    {
+      "question": "解釋 ChatGPT 價格的計算公式",
+      "passed": true,
+      "observation": "Retrieved official API pricing source, clarified subscription versus API, provided generic formula without guessing rates"
+    },
+    {
+      "question": "這次諾貝爾物理學獎的論文是什麼",
+      "passed": true,
+      "observation": "Official PDF bibliography extracted; one related journal paper metadata and DOI matched through Crossref; paper full text not read"
+    }
+  ],
+  "unit_passed": 130,
+  "http_integration_passed": 24,
+  "google_write_initiated": false,
+  "automatic_sheet_logging": false,
+  "limitations": [
+    "Bibliography excerpts are not an exhaustive list or sole prize attribution",
+    "No claim that all original papers have been read",
+    "ChatGPT subscription price itself was not retrieved; ambiguous question is clarified",
+    "No new phone cloud-write or W5 fallback add/query in this round"
+  ],
+  "all_possible_bugs_eliminated": false,
+  "public_phone_screenshot": "phone.png",
+  "scope": "Submission snapshot: classroom Python implementation; real LINE checkpoint B; read-only phone retests. Screenshots containing private course or record data are not published."
+}

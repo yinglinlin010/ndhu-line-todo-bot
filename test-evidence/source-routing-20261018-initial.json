@@ -1,0 +1,65 @@
+{
+  "method": "Real local E4B structured source classification; synthetic questions only; no public lookup or Google writes",
+  "cases": [
+    {
+      "question": "什麼是牛頓第二定律",
+      "expected": "model",
+      "actual": "web",
+      "passed": false
+    },
+    {
+      "question": "幫我翻譯一段英文",
+      "expected": "model",
+      "actual": "model",
+      "passed": true
+    },
+    {
+      "question": "解釋這次諾貝爾物理學獎的論文",
+      "expected": "web",
+      "actual": "web",
+      "passed": true
+    },
+    {
+      "question": "台灣現任總統是誰",
+      "expected": "web",
+      "actual": "web",
+      "passed": true
+    },
+    {
+      "question": "明天台北會下雨嗎",
+      "expected": "web",
+      "actual": "web",
+      "passed": true
+    },
+    {
+      "question": "幫我查我的試算表紀錄",
+      "expected": "private",
+      "actual": "private",
+      "passed": true
+    },
+    {
+      "question": "我上次存了什麼",
+      "expected": "private",
+      "actual": "private",
+      "passed": true
+    },
+    {
+      "question": "我的待辦有哪些",
+      "expected": "private",
+      "actual": "private",
+      "passed": true
+    },
+    {
+      "question": "Google試算表是什麼",
+      "expected": "model",
+      "actual": "web",
+      "passed": false
+    },
+    {
+      "question": "查一下",
+      "expected": "clarify",
+      "actual": "clarify",
+      "passed": true
+    }
+  ]
+}

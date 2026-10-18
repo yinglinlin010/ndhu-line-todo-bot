@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-18T12:34:58.697289+00:00",
+  "code_sha256": "05ca7a03e999fe916638f262e65aa6f09a32108f93478d1b72875b0d1adbcd21",
+  "method": "Read existing Google test artifacts; optional approved synthetic sheet row via TeacherFeatures, no LINE messages or phone UI",
+  "checks": {
+    "google_enabled": true,
+    "automatic_sheet_logging_off": true,
+    "owner_configured": true,
+    "sheets_readable": true,
+    "previous_calendar_test_readback": true,
+    "previous_drive_test_private": true
+  },
+  "errors": [],
+  "write_requested": false,
+  "write_result": "not_requested",
+  "limitations": [
+    "No new Drive upload or Calendar event",
+    "Not a phone end-to-end test",
+    "No IDs, credentials or existing cell contents included"
+  ]
+}

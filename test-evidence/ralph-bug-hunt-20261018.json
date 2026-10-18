@@ -1,0 +1,46 @@
+{
+  "method": "Synthetic isolated control-flow reproductions; fake Google and school APIs; mocked public lookup; no .env, real LINE, network, or Google writes",
+  "cases": [
+    {
+      "case": "explicit_save_intercepted_by_read",
+      "question": "存試算表：我今天有哪些行程？",
+      "expected": "one explicit sheet write",
+      "actual_answer": "已將指定內容存進 Google 試算表；一般聊天自動紀錄維持原設定。",
+      "cloud_writes": 1,
+      "sheet_reads": 0,
+      "calendar_reads": 0,
+      "reproduced": false
+    },
+    {
+      "case": "english_tomorrow_ignored",
+      "question": "show my calendar tomorrow",
+      "expected": "tomorrow only or clarification",
+      "actual_answer": "已查詢你的私人日曆（明天，最多10筆；唯讀）。\n這段期間沒有行程。",
+      "read_arguments": [
+        {
+          "start": "2026-10-11T00:00:00+08:00",
+          "end": "2026-10-12T00:00:00+08:00",
+          "label": "明天"
+        }
+      ],
+      "reproduced": false
+    },
+    {
+      "case": "explicit_school_bypassed",
+      "question": "我的e學苑待辦有哪些",
+      "expected": "school handler",
+      "actual_answer": "SYNTHETIC_SCHOOL_REPLY",
+      "school_calls": 1,
+      "reproduced": false
+    },
+    {
+      "case": "implicit_personal_current_record_public_search",
+      "question": "查一下今天存在表裡的客戶電話",
+      "expected": "private clarification",
+      "actual_answer": "你要查自己的待辦、試算表，還是日曆？請指定資料來源；不會把這類私人紀錄問題送去公開搜尋。",
+      "public_lookups": 0,
+      "classifier_calls": 0,
+      "reproduced": false
+    }
+  ]
+}

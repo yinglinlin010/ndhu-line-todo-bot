@@ -1,0 +1,10 @@
+{
+  "unit_passed": 118,
+  "http_initial_passed": 23,
+  "http_total": 24,
+  "http_retest_passed": 24,
+  "method": "Real local model/search through captured local HTTP sender; no LINE delivery or Google writes. Increased classification timeout after observed failure; no cold-start guarantee.",
+  "code_sha256": "2e0a750ca9d6f8e85499f82334475aabe3df7527b948de094a08d6e8c9079594",
+  "runtime_restarted": false,
+  "structural_refactor_pending": true
+}
