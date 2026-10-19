@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Asia/Taipei",
+  "kind": "real_phone_and_live_terminal",
+  "question": "查 台灣最高的山是哪一座？多高？",
+  "received_at": "10:57:55",
+  "reply_at": "10:58:03",
+  "line_reply_status": 200,
+  "phone_elapsed_seconds": 8.61,
+  "model_elapsed_seconds": 7.1,
+  "model": "gemma4:e4b-it-q4_K_M",
+  "source": "https://zh.wikipedia.org/wiki/玉山",
+  "google_writes": false,
+  "images_edited": false,
+  "sha256": {
+    "terminal.png": "6bc1daea978c5451cc1dd16200ea1cf3f949c0d6d6105187797f93e64b6535a9",
+    "phone.png": "a8f28b7bed4c8f5fc009f6c9cf9d61d9d88b32ada5916c619f4cc87864a7e307"
+  }
+}

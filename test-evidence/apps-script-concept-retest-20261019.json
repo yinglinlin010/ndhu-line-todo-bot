@@ -1,0 +1,17 @@
+{
+  "scope": "real local Ollama routing and follow-up retest; no LINE or Google writes",
+  "cases": [
+    {
+      "question": "用一句話解釋慣性",
+      "answer": "慣性是指物體會保持其原有狀態，即靜止的物體會保持靜止，運動的物體會保持原有的運動狀態，除非受到外力作用。",
+      "seconds": 1.4,
+      "passed": true
+    },
+    {
+      "question": "再簡短一點",
+      "answer": "物體會保持其原有狀態，即靜止或運動的狀態，除非受到外力作用。",
+      "seconds": 0.74,
+      "passed": true
+    }
+  ]
+}

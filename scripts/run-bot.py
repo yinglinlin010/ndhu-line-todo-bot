@@ -1,6 +1,9 @@
 """macOS/Linux supervisor: one bot, a managed quick tunnel, and safe recovery."""
 from __future__ import annotations
 import fcntl
+import base64
+import hashlib
+import hmac
 import json
 import logging
 import os
@@ -162,6 +165,16 @@ class Service:
             if self.child.poll() is not None:
                 raise RuntimeError("Bot 啟動未完成，請看上方檢查結果。")
             if self.health(f"http://127.0.0.1:{self.port}") and self.health(self.base):
+                if self.config.get("APPS_SCRIPT_RELAY_MODE") == "1":
+                    stamp = str(int(time.time()))
+                    key = self.config.get("APPS_SCRIPT_RELAY_KEY", "")
+                    signature = base64.b64encode(hmac.new(key.encode(), (stamp + "\n" + self.base).encode(), hashlib.sha256).digest()).decode()
+                    # Apps Script ContentService redirects to its Google content host.
+                    response = requests.post(self.config["W5_WEBHOOK_URL"], timeout=(5, 20),
+                        json=dict(action="registerLocalRelay", timestamp=stamp, base=self.base, signature=signature))
+                    if response.status_code != 200 or response.content.strip() != b"relay registered":
+                        raise RuntimeError("Apps Script 未確認通道更新；保留雲端入口，停止本次啟動。")
+                    LOG.info("Apps Script 已確認本機轉送通道更新。")
                 # The child verifies its Webhook before it starts serving health.
                 LOG.info("本機、公開 HTTPS 與 LINE Webhook 均已就緒。")
                 return

@@ -1,0 +1,13 @@
+{
+  "scope": "User confirmed sending a real LINE message; correlated live service log, not a synthetic event",
+  "received_at": "2026-10-19T10:45:33+08:00",
+  "route": "model",
+  "model": "gemma4:e4b-it-q4_K_M",
+  "model_seconds": 0.7,
+  "line_reply_status": 200,
+  "line_api_accepted": true,
+  "limitations": [
+    "Phone screenshot and user confirmation of visible answer have not been captured in this test.",
+    "LINE API success does not establish answer correctness."
+  ]
+}

@@ -172,7 +172,7 @@ class TodoStore:
 
 
 def question_mode(raw):
-    explicit = re.match(r"^(搜尋|搜索|查網路|上網查|最新)[：:\s]*([\s\S]*)$", raw)
+    explicit = re.match(r"^(搜尋|搜索|查網路|上網查|最新|查(?=[：:\s]))[：:\s]*([\s\S]*)$", raw)
     question = (explicit[2] if explicit else re.sub(r"^(問|AI|ai)\s*[:：]\s*", "", raw)).strip()
     recent = bool((explicit and explicit[1] == "最新") or re.search(
         r"最新|今天|今日|現在|目前|最近|即時|新聞|消息|天氣|股價|匯率|價格|今年|本週|這週", question))
@@ -212,8 +212,10 @@ def private_record_question(raw):
 def model_knowledge_intent(question):
     current_or_research = re.search(r"最新|今年|今天|明天|目前|現任|現在|這次|本次|價格|費用|計費|月費|訂閱|股價|匯率|新聞|消息|最近|本週|這週|\d{4}年|諾貝爾|論文|\b(?:latest|current|today|tomorrow|nobel|papers?|price|news|headlines|recent)\b", question, re.I)
     stable_task = re.search(r"翻譯|潤飾|改寫|推導|計算|定律|定理|公式|原理|\b(?:translate|rewrite|derive|calculate)\b", question, re.I)
+    basic_concept = re.search(r"解釋|說明|定義|是什麼|什麼是|\b(?:explain|define|what is)\b", question, re.I) and re.search(
+        r"慣性|動量|角動量|質量|能量守恆|重力|摩擦力|熵|量子疊加|\b(?:inertia|momentum|gravity|entropy)\b", question, re.I)
     tool_definition = re.search(r"試算表|資料庫|Webhook|API|Ollama|機器學習", question, re.I) and re.search(r"是什麼|什麼是|定義|怎麼用|如何使用|\bwhat is\b", question, re.I)
-    return not current_or_research and bool(stable_task or tool_definition)
+    return not current_or_research and bool(stable_task or tool_definition or basic_concept)
 
 
 def continuation_request(question):
@@ -682,6 +684,8 @@ class LocalAI:
         return relevant_sources(rows, query, definitions)
 
     def lookup(self, question, news=False, days=7):
+        if os.getenv("LOG_PUBLIC_SEARCH_QUESTIONS") == "1":
+            LOG.info("[Search] 公開問題：%s", clean(question, 200))
         pricing = self.lookup_pricing(question)
         if pricing is not None:
             return pricing
@@ -804,7 +808,7 @@ class LocalAI:
         if re.fullmatch(r"hi|hello|你好|嗨|哈囉|測試|test", raw.strip(), re.I):
             return "你好！我是跑在你電腦上的 LINE 小幫手。可以問我問題、搜尋附來源、傳照片辨識，或輸入「記錄：事項」和「查詢」。"
         question, wants_search, recent = question_mode(raw)
-        if model_knowledge_intent(question) and not re.match(r"^(搜尋|搜索|查網路|上網查|最新)", raw):
+        if model_knowledge_intent(question) and not re.match(r"^(搜尋|搜索|查網路|上網查|最新|查(?=[：:\s]))", raw):
             wants_search, recent = False, False
         if self.nobel_spec(question, research=True):
             wants_search, recent = True, True
@@ -858,7 +862,7 @@ class LocalAI:
         followup = bool(previous and re.match(r"^(那|還有|為什麼|怎麼說|這個|這位|這裡|那裡|它|他|她|哪裡|幾歲|多高|多大|出生|任期)", question))
         followup = followup or bool(previous and re.match(r"^(he|she|it|where was|when was|what about|his|her|how old|how tall|how high|what is (?:his|her|its)|where is)\b", question, re.I))
         image_followup = image_topic and (continuation or followup or image_reference)
-        explicit_search = bool(re.match(r"^(搜尋|搜索|查網路|上網查|最新)", raw))
+        explicit_search = bool(re.match(r"^(搜尋|搜索|查網路|上網查|最新|查(?=[：:\s]))", raw))
         if image_followup and not explicit_search:
             # Private image descriptions remain local, including factual follow-ups.
             continuation = True
@@ -881,7 +885,7 @@ class LocalAI:
                 LOG.info("[Route] 意圖判斷未完成，不啟動公開搜尋或私人讀取")
                 WORK_CONTEXT.route = "待釐清"
                 return "目前無法確定應查公開資訊還是私人紀錄；請指定「上網查：主題」「查試算表」「查日曆」或重新描述問題。"
-        if not self.search_enabled and not recent and not re.match(r"^(搜尋|搜索|查網路|上網查|最新)", raw):
+        if not self.search_enabled and not recent and not re.match(r"^(搜尋|搜索|查網路|上網查|最新|查(?=[：:\s]))", raw):
             search = False
         lookup_question = question
         if search and followup:
@@ -1976,6 +1980,9 @@ def create_app(runtime):
         body = request.get_data()
         if not verify_signature(body, request.headers.get("x-line-signature"), runtime.secret):
             return "invalid signature", 401
+        return accept_events(body)
+
+    def accept_events(body):
         try:
             data = json.loads(body)
         except (ValueError, UnicodeDecodeError):
@@ -2002,6 +2009,42 @@ def create_app(runtime):
                 return "busy", 503
             LOG.info("[LINE] 已接收%s事件（背景處理）", "照片" if event["message"]["type"] == "image" else "文字")
         return Response("ok", mimetype="text/plain")
+
+    @app.post("/apps-script")
+    def apps_script():
+        # A separate, opt-in private relay; never substitutes for LINE validation.
+        key = os.getenv("APPS_SCRIPT_RELAY_KEY", "")
+        owner = os.getenv("GOOGLE_OWNER_ID", "")
+        bot_id = os.getenv("APPS_SCRIPT_BOT_ID", "")
+        if not re.fullmatch(r"[a-f0-9]{64}", key) or not owner or not bot_id:
+            return "relay disabled", 503
+        body = request.get_data()
+        stamp = request.headers.get("x-relay-time", "")
+        signature = request.headers.get("x-relay-signature", "")
+        if not stamp.isascii() or not stamp.isdigit() or len(stamp) > 12:
+            return "invalid relay", 401
+        if abs(time.time() - int(stamp)) > 60:
+            return "expired relay", 401
+        signed = stamp.encode() + b"\n" + body
+        if not verify_signature(signed, signature, key):
+            return "invalid relay", 401
+        try:
+            data = json.loads(body)
+        except (ValueError, UnicodeDecodeError):
+            return "invalid JSON", 400
+        if not isinstance(data, dict) or data.get("destination") != bot_id or not isinstance(data.get("events"), list):
+            return "invalid relay body", 400
+        if data.get("action") == "probe" and data["events"] == []:
+            return Response("relay ready", mimetype="text/plain")
+        if len(data["events"]) != 1:
+            return "one event required", 400
+        event = data["events"][0]
+        if not isinstance(event, dict) or event.get("source") != {"type": "user", "userId": owner}:
+            return "private owner only", 403
+        if not isinstance(event.get("webhookEventId"), str) or not event["webhookEventId"]:
+            return "event ID required", 400
+        # Reuse the same parser, queue, deduplication, model and Google workflows.
+        return accept_events(body)
 
     return app
 
@@ -2157,7 +2200,15 @@ def main():
         private_json(bind_path, dict(code=elearn.bind_code))
     webhook_active = False
     try:
-        if os.getenv("W5_WEBHOOK_URL") and os.getenv("PUBLIC_BASE_URL"):
+        if os.getenv("APPS_SCRIPT_RELAY_MODE") == "1":
+            if not re.fullmatch(r"[a-f0-9]{64}", os.getenv("APPS_SCRIPT_RELAY_KEY", "")) or not os.getenv("APPS_SCRIPT_BOT_ID") or not os.getenv("GOOGLE_OWNER_ID"):
+                raise RuntimeError("Apps Script relay configuration is incomplete")
+            current = json.loads(read_http("https://api.line.me/v2/bot/channel/webhook/endpoint", timeout=8,
+                headers={"Authorization": "Bearer " + token})).get("endpoint")
+            if not os.getenv("W5_WEBHOOK_URL") or current != os.environ["W5_WEBHOOK_URL"]:
+                raise RuntimeError("Relay mode requires the existing Apps Script Webhook; no route was changed")
+            LOG.info("[Webhook] Apps Script 轉送模式，保留雲端入口；請確認其通道網址設定。")
+        elif os.getenv("W5_WEBHOOK_URL") and os.getenv("PUBLIC_BASE_URL"):
             try:
                 activate_local_webhook(token, os.environ["PUBLIC_BASE_URL"], os.environ["W5_WEBHOOK_URL"])
                 webhook_active = True

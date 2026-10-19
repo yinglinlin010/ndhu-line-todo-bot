@@ -1,10 +1,27 @@
-# 本機 Ollama LINE Bot — 課堂版
+# 本機 Ollama LINE Bot — W7 Apps Script 轉接版
 
 公開 repo：https://github.com/yinglinlin010/ndhu-line-todo-bot
 
-本次版本已完成實際接 LINE 的關卡 B。[手機對話截圖](test-evidence/submission-20261018/phone.png)與[交件文字](test-evidence/submission-20261018/SUBMISSION.txt)均附於 repo；測試範圍與限制見下方。
+本次 W7 版本已完成 Apps Script 固定入口的真實手機搜尋測試：[完整手機問題與來源](test-evidence/w7-submission-20261019/phone.png)、[同次轉接站畫面](test-evidence/w7-submission-20261019/terminal.png)、[交件文字](test-evidence/w7-submission-20261019/SUBMISSION.txt)。W6 關卡 B 舊證據保留於 `test-evidence/submission-20261018/`。
 
 LINE 文字與照片交由自己電腦上的 **Gemma 4 E4B** 處理；需要時搜尋附來源。支援照片存私人 Google Drive、行程確認後寫 Calendar、指定內容寫 Sheets。文字與圖片使用 `gemma4:e4b-it-q4_K_M`，下載約6.6GB；本機已用 Python 3.12 測試。
+
+## W7：固定雲端入口與本機模型
+
+LINE Webhook 固定指向 Apps Script。雲端處理「記錄：事項」與「查詢」，「查 問題」明確進入本機網路查證並附來源；其他 AI 問答、照片與 Google 流程也可交給本機。手機與同時刻轉接站證據見 [W7 驗收](test-evidence/w7-submission-20261019/README.md)。
+
+**相對老師版本的修改**：依使用者選擇保留手動保存，普通聊天不自動記成待辦或寫入試算表；保留一般 AI 聊天與照片等既有功能。老師的轉接站回傳答案給 Apps Script 再回 LINE，本版由 Python 背景佇列直接回 LINE，讓雲端入口不等待模型生成。這些差異不冒充原版逐字實作。
+
+W7 設定順序（從全新安裝開始仍需先完成下方 Python／Ollama 安裝）：
+
+1. 將 `apps-script/Code.gs` 與 `apps-script/appsscript.json` 放入自己的 Apps Script 專案，依 [部署與安全設定](apps-script/README.md) 設定私人指令碼屬性並部署。
+2. 本機 `.env` 設定自己的 LINE token／secret、`GOOGLE_OWNER_ID`、`APPS_SCRIPT_BOT_ID`、`W5_WEBHOOK_URL`，以及 `APPS_SCRIPT_RELAY_MODE=1`、`APPS_SCRIPT_RELAY_KEY`。轉送金鑰需為獨立隨機的64位十六進位字串，與指令碼屬性 `LOCAL_RELAY_KEY` 一致；不可使用 LINE secret。
+3. 指令碼屬性設 `ENABLE_LOCAL_RELAY=1`。將 LINE Webhook 指向自己的 Apps Script 私密入口，再執行 `python scripts/run-bot.py`。管理程序會核對既有 Webhook、建立 HTTPS 通道並自動同步雲端 `LOCAL_RELAY_BASE`；不需每次重部署或改 LINE 網址。
+4. 在 LINE 傳「查 台灣最高的山是哪一座？多高？」；公開查證應回覆並附來源。輸入「記錄：事項」「查詢」測雲端待辦。Google 功能另需下方的私人授權設定，搜尋問答不需 Google Drive／Calendar／Sheets 授權。
+
+金鑰、試算表 ID、通道網址與完整 Apps Script 私密網址均不可提交 repo 或出現在截圖。轉送以時間戳＋HMAC 驗證，僅本人私聊；Apps Script 本身仍無法取得 LINE 原始驗簽標頭，秘密入口網址限制仍是私人原型的限制。本機關機／睡眠後只有雲端待辦可用，不能保證全天 AI 在線。
+
+日常日誌不印問題內容。僅公開題目截圖示範時可用 `LOG_PUBLIC_SEARCH_QUESTIONS=1 python scripts/run-bot.py` 顯示公開搜尋題，完成後以未設定該環境變數的指令重新啟動；不要在這個模式傳私人問題。
 
 ## 怎麼裝
 
@@ -35,6 +52,8 @@ python scripts/configure-google.py
 上述export需與gws登入在同一個終端執行；`.env`不會自動被gws CLI讀取。Windows PowerShell可用 `$env:GOOGLE_WORKSPACE_CLI_CONFIG_DIR=(Join-Path $PWD "data/gws")` 指定相同目錄。
 
 設定工具以隱藏輸入接收私人ID，啟用僅限綁定者私聊的Google功能；不會直接寫入雲端。課堂版手動Sheets指令需要設定試算表ID；Google帳號必須有該表的編輯權限。
+
+目前本機設定採 Apps Script 固定入口：雲端「記錄：事項／查詢」獨立運作，其餘 AI 與照片轉交本機 Python。啟動管理程序會同步通道網址；電腦離線時不提供本機 AI。轉送設定與驗收界線見 [Apps Script 說明](apps-script/README.md)。
 
 ## 怎麼跑
 

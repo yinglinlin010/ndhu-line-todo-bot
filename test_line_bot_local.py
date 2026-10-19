@@ -913,7 +913,7 @@ class PythonBotTests(unittest.TestCase):
     def test_real_http_server_start_health_and_sigint_without_line_calls(self):
         environment = dict(os.environ, LINE_CHANNEL_SECRET="test-secret", LINE_CHANNEL_ACCESS_TOKEN="test-token",
                            ELEARN_CALENDAR_URL="", ELEARN_STATE_FILE=str(self.path / "state.json"),
-                           TODO_FILE=str(self.path / "tasks.jsonl"), PUBLIC_BASE_URL="", W5_WEBHOOK_URL="",
+                           TODO_FILE=str(self.path / "tasks.jsonl"), PUBLIC_BASE_URL="", W5_WEBHOOK_URL="", APPS_SCRIPT_RELAY_MODE="0",
                            OLLAMA_MODEL="qwen2.5:3b", OLLAMA_BASE_URL="http://127.0.0.1:11434", PORT="0")
         process = subprocess.Popen([sys.executable, str(Path(bot.__file__).resolve())], env=environment,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)

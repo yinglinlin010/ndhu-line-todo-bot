@@ -1,0 +1,37 @@
+{
+  "scope": "synthetic event through deployed Apps Script; invalid reply token, no delivered LINE message or Google write intended",
+  "http": 200,
+  "sent_at": 1792377272.069987,
+  "initial_deployed_forwarding": "not accepted by local signature check",
+  "editor_diagnostic_before_fix": {
+    "health": 200,
+    "relay": 401
+  },
+  "editor_diagnostic_after_utf8_fix": {
+    "health": 200,
+    "relay": 200,
+    "model": "gemma4:e4b-it-q4_K_M",
+    "model_seconds": 5.4,
+    "line_reply_status": 400,
+    "reply_delivered": false
+  },
+  "limitations": [
+    "Synthetic event is not a phone conversation acceptance test.",
+    "A fixed secret Apps Script URL does not replace standard LINE signature verification."
+  ],
+  "source_hashes": {
+    "line_bot_local.py": "d27fd0d60465660096f7ce7f54db80cbe43e5ea358f4509f46757e9b3c3c3372",
+    "apps-script/Code.gs": "9b87608325bf0f79e774b70c23a4f19d9c29db35f99aff088903a6faf4b39302",
+    "scripts/run-bot.py": "93bf5deb66f0ababf0e773b37f100cc81c3d77df13d0a8e3a27e65df351b2540"
+  },
+  "final_deployed_retest": {
+    "cloud_http": 200,
+    "local_event_received": true,
+    "route": "model",
+    "model": "gemma4:e4b-it-q4_K_M",
+    "model_seconds": 0.8,
+    "line_reply_status": 400,
+    "reply_delivered": false,
+    "time": "2026-10-19T10:43:13+08:00"
+  }
+}

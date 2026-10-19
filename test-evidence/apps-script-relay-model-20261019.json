@@ -1,0 +1,20 @@
+{
+  "scope": "local HTTP relay with real Ollama; captured replies, no LINE messages or Google writes",
+  "cases": [
+    {
+      "question": "用一句話解釋慣性",
+      "accepted": true,
+      "seconds": 7.86,
+      "answer": "這次沒有找到足以確認答案的相關來源，請補充名稱、地點或日期後再查；我不會猜測答案。",
+      "passed": false
+    },
+    {
+      "question": "再簡短一點",
+      "accepted": true,
+      "seconds": 1.1,
+      "answer": "抱歉，我無法根據您提供的指令修改或補充上一則回答，因為上一則回答是關於「慣性」的，而我無法提供一個精簡的、符合您要求的解釋。",
+      "passed": false,
+      "evaluation_note": "The refusal repeats the word inertia but is not a valid conceptual answer; keyword-only check was corrected."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+https://github.com/yinglinlin010/ndhu-line-todo-bot
+
+附件：phone.png（完整手機問題、回答與來源）、terminal.png（同次轉接站搜尋與模型紀錄）。
+
+使用 Gemma 4 E4B（gemma4:e4b-it-q4_K_M），改為 Apps Script 固定 Webhook、簽章轉送與通道自動同步，保留手動記待辦，本題手機實測約 8.6 秒；已修正中文轉送驗證問題，本機仍需保持開機。
